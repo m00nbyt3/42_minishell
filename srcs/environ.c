@@ -6,7 +6,7 @@
 /*   By: agallipo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 11:58:28 by agallipo          #+#    #+#             */
-/*   Updated: 2022/02/25 17:29:06 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/03/01 14:57:06 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,5 @@ t_list	*store_env_in_list(char **environ)
 		ft_lstadd_back(&env, ft_lstnew(*environ));
 		environ++;
 	}
-	//printf("%s\n", environ[i-2]);
 	return (env);
 }

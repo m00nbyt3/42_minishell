@@ -6,13 +6,14 @@
 #    By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/07 10:43:28 by agallipo          #+#    #+#              #
-#    Updated: 2022/02/25 16:04:32 by agallipo         ###   ########.fr        #
+#    Updated: 2022/03/01 15:48:36 by agallipo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS = srcs/main.c \
 	   srcs/environ.c \
 	   srcs/builtins.c \
+	   srcs/parse.c
 	   #rcs/error.c srcs/env.c srcs/multiplepipes.c
 
 OBJS = ${SRCS:.c=.o}
