@@ -3,51 +3,49 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+         #
+#    By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/07 10:43:28 by agallipo          #+#    #+#              #
-#    Updated: 2022/03/01 15:48:36 by agallipo         ###   ########.fr        #
+#    Updated: 2022/03/02 18:41:20 by ycarro           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS = srcs/main.c \
-	   srcs/environ.c \
-	   srcs/builtins.c \
-	   srcs/parse.c
-	   #rcs/error.c srcs/env.c srcs/multiplepipes.c
-
-OBJS = ${SRCS:.c=.o}
-
-CFLAGS = # -Wall -Werror -Wextra #-fsanitize=address -g
-LDFLAGS = -L/usr/include -lreadline
-
-CC = gcc
-
-INCLUDES = includes/
-
-LIBFTDIR = libft/
-
 NAME = minishell
 
-RM = rm -fr
+CC := gcc
 
-all:	 ${NAME}
+LIBFTDIR = libft/
+INCLUDE :=  -I includes/
+HEADERFILES := includes/minishell.h
 
-${NAME}: ${OBJS}
-	make -C ${LIBFTDIR}
-	${CC} ${CFLAGS} ${LDFLAGS} ${OBJS} -I ${INCLUDES} -Llibft -lft -o ${NAME} 
+SRCS :=	main.c \
+		environ.c \
+		builtins.c \
+		parse/quotes.c \
+		parse/splitx.c
 
-%.o: %.c
-	${CC} ${CFLAGS} -I ${INCLUDES} -c $< -o $@
+OBJS := $(SRCS:%.c=obj/%.o)
+
+CFLAGS := $(INCLUDE)# -Wall -Werror -Wextra #-fsanitize=address -g
+LDFLAGS := -L/usr/include -lreadline -Llibft -lft
+
+all: $(NAME)
+
+$(NAME): $(OBJS)
+	make -C $(LIBFTDIR)
+	$(CC) $(LDFLAGS) $(OBJS) -o $@
+
+obj/%.o: srcs/%.c $(HEADERFILES)
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -o $@ -c $<
 
 clean:
-			make -sC ${LIBFTDIR} clean
-			${RM} ${OBJS} libft.a
+	make -sC $(LIBFTDIR) clean
+	rm -rf $(OBJS) libft.a
 
 fclean: clean
-
-			make -sC ${LIBFTDIR} fclean
-			${RM} ${NAME}
+	make -sC $(LIBFTDIR) fclean
+	rm -rf $(NAME)
 
 re: fclean all
 

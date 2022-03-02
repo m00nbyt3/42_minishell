@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agallipo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 15:36:54 by agallipo          #+#    #+#             */
-/*   Updated: 2022/03/01 17:34:44 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/03/02 15:34:39 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,20 @@
 void	ft_chk_quotes(t_list *args)
 {
 	int	i;
-	int	count;
+	int	scount;
+	int	dcount;
 
-	while (args->next)
-		args = args->next;
 	i = 0;
-	while (args->content[i] != 0)
+	scount = 0;
+	dcount = 0;
+	while (args->content[i])
 	{
+		if (args->content[i] == '\'')
+			scount++;
 		if (args->content[i] == '\"')
-			count++;
+			dcount++;
 		i++;
 	}
-	if (count % 2 != 0)
-		printf("%s\n", "error");
+	if (scount % 2 || dcount % 2)
+		ft_putstr_fd("Error (invalid quotation)\n", 1);
 }

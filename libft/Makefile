@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+         #
+#    By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/21 13:59:32 by agallipo          #+#    #+#              #
-#    Updated: 2022/02/25 17:33:51 by agallipo         ###   ########.fr        #
+#    Updated: 2022/03/02 17:29:31 by ycarro           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,17 +65,16 @@ NAME	= libft.a
 RM		= rm -f
 FLAGS	= -Wall -Wextra -Werror -c
 $(NAME): $(SRCS)
-		echo [Compilando...]
-		gcc $(FLAGS) $(SRCS)
-		ar rc $(NAME) $(OBJS)
-		ranlib $(NAME)
-		echo [Compilado.]
+		@echo [Compiling libft...]
+		@gcc $(FLAGS) $(SRCS)
+		@ar rc $(NAME) $(OBJS)
+		@ranlib $(NAME)
 bonus:		$(OBJS) $(OBJS_B)
-			echo [Compilando bonus...]
-			gcc $(FLAGS) $(SRCS)
-			ar rc $(NAME) 
-			ranlib $(NAME)
-			echo [Compilados.]
+			@gcc $(FLAGS) $(SRCS)
+			@ar rc $(NAME) 
+			@ranlib $(NAME)
+			@echo [Done compiling libft :)]
+
 all:		$(NAME)
 clean:
 			$(RM) $(OBJS)
