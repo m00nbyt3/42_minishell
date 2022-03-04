@@ -6,108 +6,135 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 17:36:38 by ycarro            #+#    #+#             */
-/*   Updated: 2022/03/02 20:05:27 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/03/04 17:36:43 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 t_totems	*sp_split(char *s);
-void		new_element (char *s, t_totems **input);
-void		ft_add_totem(t_totems **input, t_totems *new);
-void		ft_print_totems(t_totems *input);
-void		ft_clear_input(t_totems **input, void (*del)(void *));
+char		*new_element(char *s, t_totems **input);
+int			is_special_c(char *str, t_totems *totem, int i);
+char		*remove_quotes(char *str);
 
 t_totems	*sp_split(char *s)
 {
 	t_totems	*input;
-	size_t		size;
+	char 		*used;
 	size_t		i;
 
 	input = 0;
 	i = 0;
 	while (s[i])
 	{
-		if (s[i] == ' ')
+		while (s[i] == ' ' && s[i])
 			i++;
-		else
-		{
-			new_element(&(s[i]), &input);
-			while (s[i] != ' ' && s[i])
-				i++;
-		}
+		used = new_element(&(s[i]), &input);
+		i += ft_strlen(used);
+		free(used);
 	}
 	return(input);
 }
 
-void	new_element(char *s, t_totems **input)
+char	*new_element(char *s, t_totems **input)
 {
 	t_totems	*totem;
 	char		*tmp;
 	char		*orig;
+	int			i;
 	int			inquotes;
 
-	tmp = ft_strdup((const char *)s);
-	orig = tmp;
-	inquotes = 0;
-	while (*tmp)
-	{
-		if (*tmp == '\"' || *tmp == '\'')
-			inquotes = !inquotes;
-		if (!inquotes && *tmp == ' ') //&& is_special_c(*s))
-			break;
-		tmp++;
-	}
-	*tmp = 0;
 	totem = malloc(sizeof(t_totems));
 	if (!totem)
-		return ;
-	totem->content = ft_strdup((const char *)orig);
-	free(orig);
-	totem->type = 3;
+		return (0);
+	tmp = ft_strdup((const char *)s);
+	inquotes = 0;
+	totem->section = 0;
+	totem->type = 0;
+	orig = tmp;
+	i = 0;
+	while (tmp[i])
+	{
+		if (tmp[i] == '\"' || tmp[i] == '\'')
+			inquotes = !inquotes;
+		if (!inquotes)
+		{
+			if (is_special_c(&(tmp[i]), totem, i))
+			{
+				if (i)
+					break;
+				else
+				{
+					tmp++;
+					while(tmp[i] == ' ' && tmp[i])
+						tmp++;
+				}
+			}
+			else
+			{
+				if (tmp[i] == ' ')
+					break;
+				i++;
+			}
+		}
+		else
+			i++;
+	}
+	tmp[i] = 0;
+	totem->content = ft_strdup((const char *)remove_quotes(tmp));
 	totem->next = 0;
 	ft_add_totem(input, totem);
+	return (orig);
 }
 
-void		ft_add_totem(t_totems **input, t_totems *new)
+int	is_special_c(char *str, t_totems *totem, int i)
 {
-	t_totems	*last;
-
-	last = *input;
-	if (input && new)
+	while (*str == ' ' && *str)
+		str++;
+	if (*str == '<')
 	{
-		if (!(*input))
-			*input = new;
-		else
+		if (!i)
 		{
-			while (last->next)
-				last = last->next;
-			last->next = new;
+			if (*str + 1 == '<')
+				totem->type= 'u';
+			else
+				totem->type= 'i';
 		}
 	}
+	else if (*str == '>')
+	{
+		if (!i)
+		{
+			if (*str + 1 == '>')
+				totem->type= 'p';
+			else
+				totem->type= 'o';
+		}
+	}
+	else if (*str == '|')
+	{
+		if (!i)
+			totem->section++;
+	}
+	else
+	{
+		if (!totem->type)
+			totem->type = 'a';
+		return (0);
+	}
+	return (1);
 }
 
-void	ft_print_totems(t_totems *input)
+char	*remove_quotes(char *str)
 {
-	while (input)
-	{
-		printf("Str: %s   Type: %d\n", input->content, input->type);
-		input = input->next;
-	}
-}
+	int	pos;
+	char *mod;
 
-void	ft_clear_input(t_totems **input, void (*del)(void *))
-{
-	t_totems	*next;
-
-	if (!del || !input)
-		return ;
-	while (*input)
-	{
-		next = (*input)->next;
-		free((*input)->content);
-		free(*input);
-		(*input) = next;
-	}
-	*input = NULL;
+	mod = ft_strdup(str);
+	if (*mod == '\"' || *mod == '\'')
+		mod++;
+	pos = ft_strlen(mod) - 1;
+	if (mod[pos] == '\"' || mod[pos] == '\'')
+		mod[pos] = 0;
+	return(mod);
 }

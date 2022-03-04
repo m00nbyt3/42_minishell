@@ -6,7 +6,7 @@
 #    By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/07 10:43:28 by agallipo          #+#    #+#              #
-#    Updated: 2022/03/02 18:41:20 by ycarro           ###   ########.fr        #
+#    Updated: 2022/03/03 13:25:00 by ycarro           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,12 +22,13 @@ SRCS :=	main.c \
 		environ.c \
 		builtins.c \
 		parse/quotes.c \
-		parse/splitx.c
+		parse/splitx.c \
+		totem/manage.c
 
 OBJS := $(SRCS:%.c=obj/%.o)
 
-CFLAGS := $(INCLUDE)# -Wall -Werror -Wextra #-fsanitize=address -g
-LDFLAGS := -L/usr/include -lreadline -Llibft -lft
+CFLAGS := $(INCLUDE) #-fsanitize=address -g # -Wall -Werror -Wextra #-fsanitize=address -g
+LDFLAGS := -L/usr/include -lreadline -Llibft -lft #-fsanitize=address -g
 
 all: $(NAME)
 
