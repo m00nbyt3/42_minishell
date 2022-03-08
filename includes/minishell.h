@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 11:43:29 by agallipo          #+#    #+#             */
-/*   Updated: 2022/03/07 17:10:11 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/03/08 12:02:51 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ typedef struct	s_totems
 	char	**flags; //Liberar!!!
 	int		fd;
 	int		section;
-	char	type; 
+	char	type;
 	//i->stdi o->stdo e->sterr a->args c->command
-	//h->heredoc p->append
+	//h->heredoc p->append f->flags
 	struct s_totems	*next;
 }				t_totems;
 
@@ -53,12 +53,13 @@ typedef struct	s_oncreate
 t_list		*store_env_in_list(char **environ);
 void		ft_builtins(char *input, t_list **env);
 void		ft_env(t_list **env);
-void		ft_chk_quotes(t_list *args);
+int			ft_chk_quotes(char *str);
 t_totems	*sp_split(char *s);
 char		*new_element(char *s, t_totems **input, t_oncreate *shared);
 int			is_special_c(char *str, t_totems *totem, int i, t_oncreate *shared);
+void		set_command(t_totems *input);
 char		*remove_quotes(char *str);
-void		check_quotes(char c, t_oncreate *shared);
+void		last_quote(char c, t_oncreate *shared);
 void		ft_add_totem(t_totems **input, t_totems *new);
 void		ft_print_totems(t_totems *input);
 void		ft_clear_input(t_totems **lst, void (*del)(void *));

@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 17:36:38 by ycarro            #+#    #+#             */
-/*   Updated: 2022/03/07 17:13:19 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/03/08 12:01:51 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,7 @@
 t_totems	*sp_split(char *s);
 char		*new_element(char *s, t_totems **input, t_oncreate *shared);
 int			is_special_c(char *str, t_totems *totem, int i, t_oncreate *shared);
-char		*remove_quotes(char *str);
-void		check_quotes(char c, t_oncreate *shared);
-
+void		set_command(t_totems *input);
 
 t_totems	*sp_split(char *s)
 {
@@ -41,6 +39,7 @@ t_totems	*sp_split(char *s)
 		free(used);
 	}
 	free(shared);
+	set_command(input);
 	return(input);
 }
 
@@ -61,9 +60,7 @@ char	*new_element(char *s, t_totems **input, t_oncreate *shared)
 	i = 0;
 	while (tmp[i])
 	{
-		//if (tmp[i] == '\"' || tmp[i] == '\'')
-			//shared->inquotes = !shared->inquotes;
-		check_quotes(tmp[i], shared);
+		last_quote(tmp[i], shared);
 		if (!shared->inquotes)
 		{
 			if (is_special_c(&(tmp[i]), totem, i, shared))
@@ -117,6 +114,11 @@ int	is_special_c(char *str, t_totems *totem, int i, t_oncreate *shared)
 				totem->type= 'o';
 		}
 	}
+	else if (*str == '-')
+	{
+		if (!i)
+			totem->type = 'f';
+	}
 	else if (*str == '|')
 	{
 		if (!i)
@@ -133,31 +135,25 @@ int	is_special_c(char *str, t_totems *totem, int i, t_oncreate *shared)
 	return (1);
 }
 
-char	*remove_quotes(char *str)
+void	set_command(t_totems *input)
 {
-	int	pos;
-	char *mod;
+	int 	tot;
+	void	*orig;
+	void    *mod;
 
-	mod = ft_strdup(str);
-	if (*mod == '\"' || *mod == '\'')
-		mod++;
-	pos = ft_strlen(mod) - 1;
-	if (mod[pos] == '\"' || mod[pos] == '\'')
-		mod[pos] = 0;
-	return(mod);
-}
-
-void	check_quotes(char c, t_oncreate *shared)
-{
-	if (shared->inquotes)
+	orig = input;
+	tot = 0;
+	while (input)
 	{
-		if (c == shared->qtype)
-			shared->inquotes = 0;
+		if (input->type == 'a')
+		{	
+			if (!tot)
+				input->type = 'c';
+			tot++;
+		}
+		input = input->next;
 	}
-	else if (c == '\"' || c == '\'')
-	{
-		shared->qtype = c;
-		shared->inquotes = 1;
-	}
-	return ;
+	if (!tot)
+		ft_putstr_fd("Error (no command)\n", 1);
+	input = orig;
 }

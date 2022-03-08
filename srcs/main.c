@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 11:39:01 by agallipo          #+#    #+#             */
-/*   Updated: 2022/03/03 13:04:07 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/03/08 12:03:18 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ int main()
 	while(42)
 	{
 		str = readline("ミニシェル$ ");
-		input = sp_split(str);
-		//ft_chk_quotes(args);
+		if(!ft_chk_quotes(str))
+			input = sp_split(str);
 		//ft_builtins(str, &env);
 		ft_print_totems(input);
 		ft_clear_input(&input, free);
