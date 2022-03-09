@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 17:36:38 by ycarro            #+#    #+#             */
-/*   Updated: 2022/03/09 16:41:15 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/03/09 17:26:17 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 t_totems	*sp_split(char *s);
 char		*new_element(char *s, t_totems **input, t_oncreate *shared);
+char		*set_totem_type(char *tmp, t_oncreate *shared, t_totems *totem);
+char		*char_detection(char *tmp, t_oncreate *shared, \
+			t_totems *totem, int *i);
 int			is_special_c(char *str, t_totems *totem, int i, t_oncreate *shared);
 void		set_command(t_totems *input, int sect);
 
@@ -60,37 +63,63 @@ char	*new_element(char *s, t_totems **input, t_oncreate *shared)
 	shared->inquotes = 0;
 	totem->type = 0;
 	orig = tmp;
+	tmp = set_totem_type(tmp, shared, totem);
+	totem->content = ft_strdup((const char *)remove_quotes(tmp));
+	totem->next = 0;
+	ft_add_totem(input, totem);
+	return (orig);
+}
+
+char	*set_totem_type(char *tmp, t_oncreate *shared, t_totems *totem)
+{
+	int	i;
+
 	i = 0;
 	while (tmp[i])
 	{
 		last_quote(tmp[i], shared);
 		if (!shared->inquotes)
 		{
-			if (is_special_c(&(tmp[i]), totem, i, shared))
+			tmp = char_detection(tmp, shared, totem, &i);
+			if (i < 0)
 			{
-				if (i)
-					break ;
-				if (*(tmp + 1) == '<' || *(tmp + 1) == '>')
-					tmp++;
-				tmp++;
-				while (tmp[i] == ' ' && tmp[i])
-					tmp++;
-			}
-			else
-			{
-				if (tmp[i] == ' ')
-					break ;
-				i++;
+				i *= -1;
+				break ;
 			}
 		}
 		else
 			i++;
 	}
 	tmp[i] = 0;
-	totem->content = ft_strdup((const char *)remove_quotes(tmp));
-	totem->next = 0;
-	ft_add_totem(input, totem);
-	return (orig);
+	return (tmp);
+}
+
+char	*char_detection(char *tmp, t_oncreate *shared, t_totems *totem, int *i)
+{
+	if (is_special_c(&(tmp[*i]), totem, *i, shared))
+	{
+		if (*i)
+		{
+			*i *= -1;
+			return (tmp);
+		}
+		if (*(tmp + 1) == '<' || *(tmp + 1) == '>')
+			tmp++;
+		tmp++;
+		while (tmp[*i] == ' ' && tmp[*i])
+			tmp++;
+		return (tmp);
+	}
+	else
+	{
+		if (tmp[*i] == ' ')
+		{
+			*i *= -1;
+			return (tmp);
+		}
+		(*i)++;
+	}
+	return (tmp);
 }
 
 int	is_special_c(char *str, t_totems *totem, int i, t_oncreate *shared)
