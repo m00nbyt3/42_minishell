@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 17:36:38 by ycarro            #+#    #+#             */
-/*   Updated: 2022/03/08 12:01:51 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/03/09 16:41:15 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,15 @@
 t_totems	*sp_split(char *s);
 char		*new_element(char *s, t_totems **input, t_oncreate *shared);
 int			is_special_c(char *str, t_totems *totem, int i, t_oncreate *shared);
-void		set_command(t_totems *input);
+void		set_command(t_totems *input, int sect);
 
 t_totems	*sp_split(char *s)
 {
 	t_oncreate	*shared;
 	t_totems	*input;
-	char 		*used;
+	char		*used;
 	size_t		i;
+	int			j;
 
 	shared = malloc(sizeof(t_oncreate));
 	shared->section = 0;
@@ -33,14 +34,16 @@ t_totems	*sp_split(char *s)
 		while (s[i] == ' ' && s[i])
 			i++;
 		if (!s[i])
-			break;
+			break ;
 		used = new_element(&(s[i]), &input, shared);
 		i += ft_strlen(used);
 		free(used);
 	}
+	j = -1;
+	while (++j <= shared->section)
+		set_command(input, j);
 	free(shared);
-	set_command(input);
-	return(input);
+	return (input);
 }
 
 char	*new_element(char *s, t_totems **input, t_oncreate *shared)
@@ -66,17 +69,17 @@ char	*new_element(char *s, t_totems **input, t_oncreate *shared)
 			if (is_special_c(&(tmp[i]), totem, i, shared))
 			{
 				if (i)
-					break;
+					break ;
 				if (*(tmp + 1) == '<' || *(tmp + 1) == '>')
 					tmp++;
 				tmp++;
-				while(tmp[i] == ' ' && tmp[i])
+				while (tmp[i] == ' ' && tmp[i])
 					tmp++;
 			}
 			else
 			{
 				if (tmp[i] == ' ')
-					break;
+					break ;
 				i++;
 			}
 		}
@@ -99,9 +102,9 @@ int	is_special_c(char *str, t_totems *totem, int i, t_oncreate *shared)
 		if (!i)
 		{
 			if (*(str + 1) == '<')
-				totem->type= 'h';
+				totem->type = 'h';
 			else
-				totem->type= 'i';
+				totem->type = 'i';
 		}
 	}
 	else if (*str == '>')
@@ -109,9 +112,9 @@ int	is_special_c(char *str, t_totems *totem, int i, t_oncreate *shared)
 		if (!i)
 		{
 			if (*(str + 1) == '>')
-				totem->type= 'p';
+				totem->type = 'p';
 			else
-				totem->type= 'o';
+				totem->type = 'o';
 		}
 	}
 	else if (*str == '-')
@@ -135,25 +138,28 @@ int	is_special_c(char *str, t_totems *totem, int i, t_oncreate *shared)
 	return (1);
 }
 
-void	set_command(t_totems *input)
+void	set_command(t_totems *input, int sect)
 {
-	int 	tot;
+	int		tot;
 	void	*orig;
-	void    *mod;
+	void	*mod;
 
 	orig = input;
 	tot = 0;
 	while (input)
 	{
-		if (input->type == 'a')
+		if (input->type == 'a' && input->section == sect)
 		{	
 			if (!tot)
+			{
 				input->type = 'c';
-			tot++;
+				tot++;
+			}
 		}
 		input = input->next;
 	}
 	if (!tot)
 		ft_putstr_fd("Error (no command)\n", 1);
 	input = orig;
+	vectorize_flags(input, sect);
 }

@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 11:43:29 by agallipo          #+#    #+#             */
-/*   Updated: 2022/03/08 12:02:51 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/03/09 14:56:02 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,15 @@ int			ft_chk_quotes(char *str);
 t_totems	*sp_split(char *s);
 char		*new_element(char *s, t_totems **input, t_oncreate *shared);
 int			is_special_c(char *str, t_totems *totem, int i, t_oncreate *shared);
-void		set_command(t_totems *input);
+void		set_command(t_totems *input, int sect);
 char		*remove_quotes(char *str);
 void		last_quote(char c, t_oncreate *shared);
 void		ft_add_totem(t_totems **input, t_totems *new);
 void		ft_print_totems(t_totems *input);
 void		ft_clear_input(t_totems **lst, void (*del)(void *));
+void		vectorize_flags(t_totems *input, int sect);
+int			count_flags(t_totems *input, int sect);
+void		print_vector(t_totems *input, int sect);
 
 #endif
 

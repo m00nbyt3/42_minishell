@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 10:38:02 by ycarro            #+#    #+#             */
-/*   Updated: 2022/03/08 11:53:46 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/03/09 15:00:25 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void		ft_add_totem(t_totems **input, t_totems *new);
 void		ft_print_totems(t_totems *input);
 void		ft_clear_input(t_totems **input, void (*del)(void *));
 
-void		ft_add_totem(t_totems **input, t_totems *new)
+void	ft_add_totem(t_totems **input, t_totems *new)
 {
 	t_totems	*last;
 
@@ -41,7 +41,8 @@ void	ft_print_totems(t_totems *input)
 	orig = input;
 	while (input)
 	{
-		printf("Str: %s.   Type: %c   Section: %d\n", input->content, input->type, input->section);
+		printf("Str: %s.   Type: %c   Section: %d\n", \
+			input->content, input->type, input->section);
 		input = input->next;
 	}
 	input = orig;

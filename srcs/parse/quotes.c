@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 15:36:54 by agallipo          #+#    #+#             */
-/*   Updated: 2022/03/08 12:02:37 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/03/09 15:03:12 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	ft_chk_quotes(char *str)
 	i = 0;
 	scount = 0;
 	dcount = 0;
-	while(str[i])
+	while (str[i])
 	{
 		if (str[i] == '\'')
 			scount++;
@@ -58,8 +58,8 @@ void	last_quote(char c, t_oncreate *shared)
 
 char	*remove_quotes(char *str)
 {
-	int	pos;
-	char *mod;
+	int		pos;
+	char	*mod;
 
 	mod = ft_strdup(str);
 	if (*mod == '\"' || *mod == '\'')
@@ -67,5 +67,5 @@ char	*remove_quotes(char *str)
 	pos = ft_strlen(mod) - 1;
 	if (mod[pos] == '\"' || mod[pos] == '\'')
 		mod[pos] = 0;
-	return(mod);
+	return (mod);
 }
