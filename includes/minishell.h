@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 11:43:29 by agallipo          #+#    #+#             */
-/*   Updated: 2022/03/09 14:56:02 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/03/10 11:13:40 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,13 @@ void		ft_builtins(char *input, t_list **env);
 void		ft_env(t_list **env);
 int			ft_chk_quotes(char *str);
 t_totems	*sp_split(char *s);
-char		*new_element(char *s, t_totems **input, t_oncreate *shared);
+char		*char_detection(char *tmp, t_oncreate *shared, \
+			t_totems *totem, int *i);
 int			is_special_c(char *str, t_totems *totem, int i, t_oncreate *shared);
+int			is_redirection(char *str, t_totems *totem, int i);
 void		set_command(t_totems *input, int sect);
+char		*new_element(char *s, t_totems **input, t_oncreate *shared);
+char		*set_totem_type(char *tmp, t_oncreate *shared, t_totems *totem);
 char		*remove_quotes(char *str);
 void		last_quote(char c, t_oncreate *shared);
 void		ft_add_totem(t_totems **input, t_totems *new);

@@ -6,18 +6,17 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 17:36:38 by ycarro            #+#    #+#             */
-/*   Updated: 2022/03/09 17:26:17 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/03/10 11:12:06 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 t_totems	*sp_split(char *s);
-char		*new_element(char *s, t_totems **input, t_oncreate *shared);
-char		*set_totem_type(char *tmp, t_oncreate *shared, t_totems *totem);
 char		*char_detection(char *tmp, t_oncreate *shared, \
 			t_totems *totem, int *i);
 int			is_special_c(char *str, t_totems *totem, int i, t_oncreate *shared);
+int			is_redirection(char *str, t_totems *totem, int i);
 void		set_command(t_totems *input, int sect);
 
 t_totems	*sp_split(char *s)
@@ -47,51 +46,6 @@ t_totems	*sp_split(char *s)
 		set_command(input, j);
 	free(shared);
 	return (input);
-}
-
-char	*new_element(char *s, t_totems **input, t_oncreate *shared)
-{
-	t_totems	*totem;
-	char		*tmp;
-	char		*orig;
-	int			i;
-
-	totem = malloc(sizeof(t_totems));
-	if (!totem)
-		return (0);
-	tmp = ft_strdup((const char *)s);
-	shared->inquotes = 0;
-	totem->type = 0;
-	orig = tmp;
-	tmp = set_totem_type(tmp, shared, totem);
-	totem->content = ft_strdup((const char *)remove_quotes(tmp));
-	totem->next = 0;
-	ft_add_totem(input, totem);
-	return (orig);
-}
-
-char	*set_totem_type(char *tmp, t_oncreate *shared, t_totems *totem)
-{
-	int	i;
-
-	i = 0;
-	while (tmp[i])
-	{
-		last_quote(tmp[i], shared);
-		if (!shared->inquotes)
-		{
-			tmp = char_detection(tmp, shared, totem, &i);
-			if (i < 0)
-			{
-				i *= -1;
-				break ;
-			}
-		}
-		else
-			i++;
-	}
-	tmp[i] = 0;
-	return (tmp);
 }
 
 char	*char_detection(char *tmp, t_oncreate *shared, t_totems *totem, int *i)
@@ -124,8 +78,35 @@ char	*char_detection(char *tmp, t_oncreate *shared, t_totems *totem, int *i)
 
 int	is_special_c(char *str, t_totems *totem, int i, t_oncreate *shared)
 {
+	int	redir;
+
 	while (*str == ' ' && *str)
 		str++;
+	if (is_redirection(str, totem, i))
+		;
+	else if (*str == '-')
+	{
+		if (!i)
+			totem->type = 'f';
+	}
+	else if (*str == '|')
+	{
+		if (!i)
+			shared->section++;
+	}
+	else
+	{
+		if (!totem->type)
+			totem->type = 'a';
+		totem->section = shared->section;
+		return (0);
+	}
+	totem->section = shared->section;
+	return (1);
+}
+
+int	is_redirection(char *str, t_totems *totem, int i)
+{
 	if (*str == '<')
 	{
 		if (!i)
@@ -146,24 +127,8 @@ int	is_special_c(char *str, t_totems *totem, int i, t_oncreate *shared)
 				totem->type = 'o';
 		}
 	}
-	else if (*str == '-')
-	{
-		if (!i)
-			totem->type = 'f';
-	}
-	else if (*str == '|')
-	{
-		if (!i)
-			shared->section++;
-	}
 	else
-	{
-		if (!totem->type)
-			totem->type = 'a';
-		totem->section = shared->section;
 		return (0);
-	}
-	totem->section = shared->section;
 	return (1);
 }
 

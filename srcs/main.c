@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 11:39:01 by agallipo          #+#    #+#             */
-/*   Updated: 2022/03/08 12:03:18 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/03/10 11:09:41 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int main()
 	env = store_env_in_list(environ);
 	while(42)
 	{
-		str = readline("ミニシェル$ ");
+		str = readline("ミニシェル# ");
 		if(!ft_chk_quotes(str))
 			input = sp_split(str);
 		//ft_builtins(str, &env);
