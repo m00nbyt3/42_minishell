@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agallipo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 13:33:24 by agallipo          #+#    #+#             */
-/*   Updated: 2022/02/10 16:12:03 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/03/11 16:00:30 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,5 @@ char	*ft_strjoin(const char *s1, const char *s2)
 	while (s2[j])
 		ptr[i++] = s2[j++];
 	ptr[i] = '\0';
-	free((char *)s1);
-	free((char *)s2);
 	return (ptr);
 }

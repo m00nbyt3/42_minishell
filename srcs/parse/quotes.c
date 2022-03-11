@@ -6,30 +6,31 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 15:36:54 by agallipo          #+#    #+#             */
-/*   Updated: 2022/03/09 15:03:12 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/03/11 17:12:11 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int		ft_chk_quotes(char *str);
-char	*remove_quotes(char *str);
 void	last_quote(char c, t_oncreate *shared);
+char	*remove_quotes(char *str, t_oncreate *shared);
+size_t	count_quotes(char *str, t_oncreate *shared);
 
 int	ft_chk_quotes(char *str)
 {
-	int	i;
-	int	scount;
-	int	dcount;
+	int		i;
+	int		scount;
+	int		dcount;
 
 	i = 0;
 	scount = 0;
 	dcount = 0;
 	while (str[i])
 	{
-		if (str[i] == '\'')
+		if (str[i] == '\'' && !(dcount % 2))
 			scount++;
-		if (str[i] == '\"')
+		if (str[i] == '\"' && !(scount % 2))
 			dcount++;
 		i++;
 	}
@@ -53,19 +54,47 @@ void	last_quote(char c, t_oncreate *shared)
 		shared->qtype = c;
 		shared->inquotes = 1;
 	}
-	return ;
 }
 
-char	*remove_quotes(char *str)
+char	*remove_quotes(char *str, t_oncreate *shared)
 {
-	int		pos;
+	size_t	qcount;
+	void	*orig;
 	char	*mod;
+	char	*new;
 
-	mod = ft_strdup(str);
-	if (*mod == '\"' || *mod == '\'')
-		mod++;
-	pos = ft_strlen(mod) - 1;
-	if (mod[pos] == '\"' || mod[pos] == '\'')
-		mod[pos] = 0;
-	return (mod);
+	qcount = count_quotes(str, shared);
+	if (!qcount)
+		return (ft_strdup(str));
+	new = malloc((ft_strlen(str) - qcount + 1) * sizeof(char));
+	mod = new;
+	orig = str;
+	while (*str)
+	{
+		if (*str != shared->qtype)
+		{
+			*mod = *str;
+			mod++;
+		}
+		str++;
+	}
+	*mod = 0;
+	return (new);
+}
+
+size_t	count_quotes(char *str, t_oncreate *shared)
+{
+	size_t	qcount;
+	void	*orig;
+
+	orig = str;
+	qcount = 0;
+	while (*str)
+	{
+		if (*str == shared->qtype)
+			qcount++;
+		str++;
+	}
+	str = orig;
+	return (qcount);
 }

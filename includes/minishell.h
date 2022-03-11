@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 11:43:29 by agallipo          #+#    #+#             */
-/*   Updated: 2022/03/10 11:13:40 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/03/11 17:05:05 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,9 @@ typedef struct	s_oncreate
 
 //Functions
 t_list		*store_env_in_list(char **environ);
-void		ft_builtins(char *input, t_list **env);
+void		ft_builtins(t_totems *input, t_list **env);
 void		ft_env(t_list **env);
-int			ft_chk_quotes(char *str);
+void 		ft_echo(t_totems *input, int section);
 t_totems	*sp_split(char *s);
 char		*char_detection(char *tmp, t_oncreate *shared, \
 			t_totems *totem, int *i);
@@ -62,8 +62,10 @@ int			is_redirection(char *str, t_totems *totem, int i);
 void		set_command(t_totems *input, int sect);
 char		*new_element(char *s, t_totems **input, t_oncreate *shared);
 char		*set_totem_type(char *tmp, t_oncreate *shared, t_totems *totem);
-char		*remove_quotes(char *str);
+int			ft_chk_quotes(char *str);
 void		last_quote(char c, t_oncreate *shared);
+char		*remove_quotes(char *str, t_oncreate *shared);
+size_t		count_quotes(char *str, t_oncreate *shared);
 void		ft_add_totem(t_totems **input, t_totems *new);
 void		ft_print_totems(t_totems *input);
 void		ft_clear_input(t_totems **lst, void (*del)(void *));

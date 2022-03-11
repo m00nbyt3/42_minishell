@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 11:11:38 by ycarro            #+#    #+#             */
-/*   Updated: 2022/03/10 11:12:11 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/03/11 16:53:24 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*new_element(char *s, t_totems **input, t_oncreate *shared)
 	totem->type = 0;
 	orig = tmp;
 	tmp = set_totem_type(tmp, shared, totem);
-	totem->content = ft_strdup((const char *)remove_quotes(tmp));
+	totem->content = remove_quotes(tmp, shared);
 	totem->next = 0;
 	ft_add_totem(input, totem);
 	return (orig);
