@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 11:39:01 by agallipo          #+#    #+#             */
-/*   Updated: 2022/03/11 16:48:21 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/03/14 15:19:21 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,11 @@ int main()
 	while(42)
 	{
 		str = readline("ミニシェル# ");
+		add_history(str);
 		if(!ft_chk_quotes(str))
 			input = sp_split(str);
+		//ft_print_totems(input);
 		ft_builtins(input, &env);
-		ft_print_totems(input);
 		ft_clear_input(&input, free);
 	}
 }
