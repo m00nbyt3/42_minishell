@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 12:41:32 by ycarro            #+#    #+#             */
-/*   Updated: 2022/03/17 12:14:56 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/03/18 12:38:02 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ t_transformer	*transform(t_totems *input)
 		input = input->next;
 	}
 	runner->next = 0;
-	print_vector(orig);
 	return (orig);
 }
 

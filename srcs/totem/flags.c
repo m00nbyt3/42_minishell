@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 14:57:01 by ycarro            #+#    #+#             */
-/*   Updated: 2022/03/18 10:51:56 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/03/18 12:37:33 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	vectorize_flags(t_transformer *runner, t_totems *input, int sect)
 	int		i;
 
 	size = count_flags(input, sect) + 1;
-	printf("SIZE: %d\n", size);
 	vector = malloc((size + 1) * sizeof(char *));
 	orig = input;
 	i = 0;

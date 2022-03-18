@@ -6,7 +6,7 @@
 #    By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/07 10:43:28 by agallipo          #+#    #+#              #
-#    Updated: 2022/03/15 15:26:22 by ycarro           ###   ########.fr        #
+#    Updated: 2022/03/18 12:16:09 by ycarro           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,10 @@ SRCS :=	main.c \
 		totem/manage.c \
 		totem/flags.c \
 		totem/elements.c \
-		parse/transform.c
+		parse/transform.c \
+		exec/env.c \
+		exec/multiple.c \
+		exec/pipe.c
 
 OBJS := $(SRCS:%.c=obj/%.o)
 

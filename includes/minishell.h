@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 11:43:29 by agallipo          #+#    #+#             */
-/*   Updated: 2022/03/17 11:49:13 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/03/18 12:20:13 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,9 @@ void			vectorize_flags(t_transformer *runner, t_totems *input, int sect);
 int				count_flags(t_totems *input, int sect);
 void			print_vector(t_transformer *runner);
 t_transformer	*transform(t_totems *input);
+void			ft_pipes(t_transformer **smtha, char **env);
+char			*ft_env_path(char **env, char *argv, char **flags);
+void			ft_exit_process(int condition, char *argv);
 
 #endif
 

@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 12:14:54 by agallipo          #+#    #+#             */
-/*   Updated: 2022/03/14 15:32:38 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/03/18 11:38:03 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,6 @@ void	ft_builtins(t_totems *input, t_list **env)
 		input = input->next;
 	}
 	input = orig;
-}
-
-void	ft_env(t_list **env)
-{
-	ft_print_lst(*env);
 }
 
 void	ft_echo(t_totems *input, int section)

@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 11:39:01 by agallipo          #+#    #+#             */
-/*   Updated: 2022/03/17 12:01:45 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/03/18 12:21:22 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int main()
 		//ft_print_totems(input);
 		ft_builtins(input, &env);
 		runner =  transform(input);
+		ft_pipes(&runner, environ);
 		ft_clear_input(&input, free);
 	}
 }
