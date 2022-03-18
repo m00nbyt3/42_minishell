@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 11:43:29 by agallipo          #+#    #+#             */
-/*   Updated: 2022/03/18 12:20:13 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/03/18 15:33:34 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ typedef struct	s_oncreate
 
 //Functions
 t_list			*store_env_in_list(char **environ);
-void			ft_builtins(t_totems *input, t_list **env);
+int				ft_builtins(t_totems *input, t_list **env);
 void			ft_env(t_list **env);
 void 			ft_echo(t_totems *input, int section);
 t_totems		*sp_split(char *s);
@@ -81,7 +81,7 @@ void			vectorize_flags(t_transformer *runner, t_totems *input, int sect);
 int				count_flags(t_totems *input, int sect);
 void			print_vector(t_transformer *runner);
 t_transformer	*transform(t_totems *input);
-void			ft_pipes(t_transformer **smtha, char **env);
+void			ft_pipes(t_transformer **smtha, char **env, t_totems *input, t_list *envlist);
 char			*ft_env_path(char **env, char *argv, char **flags);
 void			ft_exit_process(int condition, char *argv);
 

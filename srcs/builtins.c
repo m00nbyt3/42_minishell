@@ -6,19 +6,19 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 12:14:54 by agallipo          #+#    #+#             */
-/*   Updated: 2022/03/18 11:38:03 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/03/18 15:29:28 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_builtins(t_totems *input, t_list **env);
+int		ft_builtins(t_totems *input, t_list **env);
 void	ft_env(t_list **env);
 void	ft_echo(t_totems *input, int section);
 void	ft_cd(t_totems *input, int section);
 void	ft_pwd(t_totems *input, int section);
 
-void	ft_builtins(t_totems *input, t_list **env)
+int		ft_builtins(t_totems *input, t_list **env)
 {
 	void	*orig;
 
@@ -38,10 +38,11 @@ void	ft_builtins(t_totems *input, t_list **env)
 			else if (ft_strcmp(input->content, "exit"))
 				exit(0);
 			else
-				printf("ミニシェル: %s: command not found\n", input->content);
+				return (0);
 		}
 		input = input->next;
 	}
+	return(1);
 	input = orig;
 }
 
