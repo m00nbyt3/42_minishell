@@ -6,13 +6,13 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 12:41:32 by ycarro            #+#    #+#             */
-/*   Updated: 2022/03/15 15:29:19 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/03/17 12:14:56 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	find_cmd(t_totems *input, t_transformer *runner);
+t_transformer	*transform(t_totems *input);
 
 t_transformer	*transform(t_totems *input)
 {
@@ -20,9 +20,9 @@ t_transformer	*transform(t_totems *input)
 	t_transformer	*orig;
 	int	lap;
 
+	runner = malloc(sizeof(t_transformer));
 	orig = runner;
 	lap = 0;
-	runner = malloc(sizeof(t_transformer));
 
 	while (input)
 	{
@@ -34,23 +34,15 @@ t_transformer	*transform(t_totems *input)
 		}
 		if (input->type == 'c')
 		{
-			find_cmd(input, runner);
+			runner->cmd = input->content;
 			vectorize_flags(runner, input, input->section);
 		}
 		//if (input->content == 'i' || input->content == 'o')
 			//find_fds(input, runner);
 		input = input->next;
 	}
-	//print_vector(orig);
+	runner->next = 0;
+	print_vector(orig);
 	return (orig);
 }
 
-void	find_cmd(t_totems *input, t_transformer *runner)
-{
-	runner->cmd = input->content;
-}	
-
-void	find_args(t_totems *input, t_transformer *runner)
-{
-
-}

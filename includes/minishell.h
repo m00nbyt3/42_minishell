@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 11:43:29 by agallipo          #+#    #+#             */
-/*   Updated: 2022/03/15 15:25:33 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/03/17 11:49:13 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ typedef struct	s_transformer
 	char **flags;
 	int	fdin;
 	int	fdout;
-	struct s_totemns *next;
+	struct s_transformer *next;
 }				t_transformer;
 
 typedef struct	s_oncreate
