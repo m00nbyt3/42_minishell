@@ -6,13 +6,14 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 09:29:02 by agallipo          #+#    #+#             */
-/*   Updated: 2022/03/21 15:09:31 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/03/23 11:35:19 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int	count_cmds(t_transformer *data);
+int	single_cmd(int npipes, t_transformer *smth, char **env);
 
 void	ft_execute(t_transformer *smth, char **env)
 {
@@ -76,14 +77,8 @@ void	ft_pipes(t_transformer **smtha, char **env, t_totems *input, t_list *envlis
 	smth = *smtha;
 	i = 0;
 	npipes = count_cmds(smth) - 1;
-	if (!npipes)
-	{
-		pid = fork();
-		if (pid == 0)
-			ft_execute(smth, env);
-		wait(&pid);
+	if (single_cmd(npipes, smth, env))
 		return ;
-	}
 	fd = malloc(npipes * sizeof(int *));
 	*fd = malloc(2 * sizeof(int));
 	pipe(*fd);
@@ -137,4 +132,32 @@ int	count_cmds(t_transformer *data)
 	}
 	data = orig;
 	return(i);
+}
+
+int	single_cmd(int npipes, t_transformer *smth, char **env)
+{
+	int	pid;
+
+	if (!npipes)
+	{
+		pid = fork();
+		if (pid == 0)
+		{
+			if (smth->fdin != 0)
+			{
+				dup2(smth->fdin, STDIN_FILENO);
+				close(smth->fdin);
+			}
+			if (smth->fdout != 1)
+			{
+				dup2(smth->fdout, STDOUT_FILENO);
+				close(smth->fdout);
+			}
+			
+				ft_execute(smth, env);
+		}
+		wait(&pid);
+		return (1);
+	}
+	return (0);
 }

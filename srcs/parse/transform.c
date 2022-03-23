@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 12:41:32 by ycarro            #+#    #+#             */
-/*   Updated: 2022/03/21 14:28:54 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/03/22 12:38:05 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ t_transformer	*transform(t_totems *input)
 	orig = runner;
 	lap = 0;
 	runner->fdin = 0;
+	runner->fdout = 1;
 	while (input)
 	{
 		if (lap != input->section)
@@ -42,7 +43,6 @@ t_transformer	*transform(t_totems *input)
 			find_fds(input, runner);
 		input = input->next;
 	}
-	runner->fdout = 1;
 	runner->next = 0;
 	return (orig);
 }
