@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 09:29:02 by agallipo          #+#    #+#             */
-/*   Updated: 2022/03/23 11:35:19 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/03/23 12:27:23 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,12 @@ void	ft_execute(t_transformer *smth, char **env)
 void	ft_frst_child_pipe(t_transformer *smth, char **env, int *fd)
 {
 	close(fd[READ_END]);
-	if (smth->fdin != 0)
+	if (smth->fdin != -1)
 	{
 		dup2(smth->fdin, STDIN_FILENO);
 		close(smth->fdin);
 	}
-	if (smth->fdout != 1)
+	if (smth->fdout == -1)
 	{
 		dup2(fd[WRITE_END], STDOUT_FILENO);
 		close(fd[WRITE_END]);
@@ -46,19 +46,37 @@ void	ft_frst_child_pipe(t_transformer *smth, char **env, int *fd)
 
 void 	ft_mid_child_pipe(t_transformer *smth, char **env, int *fd1, int *fd2)
 {
-	dup2(fd1[READ_END], STDIN_FILENO);
-	close(fd1[READ_END]);
-	dup2(fd2[WRITE_END], STDOUT_FILENO);
-	close(fd2[WRITE_END]);
+	if (smth->fdin == -1)
+	{
+		dup2(fd1[READ_END], STDIN_FILENO);
+		close(fd1[READ_END]);
+	}
+	else
+	{
+		dup2(smth->fdin, STDIN_FILENO);
+		close(smth->fdin);
+	}
+	if (smth->fdout == -1)
+	{
+		dup2(fd2[WRITE_END], STDOUT_FILENO);
+		close(fd2[WRITE_END]);
+	}
+	else
+	{
+		dup2(smth->fdout, STDOUT_FILENO);
+		close(smth->fdout);
+	}
 	ft_execute(smth, env);
 }
 
 void	ft_bastard(t_transformer *smth, char **env, int *fd1)
 {
-	dup2(fd1[READ_END], STDIN_FILENO);
-	close(fd1[READ_END]);
-	
-	if (smth->fdout != 1)
+	if (smth->fdin == -1)
+	{
+		dup2(fd1[READ_END], STDIN_FILENO);
+		close(fd1[READ_END]);
+	}
+	if (smth->fdout != -1)
 	{
 		dup2(smth->fdout, STDOUT_FILENO);
 		close(smth->fdout);
@@ -143,12 +161,12 @@ int	single_cmd(int npipes, t_transformer *smth, char **env)
 		pid = fork();
 		if (pid == 0)
 		{
-			if (smth->fdin != 0)
+			if (smth->fdin != -1)
 			{
 				dup2(smth->fdin, STDIN_FILENO);
 				close(smth->fdin);
 			}
-			if (smth->fdout != 1)
+			if (smth->fdout != -1)
 			{
 				dup2(smth->fdout, STDOUT_FILENO);
 				close(smth->fdout);
