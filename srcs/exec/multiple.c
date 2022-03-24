@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 09:29:02 by agallipo          #+#    #+#             */
-/*   Updated: 2022/03/23 12:27:23 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/03/24 12:48:03 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_execute(t_transformer *smth, char **env)
 {
 	char	*command;
 
-	if	(!*smth->cmd)
+	if (!*smth->cmd)
 		ft_exit_process(1, smth->cmd);
 	command = ft_env_path(env, smth->cmd, smth->flags);
 	if (execve(command, smth->flags, env) < 0)
@@ -44,7 +44,7 @@ void	ft_frst_child_pipe(t_transformer *smth, char **env, int *fd)
 	ft_execute(smth, env);
 }
 
-void 	ft_mid_child_pipe(t_transformer *smth, char **env, int *fd1, int *fd2)
+void	ft_mid_child_pipe(t_transformer *smth, char **env, int *fd1, int *fd2)
 {
 	if (smth->fdin == -1)
 	{
@@ -84,54 +84,65 @@ void	ft_bastard(t_transformer *smth, char **env, int *fd1)
 	ft_execute(smth, env);
 }
 
-void	ft_pipes(t_transformer **smtha, char **env, t_totems *input, t_list *envlist)
+void	ft_final_pipe(t_transformer *content, int **fd, char **env, int npipe)
 {
-	int	**fd;
 	int	pid;
-	t_transformer *smth;
-	int	i;
-	int	npipes;
 
-	smth = *smtha;
+	close(fd[npipe][WRITE_END]);
+	pid = fork();
+	if (pid == 0)
+		ft_bastard(content, env, fd[npipe]);
+	close(fd[npipe][READ_END]);
+	wait(&pid);
+}
+
+void	ft_while_pipes(t_transformer *content, int **fd, char **env)
+{
+	int	i;
+	int	pid;
+
 	i = 0;
-	npipes = count_cmds(smth) - 1;
-	if (single_cmd(npipes, smth, env))
+	content = content->next;
+	while (content && content->next)
+	{
+		close(fd[i][WRITE_END]);
+		fd[i + 1] = malloc(2 * sizeof(int));
+		pipe(fd[i + 1]);
+		pid = fork();
+		if (pid == 0)
+			ft_mid_child_pipe(content, env, fd[i], fd[i + 1]);
+		close(fd[i][READ_END]);
+		wait(&pid);
+		i++;
+		content = content->next;
+	}
+	if (content)
+		ft_final_pipe(content, fd, env, i);
+}
+
+void	ft_pipes(t_transformer **contents, char **env, t_totems *input, \
+		t_list *envlist)
+{
+	int				**fd;
+	int				pid;
+	t_transformer	*content;
+	int				npipes;
+
+	content = *contents;
+	npipes = count_cmds(content) - 1;
+	if (single_cmd(npipes, content, env))
 		return ;
 	fd = malloc(npipes * sizeof(int *));
 	*fd = malloc(2 * sizeof(int));
 	pipe(*fd);
 	pid = fork();
 	if (pid == 0)
-		ft_frst_child_pipe(smth, env, fd[0]);
+		ft_frst_child_pipe(content, env, fd[0]);
 	else
 	{
 		wait(&pid);
-		if(!ft_builtins(input, &envlist) && smth->next)
-		{
-			smth = smth->next;
-			while (smth && smth->next)
-			{
-				close(fd[i][WRITE_END]);
-				fd[i + 1] = malloc(2 * sizeof(int));
-				pipe(fd[i + 1]);
-				pid = fork();
-				if (pid == 0)
-					ft_mid_child_pipe(smth, env, fd[i], fd[i + 1]);
-				close(fd[i][READ_END]);
-				wait(&pid);
-				i++;
-				smth = smth->next;
-			}
-			if (smth)
-			{
-				close(fd[i][WRITE_END]);
-				pid = fork();
-				if (pid == 0)
-					ft_bastard(smth, env, fd[i]);
-				close(fd[i][READ_END]);
-				wait(&pid);
-			}
-		}
+		if (!ft_builtins(input, &envlist) && content->next)
+			ft_while_pipes(content, fd, env);
 	}
 }
 
@@ -149,7 +160,7 @@ int	count_cmds(t_transformer *data)
 		data = data->next;
 	}
 	data = orig;
-	return(i);
+	return (i);
 }
 
 int	single_cmd(int npipes, t_transformer *smth, char **env)
@@ -171,8 +182,7 @@ int	single_cmd(int npipes, t_transformer *smth, char **env)
 				dup2(smth->fdout, STDOUT_FILENO);
 				close(smth->fdout);
 			}
-			
-				ft_execute(smth, env);
+			ft_execute(smth, env);
 		}
 		wait(&pid);
 		return (1);

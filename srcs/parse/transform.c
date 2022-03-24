@@ -6,20 +6,22 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 12:41:32 by ycarro            #+#    #+#             */
-/*   Updated: 2022/03/23 12:23:43 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/03/24 13:12:25 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 t_transformer	*transform(t_totems *input);
-void	find_fds(t_totems *input, t_transformer *runner);
+void			find_fds(t_totems *input, t_transformer *runner);
+void			create_transformer(t_transformer *runner, int *lap);
+void			fill_content(t_totems *input, t_transformer *runner);
 
 t_transformer	*transform(t_totems *input)
 {
 	t_transformer	*runner;
 	t_transformer	*orig;
-	int	lap;
+	int				lap;
 
 	runner = malloc(sizeof(t_transformer));
 	orig = runner;
@@ -29,24 +31,30 @@ t_transformer	*transform(t_totems *input)
 	while (input)
 	{
 		if (lap != input->section)
-		{
-			runner->next = malloc(sizeof(t_transformer));
-			runner = runner->next;
-			runner->fdin = -1;
-			runner->fdout = -1;
-			lap++;
-		}
+			create_transformer(runner, &lap);
 		if (input->type == 'c')
-		{
-			runner->cmd = input->content;
-			vectorize_flags(runner, input, input->section);
-		}
+			fill_content(input, runner);
 		if (input->type == 'i' || input->type == 'o')
 			find_fds(input, runner);
 		input = input->next;
 	}
 	runner->next = 0;
 	return (orig);
+}
+
+void	create_transformer(t_transformer *runner, int *lap)
+{
+	runner = malloc(sizeof(t_transformer));
+	runner = runner->next;
+	runner->fdin = -1;
+	runner->fdout = -1;
+	(*lap)++;
+}
+
+void	fill_content(t_totems *input, t_transformer *runner)
+{
+	runner->cmd = input->content;
+	vectorize_flags(runner, input, input_section);
 }
 
 void	find_fds(t_totems *input, t_transformer *runner)
@@ -57,4 +65,3 @@ void	find_fds(t_totems *input, t_transformer *runner)
 	if (input->type == 'o')
 		runner->fdout = open(input->content, O_RDWR | O_CREAT | O_TRUNC, 0644);
 }
-
