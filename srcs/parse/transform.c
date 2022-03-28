@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 12:41:32 by ycarro            #+#    #+#             */
-/*   Updated: 2022/03/24 13:12:25 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/03/28 17:40:56 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ t_transformer	*transform(t_totems *input)
 	runner = malloc(sizeof(t_transformer));
 	orig = runner;
 	lap = 0;
-	runner->fdin = -1;
-	runner->fdout = -1;
+	runner->fdin = -2;
+	runner->fdout = -2;
 	while (input)
 	{
 		if (lap != input->section)
@@ -44,17 +44,17 @@ t_transformer	*transform(t_totems *input)
 
 void	create_transformer(t_transformer *runner, int *lap)
 {
-	runner = malloc(sizeof(t_transformer));
 	runner = runner->next;
-	runner->fdin = -1;
-	runner->fdout = -1;
+	runner = malloc(sizeof(t_transformer));
+	runner->fdin = -2;
+	runner->fdout = -2;
 	(*lap)++;
 }
 
 void	fill_content(t_totems *input, t_transformer *runner)
 {
 	runner->cmd = input->content;
-	vectorize_flags(runner, input, input_section);
+	vectorize_flags(runner, input, input->section);
 }
 
 void	find_fds(t_totems *input, t_transformer *runner)

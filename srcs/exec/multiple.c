@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 09:29:02 by agallipo          #+#    #+#             */
-/*   Updated: 2022/03/24 12:48:03 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/03/28 17:37:35 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,22 +31,27 @@ void	ft_execute(t_transformer *smth, char **env)
 void	ft_frst_child_pipe(t_transformer *smth, char **env, int *fd)
 {
 	close(fd[READ_END]);
-	if (smth->fdin != -1)
+	if (smth->fdin != -2)
 	{
 		dup2(smth->fdin, STDIN_FILENO);
 		close(smth->fdin);
 	}
-	if (smth->fdout == -1)
+	if (smth->fdout == -2)
 	{
 		dup2(fd[WRITE_END], STDOUT_FILENO);
 		close(fd[WRITE_END]);
+	}
+	else
+	{
+		dup2(smth->fdout, STDOUT_FILENO);
+		close(smth->fdout);
 	}
 	ft_execute(smth, env);
 }
 
 void	ft_mid_child_pipe(t_transformer *smth, char **env, int *fd1, int *fd2)
 {
-	if (smth->fdin == -1)
+	if (smth->fdin == -2)
 	{
 		dup2(fd1[READ_END], STDIN_FILENO);
 		close(fd1[READ_END]);
@@ -56,7 +61,7 @@ void	ft_mid_child_pipe(t_transformer *smth, char **env, int *fd1, int *fd2)
 		dup2(smth->fdin, STDIN_FILENO);
 		close(smth->fdin);
 	}
-	if (smth->fdout == -1)
+	if (smth->fdout == -2)
 	{
 		dup2(fd2[WRITE_END], STDOUT_FILENO);
 		close(fd2[WRITE_END]);
@@ -71,12 +76,17 @@ void	ft_mid_child_pipe(t_transformer *smth, char **env, int *fd1, int *fd2)
 
 void	ft_bastard(t_transformer *smth, char **env, int *fd1)
 {
-	if (smth->fdin == -1)
+	if (smth->fdin == -2)
 	{
 		dup2(fd1[READ_END], STDIN_FILENO);
 		close(fd1[READ_END]);
 	}
-	if (smth->fdout != -1)
+	else
+	{
+		dup2(smth->fdin, STDIN_FILENO);
+		close(smth->fdin);
+	}
+	if (smth->fdout != -2)
 	{
 		dup2(smth->fdout, STDOUT_FILENO);
 		close(smth->fdout);
@@ -84,66 +94,69 @@ void	ft_bastard(t_transformer *smth, char **env, int *fd1)
 	ft_execute(smth, env);
 }
 
-void	ft_final_pipe(t_transformer *content, int **fd, char **env, int npipe)
+void	ft_final_pipe(t_transformer *content, t_tools *tools, char **env, int i)
 {
-	int	pid;
-
-	close(fd[npipe][WRITE_END]);
-	pid = fork();
-	if (pid == 0)
-		ft_bastard(content, env, fd[npipe]);
-	close(fd[npipe][READ_END]);
-	wait(&pid);
+	close(tools->fd[i][WRITE_END]);
+	tools->pid[i] = fork();
+	if (tools->pid[i] == 0)
+		ft_bastard(content, env, tools->fd[i]);
+	close(tools->fd[i][READ_END]);
+	//wait(&(tools->pid[i]));
 }
 
-void	ft_while_pipes(t_transformer *content, int **fd, char **env)
+void	ft_while_pipes(t_transformer *content, t_tools *tools, char **env)
 {
-	int	i;
-	int	pid;
+	int i;
 
 	i = 0;
 	content = content->next;
 	while (content && content->next)
 	{
-		close(fd[i][WRITE_END]);
-		fd[i + 1] = malloc(2 * sizeof(int));
-		pipe(fd[i + 1]);
-		pid = fork();
-		if (pid == 0)
-			ft_mid_child_pipe(content, env, fd[i], fd[i + 1]);
-		close(fd[i][READ_END]);
-		wait(&pid);
+		close(tools->fd[i][WRITE_END]);
+		tools->fd[i + 1] = malloc(2 * sizeof(int));
+		pipe(tools->fd[i + 1]);
+		tools->pid[i] = fork();
+		if (tools->pid[i] == 0)
+			ft_mid_child_pipe(content, env, tools->fd[i], tools->fd[i + 1]);
+		close(tools->fd[i][READ_END]);
+		//wait(&(tools->pid[i]));
 		i++;
 		content = content->next;
 	}
 	if (content)
-		ft_final_pipe(content, fd, env, i);
+		ft_final_pipe(content, tools, env, i);
 }
 
 void	ft_pipes(t_transformer **contents, char **env, t_totems *input, \
 		t_list *envlist)
 {
-	int				**fd;
-	int				pid;
+	int i;
+
 	t_transformer	*content;
-	int				npipes;
+	t_tools			*tools;
 
 	content = *contents;
-	npipes = count_cmds(content) - 1;
-	if (single_cmd(npipes, content, env))
+	printf("%s\n", content->cmd);
+	tools = malloc(sizeof(t_tools));
+	tools->npipes = count_cmds(content) - 1;
+	tools->pid = malloc((tools->npipes + 1) * sizeof(int));
+	if (single_cmd(tools->npipes, content, env))
 		return ;
-	fd = malloc(npipes * sizeof(int *));
-	*fd = malloc(2 * sizeof(int));
-	pipe(*fd);
-	pid = fork();
-	if (pid == 0)
-		ft_frst_child_pipe(content, env, fd[0]);
+	tools->fd = malloc(tools->npipes * sizeof(int *));
+	tools->fd[0] = malloc(2 * sizeof(int));
+	pipe(tools->fd[0]);
+	tools->pid[0] = fork();
+	if (tools->pid[0] == 0)
+		ft_frst_child_pipe(content, env, tools->fd[0]);
 	else
 	{
-		wait(&pid);
+		//wait(&(tools->pid[0]));
 		if (!ft_builtins(input, &envlist) && content->next)
-			ft_while_pipes(content, fd, env);
+			ft_while_pipes(content, tools, env);
 	}
+	i = -1;
+	while (++i < (tools->npipes + 1))
+		wait(&(tools->pid[i]));
 }
 
 int	count_cmds(t_transformer *data)
@@ -160,6 +173,7 @@ int	count_cmds(t_transformer *data)
 		data = data->next;
 	}
 	data = orig;
+	printf("%d\n", i);
 	return (i);
 }
 
@@ -172,12 +186,12 @@ int	single_cmd(int npipes, t_transformer *smth, char **env)
 		pid = fork();
 		if (pid == 0)
 		{
-			if (smth->fdin != -1)
+			if (smth->fdin != -2)
 			{
 				dup2(smth->fdin, STDIN_FILENO);
 				close(smth->fdin);
 			}
-			if (smth->fdout != -1)
+			if (smth->fdout != -2)
 			{
 				dup2(smth->fdout, STDOUT_FILENO);
 				close(smth->fdout);

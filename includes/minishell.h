@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 11:43:29 by agallipo          #+#    #+#             */
-/*   Updated: 2022/03/24 11:32:31 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/03/28 14:26:32 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,13 @@ typedef struct s_oncreate
 	int		inquotes;
 	char	qtype;
 }				t_oncreate;
+
+typedef struct s_tools
+{
+	int	**fd;
+	int	*pid;
+	int	npipes;
+}				t_tools;
 
 //Functions
 t_list			*store_env_in_list(char **environ);
