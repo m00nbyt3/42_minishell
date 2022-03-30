@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 11:39:01 by agallipo          #+#    #+#             */
-/*   Updated: 2022/03/22 12:34:52 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/03/28 12:12:39 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,15 @@ int main()
 		if(!ft_chk_quotes(str))
 			input = sp_split(str);
 		//ft_print_totems(input);
-		if(!ft_builtins(input, &env))
+		if (input)
 		{
-			runner =  transform(input);
-			ft_pipes(&runner, environ, input, env);
+			if(!ft_builtins(input, &env))
+			{
+				runner =  transform(input);
+				ft_pipes(&runner, environ, input, env);
+			}
+			ft_clear_input(&input, free);
 		}
-		ft_clear_input(&input, free);
 		free(str);
 	}
 }

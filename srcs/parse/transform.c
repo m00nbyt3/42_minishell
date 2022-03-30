@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 12:41:32 by ycarro            #+#    #+#             */
-/*   Updated: 2022/03/23 12:23:43 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/03/28 12:57:55 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,16 @@ t_transformer	*transform(t_totems *input)
 	runner = malloc(sizeof(t_transformer));
 	orig = runner;
 	lap = 0;
-	runner->fdin = -1;
-	runner->fdout = -1;
+	runner->fdin = -2;
+	runner->fdout = -2;
 	while (input)
 	{
 		if (lap != input->section)
 		{
 			runner->next = malloc(sizeof(t_transformer));
 			runner = runner->next;
-			runner->fdin = -1;
-			runner->fdout = -1;
+			runner->fdin = -2;
+			runner->fdout = -2;
 			lap++;
 		}
 		if (input->type == 'c')
