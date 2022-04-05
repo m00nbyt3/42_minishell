@@ -6,12 +6,14 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 14:16:08 by agallipo          #+#    #+#             */
-/*   Updated: 2022/03/18 12:17:53 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/04/05 15:08:14 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+int		ft_check_directory(char **flags);
+char	*ft_env_path(char **env, char *argv, char **flags);
 char	**ft_path_split(char **env);
 
 int	ft_check_directory(char **flags)

@@ -6,7 +6,7 @@
 #    By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/07 10:43:28 by agallipo          #+#    #+#              #
-#    Updated: 2022/03/21 11:15:16 by ycarro           ###   ########.fr        #
+#    Updated: 2022/04/05 14:59:45 by ycarro           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,9 @@ HEADERFILES := includes/minishell.h
 
 SRCS :=	main.c \
 		environ.c \
-		builtins.c \
+		builtins/builtins.c \
+		builtins/cmds1.c \
+		builtins/other.c \
 		parse/quotes.c \
 		parse/splitx.c \
 		totem/manage.c \
@@ -29,7 +31,9 @@ SRCS :=	main.c \
 		parse/transform.c \
 		exec/env.c \
 		exec/multiple.c \
-		exec/pipe.c
+		exec/pipe.c \
+		exec/childs.c \
+		exec/cmds.c
 
 OBJS := $(SRCS:%.c=obj/%.o)
 

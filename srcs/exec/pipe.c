@@ -6,11 +6,14 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 19:10:30 by agallipo          #+#    #+#             */
-/*   Updated: 2022/03/21 14:18:19 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/04/05 15:10:08 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	ft_print_error(char *error, char *arg);
+void	ft_exit_process(int condition, char *argv);
 
 void	ft_print_error(char *error, char *arg)
 {	

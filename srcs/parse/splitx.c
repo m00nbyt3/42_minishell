@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 17:36:38 by ycarro            #+#    #+#             */
-/*   Updated: 2022/03/15 15:10:12 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/03/29 11:31:23 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,5 @@ void	set_command(t_totems *input, int sect)
 		}
 		input = input->next;
 	}
-	if (!tot)
-		ft_putstr_fd("Error (no command)\n", 1);
 	input = orig;
 }
