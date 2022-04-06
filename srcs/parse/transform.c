@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   transform.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
+/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 12:41:32 by ycarro            #+#    #+#             */
-/*   Updated: 2022/04/05 14:57:48 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/04/06 11:49:03 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,15 @@ void	fill_content(t_totems *input, t_transformer *runner)
 
 void	find_fds(t_totems *input, t_transformer *runner)
 {
-	//Comprobar archivo existe
 	if (input->type == 'i')
 		runner->fdin = open(input->content, O_RDONLY);
 	if (input->type == 'o')
 		runner->fdout = open(input->content, O_RDWR | O_CREAT | O_TRUNC, 0644);
+	if (runner->fdout == -1 || runner->fdin == -1)
+	{
+		dprintf(2, "minishell: %s", input->content);
+		perror(" ");
+	}
 }
 
 void	set_doubles(t_totems *input, t_transformer *runner)

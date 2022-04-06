@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
+/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 11:43:29 by agallipo          #+#    #+#             */
-/*   Updated: 2022/04/05 15:11:39 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/04/06 12:54:27 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ int				ft_check_directory(char **flags);
 char			*ft_env_path(char **env, char *argv, char **flags);
 char			**ft_path_split(char **env);
 void			ft_print_error(char *error, char *arg);
-void			ft_exit_process(int condition, char *argv);
+void			ft_error(t_transformer *smth, int cond);
+void			here_doc(t_transformer *content);
 
 #endif
