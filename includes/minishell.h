@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 11:43:29 by agallipo          #+#    #+#             */
-/*   Updated: 2022/04/06 12:54:27 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/04/06 17:24:01 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,9 @@ typedef struct s_tools
 
 //Functions
 
-//Environ
+//Utils
 t_list			*store_env_in_list(char **environ);
+void			run_cmd(char *complete, char **env);
 
 //Builtins
 int				ft_builtins(t_transformer *runner, t_list **env);

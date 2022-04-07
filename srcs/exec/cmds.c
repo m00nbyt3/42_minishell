@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmds.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 14:53:51 by ycarro            #+#    #+#             */
-/*   Updated: 2022/04/06 16:36:54 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/04/07 14:51:03 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	single_cmd(int npipes, t_transformer *smth, char **env)
 		{
 			if (!*smth->cmd)
 				ft_exit_process(1, smth->cmd);
-			if (smth->fdin != -2 && !smth->heredoc)
+			if (smth->fdin != -2)
 			{
 				dup2(smth->fdin, STDIN_FILENO);
 				close(smth->fdin);
@@ -67,17 +67,12 @@ int	single_cmd(int npipes, t_transformer *smth, char **env)
 void	ft_execute(t_transformer *smth, char **env)
 {
 	char	*command;
-	char	**temp;
 
-	*temp = "temp.txt";
 	if (smth->heredoc)
-		here_doc(smth);
+			here_doc(smth);
 	command = ft_env_path(env, smth->cmd, smth->flags);
-	//dprintf(2, "%s\n", command);
 	if (execve(command, smth->flags, env) < 0)
 		ft_error(smth, 1);
-	if (smth->heredoc)
-		execve("rm", temp, env);
 	ft_free_matrix(smth->flags);
 	exit(0);
 }

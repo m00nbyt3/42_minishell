@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+         #
+#    By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/07 10:43:28 by agallipo          #+#    #+#              #
-#    Updated: 2022/04/06 12:54:51 by agallipo         ###   ########.fr        #
+#    Updated: 2022/04/06 17:11:30 by ycarro           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ INCLUDE :=  -I includes/
 HEADERFILES := includes/minishell.h
 
 SRCS :=	main.c \
-		environ.c \
+		utils.c \
 		builtins/builtins.c \
 		builtins/cmds1.c \
 		builtins/other.c \
