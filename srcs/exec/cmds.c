@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 14:53:51 by ycarro            #+#    #+#             */
-/*   Updated: 2022/04/05 15:11:29 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/04/06 15:12:22 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ int	single_cmd(int npipes, t_transformer *smth, char **env)
 
 	if (!npipes)
 	{
+		if (ft_builtins(smth, env))
+			return (1);
 		pid = fork();
 		if (pid == 0)
 		{

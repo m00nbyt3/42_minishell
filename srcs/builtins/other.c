@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 14:32:09 by ycarro            #+#    #+#             */
-/*   Updated: 2022/04/05 15:00:57 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/04/06 15:00:50 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	set_fds(t_totems *input, int section);
 char	*ft_srchlist_var(char *tofind, t_list **env);
+char	*ft_vsrch_var(char *tofind, char **env);
 
 void	set_fds(t_totems *input, int section)
 {
@@ -58,6 +59,33 @@ char	*ft_srchlist_var(char *tofind, t_list **env)
 			break ;
 		}
 		list = list->next;
+	}
+	if (tmp)
+	{
+		result = ft_strdup(tmp + (len + 1));
+		free(tmp);
+	}
+	return (result);
+}
+
+char	*ft_vsrch_var(char *tofind, char **env)
+{
+	int		len;
+	char	*tmp;
+	char	*result;
+	void	*orig;
+
+	orig = env;
+	len = ft_strlen(tofind);
+	result = 0;
+	while (*env)
+	{
+		if (!ft_strncmp(tofind, *env, len))
+		{
+			tmp = ft_strdup(*env);
+			break ;
+		}
+		env++;
 	}
 	if (tmp)
 	{
