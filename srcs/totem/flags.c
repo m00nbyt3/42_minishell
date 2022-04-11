@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 14:57:01 by ycarro            #+#    #+#             */
-/*   Updated: 2022/03/18 12:37:33 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/04/11 15:46:13 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ void	save_flag(t_totems *input, int sect, char **vector, int *i)
 		vector[*i] = input->content;
 		if (input->type == 'f')
 			vector[*i] = ft_strjoin("-\0", vector[*i]);
+		if (*vector[*i] == '$' && input->type != 'h')
+			vector[*i] = getenv(vector[*i] + 1);
 		(*i)++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 11:43:29 by agallipo          #+#    #+#             */
-/*   Updated: 2022/04/06 17:24:01 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/04/11 15:38:19 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,13 +73,15 @@ t_list			*store_env_in_list(char **environ);
 void			run_cmd(char *complete, char **env);
 
 //Builtins
-int				ft_builtins(t_transformer *runner, t_list **env);
-void			select_cmd(t_transformer *runner, t_list **env, int ofdin, int ofdout);
+int				ft_builtins(t_transformer *runner, char **env);
+int				select_cmd(t_transformer *runner, char **env, int ofdin, int ofdout);
 void			ft_echo(t_transformer *runner);
-void			ft_cd(t_transformer *runner, t_list **env);
+void			ft_cd(t_transformer *runner, char **env);
 void			ft_pwd(void);
 void			set_fds(t_totems *input, int section);
 char			*ft_srchlist_var(char *tofind, t_list **env);
+char			*ft_vsrch_var(char *tofind, char **env);
+
 
 //Totem
 t_totems		*sp_split(char *s);

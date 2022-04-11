@@ -6,23 +6,24 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 12:14:54 by agallipo          #+#    #+#             */
-/*   Updated: 2022/04/05 15:00:23 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/04/06 15:04:13 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		ft_builtins(t_transformer *runner, t_list **env);
-void	select_cmd(t_transformer *runner, t_list **env, int ofdin, int ofdout);
+int		ft_builtins(t_transformer *runner, char **env);
+int	select_cmd(t_transformer *runner, char **env, int ofdin, int ofdout);
 
-int	ft_builtins(t_transformer *runner, t_list **env)
+int	ft_builtins(t_transformer *runner, char **env)
 {
 	int		ofdin;
 	int		ofdout;
 
 	ofdin = dup(STDIN_FILENO);
 	ofdout = dup(STDOUT_FILENO);
-	select_cmd(runner, env, ofdin, ofdout);
+	if (!select_cmd(runner, env, ofdin, ofdout))
+		return (0);
 	dup2(ofdin, STDIN_FILENO);
 	close(ofdin);
 	dup2(ofdout, STDOUT_FILENO);
@@ -30,14 +31,15 @@ int	ft_builtins(t_transformer *runner, t_list **env)
 	return (1);
 }
 
-void	select_cmd(t_transformer *runner, t_list **env, int ofdin, int ofdout)
+int	select_cmd(t_transformer *runner, char **env, int ofdin, int ofdout)
 {
 	void	*orig;
 
 	orig = runner;
 	if (ft_strcmp(runner->cmd, "env"))
-		ft_print_lst(*env);
-	if (ft_strcmp(runner->cmd, "echo"))
+		//ft_print_lst(*env);
+		printf("env\n");
+	else if (ft_strcmp(runner->cmd, "echo"))
 		ft_echo(runner);
 	else if (ft_strcmp(runner->cmd, "cd"))
 		ft_cd(runner, env);
@@ -52,7 +54,8 @@ void	select_cmd(t_transformer *runner, t_list **env, int ofdin, int ofdout)
 		close(ofdin);
 		dup2(ofdout, STDOUT_FILENO);
 		close(ofdout);
-		return ;
+		return (0);
 	}
 	runner = orig;
+	return (1);
 }
