@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 09:29:02 by agallipo          #+#    #+#             */
-/*   Updated: 2022/04/06 15:17:55 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/04/15 18:01:01 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 void	ft_pipes(t_transformer **contents, char **env, t_totems *input, \
 		t_list *envlist);
 void	ft_while_pipes(t_transformer *content, t_tools *tools, char **env);
-void	ft_final_pipe(t_transformer *content, t_tools *tools, char **env, int i);
+void	ft_final_pipe(t_transformer *content, t_tools *tools, char **env, \
+		int i);
 
 void	ft_pipes(t_transformer **contents, char **env, t_totems *input, \
 		t_list *envlist)

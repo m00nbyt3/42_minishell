@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 14:53:51 by ycarro            #+#    #+#             */
-/*   Updated: 2022/04/11 15:38:53 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/04/15 17:47:18 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int	single_cmd(int npipes, t_transformer *smth, char **env)
 				ft_error(smth, 0);
 			ft_execute(smth, env);
 		}
+		sigignore(SIGINT);
 		wait(&pid);
 		return (1);
 	}
@@ -71,7 +72,7 @@ void	ft_execute(t_transformer *smth, char **env)
 	char	*command;
 
 	if (smth->heredoc)
-			here_doc(smth);
+		here_doc(smth);
 	command = ft_env_path(env, smth->cmd, smth->flags);
 	if (execve(command, smth->flags, env) < 0)
 		ft_error(smth, 1);

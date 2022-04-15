@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 12:08:30 by agallipo          #+#    #+#             */
-/*   Updated: 2022/04/11 16:29:10 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/04/15 17:56:55 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 
 void	here_doc(t_transformer *content);
 void	find_variable(char	*str, int fd, int *i);
-int		if_quotes(char *heredoc); 
+int		if_quotes(char *heredoc);
 void	cutstr(char *str, char c);
+void	exit_here(int sig);
+
 //cuando el transormer este ok, pasalo como parametro y edita el fdin
 void	here_doc(t_transformer *content)
 {
@@ -28,7 +30,10 @@ void	here_doc(t_transformer *content)
 	quotes = if_quotes(content->heredoc);
 	while (42)
 	{
+		signal(SIGINT, exit_here);
 		str = readline(">");
+		if (str == NULL)
+			exit_here(0);
 		if (ft_strcmp(str, content->heredoc))
 			break ;
 		i = 0;
@@ -50,20 +55,26 @@ void	here_doc(t_transformer *content)
 	close(content->fdin);
 }
 
+void	exit_here(int sig)
+{
+	ft_putstr_fd("\n", 2);
+	exit (0);
+}
+
 int	if_quotes(char *heredoc)
 {
 	int	len;
 
-	dprintf(2, "here: %s", heredoc);
 	len = ft_strlen(heredoc) - 1;
 	if (heredoc[0] == '\"' && heredoc[len] == '\"')
 	{
 		heredoc++;
 		heredoc[len] = '\0';
-		return 1;
+		return (1);
 	}
-	return 0;
+	return (0);
 }
+
 void	find_variable(char	*str, int fd, int *i)
 {
 	char	*aux;
@@ -75,9 +86,15 @@ void	find_variable(char	*str, int fd, int *i)
 	aux = getenv(aux);
 	ft_putstr_fd(aux, fd);
 	free(orig);
+	(*i)++;
+	if (str[(*i)] == ' ' || str[(*i)] == 0)
+	{
+		write(fd, "$", 1);
+		return ;
+	}
 	while (str[*i] != '\0')
 	{
-		if (str[*i] == ' ')
+		if (str[*i] == ' ' || str[*i] == '$')
 			break ;
 		(*i)++;
 	}
@@ -88,7 +105,7 @@ void	cutstr(char *str, char c)
 	size_t	i;
 
 	i = 0;
-	while (str[i] && str[i] != c)
+	while (str[i] && str[i] != c && str[i] != '$')
 		i++;
 	str[i] = '\0';
 }

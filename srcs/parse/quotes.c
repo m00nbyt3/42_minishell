@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 15:36:54 by agallipo          #+#    #+#             */
-/*   Updated: 2022/03/22 12:29:18 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/04/12 12:39:52 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,21 @@ int	ft_chk_quotes(char *str)
 	i = 0;
 	scount = 0;
 	dcount = 0;
-	while (str[i])
+	if (str)
 	{
-		if (str[i] == '\'' && !(dcount % 2))
-			scount++;
-		if (str[i] == '\"' && !(scount % 2))
-			dcount++;
-		i++;
-	}
-	if (scount % 2 || dcount % 2)
-	{
-		ft_putstr_fd("Error (invalid quotation)\n", 1);
-		return (1);
+		while (str[i])
+		{
+			if (str[i] == '\'' && !(dcount % 2))
+				scount++;
+			if (str[i] == '\"' && !(scount % 2))
+				dcount++;
+			i++;
+		}
+		if (scount % 2 || dcount % 2)
+		{
+			ft_putstr_fd("Error (invalid quotation)\n", 1);
+			return (1);
+		}
 	}
 	return (0);
 }

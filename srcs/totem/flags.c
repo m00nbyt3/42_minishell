@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   flags.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
+/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 14:57:01 by ycarro            #+#    #+#             */
-/*   Updated: 2022/04/11 15:46:13 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/04/15 18:03:32 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	vectorize_flags(t_transformer *runner, t_totems *input, int sect);
 void	save_flag(t_totems *input, int sect, char **vector, int *i);
 int		count_flags(t_totems *input, int sect);
 void	print_vector(t_transformer *runner);
+char	*getdollars(char *str);
 
 void	vectorize_flags(t_transformer *runner, t_totems *input, int sect)
 {
@@ -50,9 +51,34 @@ void	save_flag(t_totems *input, int sect, char **vector, int *i)
 		if (input->type == 'f')
 			vector[*i] = ft_strjoin("-\0", vector[*i]);
 		if (*vector[*i] == '$' && input->type != 'h')
-			vector[*i] = getenv(vector[*i] + 1);
+			vector[*i] = getdollars(vector[*i]);
 		(*i)++;
 	}
+}
+
+char	*getdollars(char *str)
+{
+	char	*aux;
+	char	*orig;
+	char	*ret;
+	int		i;
+
+	orig = ft_strdup(str);
+	i = 0;
+	ret = ft_calloc(sizeof(char *), 1);
+	while (orig[i])
+	{
+		if (orig[i] == '$')
+		{
+			aux = ft_strdup(orig + 1);
+			cutstr(aux, ' ');
+			aux = getenv(aux);
+			ret = ft_strjoin(ret, aux);
+		}
+		i++;
+	}
+	free(orig);
+	return (ret);
 }
 
 int	count_flags(t_totems *input, int sect)

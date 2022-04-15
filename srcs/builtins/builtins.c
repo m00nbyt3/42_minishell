@@ -6,14 +6,14 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 12:14:54 by agallipo          #+#    #+#             */
-/*   Updated: 2022/04/06 15:04:13 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/04/15 17:45:18 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int		ft_builtins(t_transformer *runner, char **env);
-int	select_cmd(t_transformer *runner, char **env, int ofdin, int ofdout);
+int		select_cmd(t_transformer *runner, char **env, int ofdin, int ofdout);
 
 int	ft_builtins(t_transformer *runner, char **env)
 {
