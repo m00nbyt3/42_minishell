@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 11:39:01 by agallipo          #+#    #+#             */
-/*   Updated: 2022/04/15 17:44:13 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/04/18 12:31:12 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char	*read_my_line(char *str)
 		free(str);
 		str = NULL;
 	}
-	str = readline("minishell# ");
+	str = readline("W4V3shell# ");
 	return (str);
 }
 

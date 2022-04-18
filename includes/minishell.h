@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 11:43:29 by agallipo          #+#    #+#             */
-/*   Updated: 2022/04/15 17:37:44 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/04/18 16:40:26 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef struct s_totems
 	char			**flags;
 	int				section;
 	char			type;
+	char			qtype;
 	struct s_totems	*next;
 }				t_totems;
 
@@ -57,6 +58,7 @@ typedef struct s_transformer
 	int						fdout;
 	char					*heredoc;
 	char					*append;
+	char					qtype;
 	struct s_transformer	*next;
 }				t_transformer;
 

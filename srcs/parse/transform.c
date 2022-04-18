@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   transform.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 12:41:32 by ycarro            #+#    #+#             */
-/*   Updated: 2022/04/06 11:49:03 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/04/18 12:42:27 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ t_transformer	*transform(t_totems *input)
 	runner->fdout = -2;
 	runner->heredoc = 0;
 	runner->append = 0;
+	runner->qtype = 0;
 	while (input)
 	{
 		if (lap != input->section)
@@ -87,4 +88,5 @@ void	set_doubles(t_totems *input, t_transformer *runner)
 		runner->heredoc = input->content;
 	if (input->type == 'p')
 		runner->append = input->content;
+	runner->qtype = input->qtype;
 }

@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 12:08:30 by agallipo          #+#    #+#             */
-/*   Updated: 2022/04/15 17:56:55 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/04/18 12:40:56 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,9 @@ void	here_doc(t_transformer *content)
 
 	str = malloc(sizeof(char *));
 	content->fdin = open("/private/tmp/tmp", O_RDWR | O_CREAT | O_TRUNC, 0644);
-	quotes = if_quotes(content->heredoc);
+	quotes = 0;
+	if (content->qtype == '\"' || content->qtype == '\'')
+		quotes = 1;
 	while (42)
 	{
 		signal(SIGINT, exit_here);
