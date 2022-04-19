@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+         #
+#    By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/07 10:43:28 by agallipo          #+#    #+#              #
-#    Updated: 2022/04/15 16:42:39 by agallipo         ###   ########.fr        #
+#    Updated: 2022/04/19 10:40:45 by agallipo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,6 @@ SRCS :=	main.c \
 		parse/transform.c \
 		exec/env.c \
 		exec/multiple.c \
-		exec/pipe.c \
 		exec/childs.c \
 		exec/cmds.c \
 		exec/here_doc.c \
@@ -39,8 +38,8 @@ SRCS :=	main.c \
 
 OBJS := $(SRCS:%.c=obj/%.o)
 
-CFLAGS := $(INCLUDE) -fsanitize=address -g -lreadline -L /Users/$(USER)/.brew/opt/readline/lib -I /Users/$(USER)/.brew/opt/readline/include # -Wall -Werror -Wextra #-fsanitize=address -g
-LDFLAGS := -L/usr/include -lreadline -Llibft -lft -fsanitize=address -g
+CFLAGS := $(INCLUDE) -fsanitize=address -g # -Wall -Werror -Wextra #-fsanitize=address -g
+LDFLAGS := -L/usr/include -lreadline -L /Users/$(USER)/.brew/opt/readline/lib -I /Users/$(USER)/.brew/opt/readline/include -Llibft -lft -fsanitize=address -g
 
 all: $(NAME)
 

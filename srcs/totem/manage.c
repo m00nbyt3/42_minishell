@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   manage.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
+/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 10:38:02 by ycarro            #+#    #+#             */
-/*   Updated: 2022/03/09 15:00:25 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/04/19 10:32:39 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,26 @@ void	ft_clear_input(t_totems **input, void (*del)(void *))
 		(*input) = next;
 	}
 	*input = NULL;
+}
+
+void    ft_clear_transformer(t_transformer **runner, void (*del)(void *))
+{
+    t_transformer    *next;
+
+    if (!del || !runner)
+        return ;
+    while (*runner)
+    {
+        next = (*runner)->next;
+    //    free((*runner)->cmd);
+    //    if ((*runner)->heredoc)
+    //        free((*runner)->heredoc);
+//        if ((*runner)->append)
+//            free((*runner)->append);
+    //    if ((*runner)->flags)
+    //        ft_free_matrix((*runner)->flags);
+        free(*runner);
+        (*runner) = next;
+    }
+    *runner = NULL;
 }

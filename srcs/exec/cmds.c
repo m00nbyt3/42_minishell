@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmds.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
+/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 14:53:51 by ycarro            #+#    #+#             */
-/*   Updated: 2022/04/15 17:47:18 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/04/19 10:37:43 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	single_cmd(int npipes, t_transformer *smth, char **env)
 		if (pid == 0)
 		{
 			if (!*smth->cmd)
-				ft_exit_process(1, smth->cmd);
+				ft_error(smth, 1);
 			if (smth->fdin != -2)
 			{
 				dup2(smth->fdin, STDIN_FILENO);

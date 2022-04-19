@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
+/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 11:39:01 by agallipo          #+#    #+#             */
-/*   Updated: 2022/04/18 12:31:12 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/04/19 10:36:14 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 void	sign(int sig);
-void	ctrl_d(char *str);
+void	ctrl_d(char *str, t_transformer *runner);
 char	*read_my_line(char *str);
 
 int	main(void)
@@ -30,7 +30,7 @@ int	main(void)
 		signal(SIGINT, sign);
 		signal(SIGQUIT, sign);
 		str = read_my_line(str);
-		ctrl_d(str);
+		ctrl_d(str, runner);
 		add_history(str);
 		if (!ft_chk_quotes(str))
 			input = sp_split(str);
@@ -41,6 +41,7 @@ int	main(void)
 			ft_clear_input(&input, free);
 		}
 		free(str);
+		ft_clear_transformer(&runner, free);
 		g_util.ctr_c = 0;
 		g_util.ctr_b = 0;
 	}
@@ -58,12 +59,15 @@ char	*read_my_line(char *str)
 	return (str);
 }
 
-void	ctrl_d(char *str)
+void	ctrl_d(char *str, t_transformer *runner)
 {
 	if (str == NULL)
 	{
 		if (g_util.ctr_c == 0 || g_util.ctr_b == 0)
+		{
+			ft_clear_transformer(&runner, free);
 			exit(0);
+		}
 	}
 }
 
