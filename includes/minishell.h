@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 11:43:29 by agallipo          #+#    #+#             */
-/*   Updated: 2022/04/18 16:40:26 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/04/19 12:26:51 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ void			ft_pwd(void);
 void			set_fds(t_totems *input, int section);
 char			*ft_srchlist_var(char *tofind, t_list **env);
 char			*ft_vsrch_var(char *tofind, char **env);
+
 //Totem
 t_totems		*sp_split(char *s);
 char			*char_detection(char *tmp, t_oncreate *shared, \
@@ -121,6 +122,7 @@ void			vectorize_flags(t_transformer *runner, \
 int				count_flags(t_totems *input, int sect);
 void			print_vector(t_transformer *runner);
 t_transformer	*transform(t_totems *input);
+void   			ft_clear_transformer(t_transformer **runner, void (*del)(void *));
 
 //Pipes
 void			ft_pipes(t_transformer **contents, char **env, t_totems *input, \

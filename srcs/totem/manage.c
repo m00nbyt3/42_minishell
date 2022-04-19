@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   manage.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 10:38:02 by ycarro            #+#    #+#             */
-/*   Updated: 2022/04/19 10:32:39 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/04/19 11:13:01 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void		ft_add_totem(t_totems **input, t_totems *new);
 void		ft_print_totems(t_totems *input);
 void		ft_clear_input(t_totems **input, void (*del)(void *));
+void   		ft_clear_transformer(t_transformer **runner, void (*del)(void *));
 
 void	ft_add_totem(t_totems **input, t_totems *new)
 {

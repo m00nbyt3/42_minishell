@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   flags.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 14:57:01 by ycarro            #+#    #+#             */
-/*   Updated: 2022/04/15 18:03:32 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/04/19 12:22:02 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	save_flag(t_totems *input, int sect, char **vector, int *i)
 		vector[*i] = input->content;
 		if (input->type == 'f')
 			vector[*i] = ft_strjoin("-\0", vector[*i]);
-		if (*vector[*i] == '$' && input->type != 'h')
+		if (*vector[*i] == '$' && input->qtype != '\'' && input->type != 'h')
 			vector[*i] = getdollars(vector[*i]);
 		(*i)++;
 	}

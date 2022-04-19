@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+         #
+#    By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/07 10:43:28 by agallipo          #+#    #+#              #
-#    Updated: 2022/04/19 10:40:45 by agallipo         ###   ########.fr        #
+#    Updated: 2022/04/19 11:11:32 by ycarro           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,7 @@ SRCS :=	main.c \
 OBJS := $(SRCS:%.c=obj/%.o)
 
 CFLAGS := $(INCLUDE) -fsanitize=address -g # -Wall -Werror -Wextra #-fsanitize=address -g
-LDFLAGS := -L/usr/include -lreadline -L /Users/$(USER)/.brew/opt/readline/lib -I /Users/$(USER)/.brew/opt/readline/include -Llibft -lft -fsanitize=address -g
+LDFLAGS := -L/usr/include -lreadline -I /Users/$(USER)/.brew/opt/readline/include -Llibft -lft -fsanitize=address -g
 
 all: $(NAME)
 
