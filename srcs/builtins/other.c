@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 14:32:09 by ycarro            #+#    #+#             */
-/*   Updated: 2022/04/15 17:46:40 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/04/20 15:11:31 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	set_fds(t_totems *input, int section);
 char	*ft_srchlist_var(char *tofind, t_list **env);
 char	*ft_vsrch_var(char *tofind, char **env);
+void	ft_print_mtx(char **env);
 
 void	set_fds(t_totems *input, int section)
 {
@@ -92,5 +93,16 @@ char	*ft_vsrch_var(char *tofind, char **env)
 		result = ft_strdup(tmp + (len + 1));
 		free(tmp);
 	}
+	env = orig;
 	return (result);
 }
+
+void	ft_print_mtx(char **env)
+{
+	int i;
+
+	i = -1;
+	while (env[++i])
+		printf("%s\n", env[i]);
+}
+

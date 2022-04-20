@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
+/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 11:43:29 by agallipo          #+#    #+#             */
-/*   Updated: 2022/04/19 12:26:51 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/04/20 17:00:28 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ typedef struct s_tools
 
 //global
 
-t_global	g_util;	
+t_global	g_util;
 
 //Functions
 
@@ -95,9 +95,13 @@ int ofdin, int ofdout);
 void			ft_echo(t_transformer *runner);
 void			ft_cd(t_transformer *runner, char **env);
 void			ft_pwd(void);
+void   			ft_export(t_transformer *orunner, char **environ);
+void			ft_export_add(t_transformer *runner, char **environ);
 void			set_fds(t_totems *input, int section);
 char			*ft_srchlist_var(char *tofind, t_list **env);
 char			*ft_vsrch_var(char *tofind, char **env);
+void			ft_print_mtx(char **env);
+
 
 //Totem
 t_totems		*sp_split(char *s);

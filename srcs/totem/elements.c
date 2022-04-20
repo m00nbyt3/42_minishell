@@ -27,7 +27,7 @@ char	*new_element(char *s, t_totems **input, t_oncreate *shared)
 		return (0);
 	tmp = ft_strdup((const char *)s);
 	shared->inquotes = 0;
-	shared->qtype = 'n';
+	shared->qtype = 0;
 	totem->type = 0;
 	orig = tmp;
 	tmp = set_totem_type(tmp, shared, totem);
