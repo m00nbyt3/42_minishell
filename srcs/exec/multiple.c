@@ -6,20 +6,18 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 09:29:02 by agallipo          #+#    #+#             */
-/*   Updated: 2022/04/15 18:01:01 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/04/21 15:47:58 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_pipes(t_transformer **contents, char **env, t_totems *input, \
-		t_list *envlist);
+void	ft_pipes(t_transformer **contents, char **env, t_totems *input);
 void	ft_while_pipes(t_transformer *content, t_tools *tools, char **env);
 void	ft_final_pipe(t_transformer *content, t_tools *tools, char **env, \
 		int i);
 
-void	ft_pipes(t_transformer **contents, char **env, t_totems *input, \
-		t_list *envlist)
+void	ft_pipes(t_transformer **contents, char **env, t_totems *input)
 {
 	int				i;
 	t_transformer	*content;

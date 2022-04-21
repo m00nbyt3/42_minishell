@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 11:43:29 by agallipo          #+#    #+#             */
-/*   Updated: 2022/04/20 17:00:28 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/04/21 15:48:24 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,8 +129,7 @@ t_transformer	*transform(t_totems *input);
 void   			ft_clear_transformer(t_transformer **runner, void (*del)(void *));
 
 //Pipes
-void			ft_pipes(t_transformer **contents, char **env, t_totems *input, \
-				t_list *envlist);
+void			ft_pipes(t_transformer **contents, char **env, t_totems *input);
 void			ft_while_pipes(t_transformer *content, t_tools *tools, \
 char **env);
 void			ft_final_pipe(t_transformer *content, t_tools *tools, \

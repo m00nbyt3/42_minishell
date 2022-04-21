@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmds1.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 14:31:48 by ycarro            #+#    #+#             */
-/*   Updated: 2022/04/21 10:56:01 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/04/21 15:49:03 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void    ft_export(t_transformer *orunner, char **environ)
     	runner = transform(input);
  		if (input)
 		{
-			ft_pipes(&runner, environ, input, 0);
+			ft_pipes(&runner, environ, input);
 			ft_clear_input(&input, free);
 		}
     	ft_clear_transformer(&runner, free);
