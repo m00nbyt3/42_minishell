@@ -6,7 +6,7 @@
 /*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 14:31:48 by ycarro            #+#    #+#             */
-/*   Updated: 2022/04/20 17:47:25 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/04/21 10:56:01 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ void	ft_export_add(t_transformer *runner, char **environ)
 	while (environ[i])
 	{
 		env[i] = environ[i];
+		dprintf(2, "env[%i]: %s\n", i, env[i]);
 		i++;
 	}
 	j = 0;
