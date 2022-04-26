@@ -6,7 +6,7 @@
 /*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 11:39:01 by agallipo          #+#    #+#             */
-/*   Updated: 2022/04/19 10:36:14 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/04/26 15:53:57 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,12 @@ char	*read_my_line(char *str);
 
 int	main(void)
 {
-	extern char		**environ;
 	char			*str;
-	t_list			*env;
+	t_env			*env;
 	t_totems		*input;
 	t_transformer	*runner;
 
-	env = store_env_in_list(environ);
+	env = store_environ();
 	while (42)
 	{
 		signal(SIGINT, sign);
@@ -37,7 +36,7 @@ int	main(void)
 		runner = transform(input);
 		if (input)
 		{
-			ft_pipes(&runner, environ, input, env);
+			ft_pipes(&runner, input, env);
 			ft_clear_input(&input, free);
 		}
 		free(str);

@@ -3,23 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   multiple.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
+/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 09:29:02 by agallipo          #+#    #+#             */
-/*   Updated: 2022/04/15 18:01:01 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/04/26 15:55:33 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_pipes(t_transformer **contents, char **env, t_totems *input, \
-		t_list *envlist);
-void	ft_while_pipes(t_transformer *content, t_tools *tools, char **env);
-void	ft_final_pipe(t_transformer *content, t_tools *tools, char **env, \
+void	ft_pipes(t_transformer **contents, t_totems *input, t_env *env);
+void	ft_while_pipes(t_transformer *content, t_tools *tools, t_env *env);
+void	ft_final_pipe(t_transformer *content, t_tools *tools, t_env *env, \
 		int i);
 
-void	ft_pipes(t_transformer **contents, char **env, t_totems *input, \
-		t_list *envlist)
+void	ft_pipes(t_transformer **contents, t_totems *input, t_env *env)
 {
 	int				i;
 	t_transformer	*content;
@@ -44,7 +42,7 @@ void	ft_pipes(t_transformer **contents, char **env, t_totems *input, \
 		wait(&(tools->pid[i]));
 }
 
-void	ft_while_pipes(t_transformer *content, t_tools *tools, char **env)
+void	ft_while_pipes(t_transformer *content, t_tools *tools, t_env *env)
 {
 	int	i;
 
@@ -66,7 +64,7 @@ void	ft_while_pipes(t_transformer *content, t_tools *tools, char **env)
 		ft_final_pipe(content, tools, env, i);
 }
 
-void	ft_final_pipe(t_transformer *content, t_tools *tools, char **env, int i)
+void	ft_final_pipe(t_transformer *content, t_tools *tools, t_env *env, int i)
 {
 	close(tools->fd[i][WRITE_END]);
 	tools->pid[i] = fork();

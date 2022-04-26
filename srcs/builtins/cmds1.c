@@ -6,7 +6,7 @@
 /*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 14:31:48 by ycarro            #+#    #+#             */
-/*   Updated: 2022/04/20 17:47:25 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/04/26 16:13:10 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 void	ft_echo(t_transformer *runner);
 void	ft_cd(t_transformer *runner, char **env);
 void	ft_pwd(void);
-void    ft_export(t_transformer *orunner, char **environ);
-void	ft_export_add(t_transformer *runner, char **environ);
+void    ft_export(t_transformer *orunner, t_env *env);
+char	**ft_export_add(t_transformer *runner, char **environ);
 
 void	ft_echo(t_transformer *runner)
 {
@@ -71,24 +71,30 @@ void	ft_pwd(void)
 	free(buf);
 }
 
-void    ft_export(t_transformer *orunner, char **environ)
+void    ft_export(t_transformer *orunner, t_env *env)
 {
     t_totems            *input;
     t_transformer   	*runner;
     char           		 *sort;
 
     if (orunner->flags[1])
-    	ft_export_add(orunner, environ);
+	{
+    	env->array = ft_export_add(orunner, env->array);
+		int i = 0;
+		while (env->array[i])
+		{
+			printf("uuuuuu:%s\n", env->array[i]);
+			i++;
+		}
+	}
 	else
 	{
-
-		printf("here");
 		sort = "env | sort";
     	input = sp_split(sort);
     	runner = transform(input);
  		if (input)
 		{
-			ft_pipes(&runner, environ, input, 0);
+			ft_pipes(&runner, input, env);
 			ft_clear_input(&input, free);
 		}
     	ft_clear_transformer(&runner, free);
@@ -105,13 +111,14 @@ int	ft_mtxlen(char **mtx)
 	return (i);
 }
 
-void	ft_export_add(t_transformer *runner, char **environ)
+char	**ft_export_add(t_transformer *runner, char **environ)
 {
 	int len;
 	int i;
 	int j;
 	char **env;
 
+	len = ft_mtxlen(runner->flags) + ft_mtxlen(environ);
 	env = malloc((len + 1) * sizeof(char *));
 	i = 0;
 	while (environ[i])
@@ -119,7 +126,7 @@ void	ft_export_add(t_transformer *runner, char **environ)
 		env[i] = environ[i];
 		i++;
 	}
-	j = 0;
+	j = 1;
 	while (runner->flags[j])
 	{
 		env[i] = ft_strdup(runner->flags[j]);
@@ -133,5 +140,11 @@ void	ft_export_add(t_transformer *runner, char **environ)
 		i++;
 	}*/
 	//free(environ);
-	environ = env;
+	i = 0;
+	while (env[i])
+	{
+		printf("%s\n", env[i]);
+		i++;
+	}
+	return (env);
 }

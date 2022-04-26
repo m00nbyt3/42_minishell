@@ -6,7 +6,7 @@
 /*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 11:43:29 by agallipo          #+#    #+#             */
-/*   Updated: 2022/04/20 17:00:28 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/04/26 16:07:53 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,13 @@ typedef struct s_tools
 	t_list		*envlist;
 }				t_tools;
 
+
+typedef struct s_env
+{
+	t_list	*list;
+	char	**array;
+	t_list	*export;
+}				t_env;
 //global
 
 t_global	g_util;
@@ -86,17 +93,18 @@ t_global	g_util;
 
 //Utils
 t_list			*store_env_in_list(char **environ);
-void			run_cmd(char *complete, char **env);
+void			run_cmd(char *complete, t_env *env);
+t_env			*store_environ();
 
 //Builtins
-int				ft_builtins(t_transformer *runner, char **env);
-int				select_cmd(t_transformer *runner, char **env, \
+int				ft_builtins(t_transformer *runner, t_env *env);
+int				select_cmd(t_transformer *runner, t_env *env, \
 int ofdin, int ofdout);
 void			ft_echo(t_transformer *runner);
 void			ft_cd(t_transformer *runner, char **env);
 void			ft_pwd(void);
-void   			ft_export(t_transformer *orunner, char **environ);
-void			ft_export_add(t_transformer *runner, char **environ);
+void   			ft_export(t_transformer *orunner, t_env *env);
+char			**ft_export_add(t_transformer *runner, char **environ);
 void			set_fds(t_totems *input, int section);
 char			*ft_srchlist_var(char *tofind, t_list **env);
 char			*ft_vsrch_var(char *tofind, char **env);
@@ -127,22 +135,20 @@ int				count_flags(t_totems *input, int sect);
 void			print_vector(t_transformer *runner);
 t_transformer	*transform(t_totems *input);
 void   			ft_clear_transformer(t_transformer **runner, void (*del)(void *));
-
 //Pipes
-void			ft_pipes(t_transformer **contents, char **env, t_totems *input, \
-				t_list *envlist);
+void			ft_pipes(t_transformer **contents,	 t_totems *input, t_env *env);
 void			ft_while_pipes(t_transformer *content, t_tools *tools, \
-char **env);
+t_env *env);
 void			ft_final_pipe(t_transformer *content, t_tools *tools, \
-char **env, int i);
+t_env *env, int i);
 void			ft_exit_process(int condition, char *argv);
-void			ft_frst_child_pipe(t_transformer *smth, char **env, int *fd);
-void			ft_mid_child_pipe(t_transformer *smth, char **env, int *fd1, \
+void			ft_frst_child_pipe(t_transformer *smth, t_env *env, int *fd);
+void			ft_mid_child_pipe(t_transformer *smth, t_env *env, int *fd1, \
 int *fd2);
-void			ft_bastard(t_transformer *smth, char **env, int *fd1);
+void			ft_bastard(t_transformer *smth, t_env *env, int *fd1);
 int				count_cmds(t_transformer *data);
-int				single_cmd(int npipes, t_transformer *smth, char **env);
-void			ft_execute(t_transformer *smth, char **env);
+int				single_cmd(int npipes, t_transformer *smth, t_env *env);
+void			ft_execute(t_transformer *smth, t_env *env);
 int				ft_check_directory(char **flags);
 char			*ft_env_path(char **env, char *argv, char **flags);
 char			**ft_path_split(char **env);
