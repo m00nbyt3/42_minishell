@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 10:38:02 by ycarro            #+#    #+#             */
-/*   Updated: 2022/04/19 11:13:01 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/04/27 17:25:07 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ void	ft_print_totems(t_totems *input)
 	orig = input;
 	while (input)
 	{
-		printf("Str: %s.   Type: %c   Section: %d\n", \
-			input->content, input->type, input->section);
+		printf("Str: %s.   Type: %c   Section: %d	Quotes: %c.\n", \
+			input->content, input->type, input->section, input->qtype);
 		input = input->next;
 	}
 	input = orig;

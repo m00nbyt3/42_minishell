@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/04/27 15:24:06 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/04/27 17:31:57 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	sign(int sig);
 void	ctrl_d(char *str, t_transformer *runner);
 char	*read_my_line(char *str);
+int		checkreds(char *str);
 
 int	main(void)
 {
@@ -30,7 +31,8 @@ int	main(void)
 		str = read_my_line(str);
 		ctrl_d(str, runner);
 		add_history(str);
-		if (!ft_chk_quotes(str))
+		input = 0;
+		if (!ft_chk_quotes(str) && !checkreds(str))
 			input = sp_split(str);
 		runner = transform(input);
 		if (input)
@@ -85,3 +87,43 @@ void	sign(int sig)
 		signal(SIGQUIT, SIG_IGN);
 	}
 }
+
+int	checkreds(char *str)
+{
+	int	smaller;
+	int	bigger;
+	int i;
+	int first;
+
+	smaller = 0;
+	bigger = 0;
+	first = 0;
+	while(*str)
+	{	
+		i++;
+		if (*str == '|')
+		{
+			if ((smaller || bigger) && !first)
+				return(1);
+			smaller = 0;
+			bigger = 0;
+			first = 0;
+			str++;
+		}
+		if (*str == '<')
+			smaller++;
+		else if (*str == '>')
+			bigger++;
+		else if (!smaller && !bigger && *str != ' ')
+			first++;
+		if (smaller && bigger)
+			return (1);
+		if (smaller > 2 || bigger > 2)
+			return(1);
+		str++;
+	}
+	if ((smaller || bigger) && !first)
+		return(1);
+	return (0);
+}
+
