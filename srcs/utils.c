@@ -3,18 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
+/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 11:58:28 by agallipo          #+#    #+#             */
-/*   Updated: 2022/04/06 17:48:33 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/04/27 12:17:44 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 t_list	*store_env_in_list(char **environ);
-void	run_cmd(char *complete, char **env);
+void	run_cmd(char *complete, t_env *env);
+t_env	*store_environ();
 
+t_env	*store_environ()
+{
+	t_env			*env;
+	extern char		**environ;
+
+	env = malloc(sizeof(t_env));
+	env->export = ft_mtxdup(environ);
+	env->array = environ;
+	env->list = store_env_in_list(environ);
+	return (env);
+}
 t_list	*store_env_in_list(char **environ)
 {
 	t_list	*env;
@@ -28,7 +40,7 @@ t_list	*store_env_in_list(char **environ)
 	return (env);
 }
 
-void	run_cmd(char *complete, char **env)
+void	run_cmd(char *complete, t_env *env)
 {
 	t_transformer	*content;
 

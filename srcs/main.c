@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/25 11:39:01 by agallipo          #+#    #+#             */
-/*   Updated: 2022/04/21 15:47:27 by ycarro           ###   ########.fr       */
+/*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
+/*   Updated: 2022/04/27 15:24:06 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ char	*read_my_line(char *str);
 
 int	main(void)
 {
-	extern char		**environ;
 	char			*str;
+	t_env			*env;
 	t_totems		*input;
 	t_transformer	*runner;
-
+	env = store_environ();
 	while (42)
 	{
 		signal(SIGINT, sign);
@@ -35,7 +35,7 @@ int	main(void)
 		runner = transform(input);
 		if (input)
 		{
-			ft_pipes(&runner, environ, input);
+			ft_pipes(&runner, input, env);
 			ft_clear_input(&input, free);
 		}
 		free(str);

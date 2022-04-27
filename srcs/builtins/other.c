@@ -3,44 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   other.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
+/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 14:32:09 by ycarro            #+#    #+#             */
-/*   Updated: 2022/04/20 15:11:31 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/04/21 12:09:06 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	set_fds(t_totems *input, int section);
 char	*ft_srchlist_var(char *tofind, t_list **env);
 char	*ft_vsrch_var(char *tofind, char **env);
 void	ft_print_mtx(char **env);
 
-void	set_fds(t_totems *input, int section)
-{
-	void	*orig;
-	int		fd;
-
-	orig = input;
-	while (input)
-	{
-		if (input->type == 'i')
-		{
-			fd = open(input->content, O_RDONLY);
-			dup2(fd, STDIN_FILENO);
-			close(fd);
-		}
-		if (input->type == 'o')
-		{
-			fd = open(input->content, O_RDWR | O_CREAT | O_TRUNC, 0644);
-			dup2(fd, STDOUT_FILENO);
-			close(fd);
-		}
-		input = input->next;
-	}
-	input = orig;
-}
 
 char	*ft_srchlist_var(char *tofind, t_list **env)
 {

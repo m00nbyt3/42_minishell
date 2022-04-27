@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/05 14:31:48 by ycarro            #+#    #+#             */
-/*   Updated: 2022/04/21 15:49:03 by ycarro           ###   ########.fr       */
+/*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
+/*   Updated: 2022/04/27 15:25:02 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 void	ft_echo(t_transformer *runner);
 void	ft_cd(t_transformer *runner, char **env);
 void	ft_pwd(void);
-void    ft_export(t_transformer *orunner, char **environ);
-void	ft_export_add(t_transformer *runner, char **environ);
+void    ft_export(t_transformer *orunner, t_env *env);
+char	**ft_export_add(t_transformer *runner, char **environ);
 
 void	ft_echo(t_transformer *runner)
 {
@@ -71,48 +71,66 @@ void	ft_pwd(void)
 	free(buf);
 }
 
-void    ft_export(t_transformer *orunner, char **environ)
+int		add_to_env(t_transformer *orunner)
+{
+	int	i;
+
+	i = 0;
+	while (orunner->flags[1][i])
+	{
+		if (orunner->flags[1][i] == '=')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+void    ft_export(t_transformer *orunner, t_env *env)
 {
     t_totems            *input;
     t_transformer   	*runner;
     char           		 *sort;
-
+	char **aux;
+	int i = 0;
     if (orunner->flags[1])
-    	ft_export_add(orunner, environ);
+	{
+		if (add_to_env(orunner))
+		{
+    		aux = ft_export_add(orunner, env->array);
+			env->array = aux;
+			dprintf(2, "entro------\n");
+			aux = ft_export_add(orunner, env->export);
+			ft_free_matrix(env->export);
+			env->export = aux;
+		}
+		else
+			env->export = ft_export_add(orunner, env->export);
+	}
 	else
 	{
-
-		printf("here");
-		sort = "env | sort";
+		//imprimir de manera ordenada, b
+		/*sort = "env | sort";
     	input = sp_split(sort);
     	runner = transform(input);
  		if (input)
 		{
-			ft_pipes(&runner, environ, input);
+			ft_pipes(&runner, input, env);
 			ft_clear_input(&input, free);
 		}
-    	ft_clear_transformer(&runner, free);
+    	ft_clear_transformer(&runner, free);*/
 	}
 }
 
-int	ft_mtxlen(char **mtx)
-{
-	int i;
 
-	i = 0;
-	while(mtx[i])
-		i++;
-	return (i);
-}
-
-void	ft_export_add(t_transformer *runner, char **environ)
+char	**ft_export_add(t_transformer *runner, char **environ)
 {
 	int len;
 	int i;
 	int j;
 	char **env;
 
-	env = malloc((len + 1) * sizeof(char *));
+	len = ft_mtxlen(runner->flags) + ft_mtxlen(environ);
+	env = malloc((len) * sizeof(char *));
 	i = 0;
 	while (environ[i])
 	{
@@ -120,19 +138,12 @@ void	ft_export_add(t_transformer *runner, char **environ)
 		dprintf(2, "env[%i]: %s\n", i, env[i]);
 		i++;
 	}
-	j = 0;
+	j = 1;
 	while (runner->flags[j])
 	{
 		env[i] = ft_strdup(runner->flags[j]);
 		i++ && j++;
 	}
 	env[i] = 0;
-	i = 0;
-	/*while (environ[i])
-	{
-		free(environ[i]);
-		i++;
-	}*/
-	//free(environ);
-	environ = env;
+	return (env);
 }
