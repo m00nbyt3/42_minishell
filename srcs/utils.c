@@ -6,7 +6,7 @@
 /*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 11:58:28 by agallipo          #+#    #+#             */
-/*   Updated: 2022/04/26 16:03:22 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/04/27 12:17:44 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ t_env	*store_environ()
 	extern char		**environ;
 
 	env = malloc(sizeof(t_env));
+	env->export = ft_mtxdup(environ);
 	env->array = environ;
 	env->list = store_env_in_list(environ);
 	return (env);

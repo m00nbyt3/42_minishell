@@ -6,7 +6,7 @@
 /*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 11:43:29 by agallipo          #+#    #+#             */
-/*   Updated: 2022/04/26 16:07:53 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/04/27 10:09:41 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ typedef struct s_env
 {
 	t_list	*list;
 	char	**array;
-	t_list	*export;
+	char	**export;
 }				t_env;
 //global
 

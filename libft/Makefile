@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+         #
+#    By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/21 13:59:32 by agallipo          #+#    #+#              #
-#    Updated: 2022/03/02 17:29:31 by ycarro           ###   ########.fr        #
+#    Updated: 2022/04/27 10:36:16 by agallipo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,7 +57,9 @@ SRCS	=	ft_atoi.c \
 			ft_lstiter.c \
 			ft_lstmap.c \
 			ft_print_lst.c \
-			ft_strcmp.c
+			ft_strcmp.c \
+			ft_mtxdup.c \
+			ft_mtxlen.c
 
 OBJS	= $(SRCS:.c=.o)
 OBJS_B	= $(BONUS:.c=.o)
@@ -71,7 +73,7 @@ $(NAME): $(SRCS)
 		@ranlib $(NAME)
 bonus:		$(OBJS) $(OBJS_B)
 			@gcc $(FLAGS) $(SRCS)
-			@ar rc $(NAME) 
+			@ar rc $(NAME)
 			@ranlib $(NAME)
 			@echo [Done compiling libft :)]
 
