@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
+/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/04/27 15:25:45 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/04/27 18:41:47 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ t_global	g_util;
 t_list			*store_env_in_list(char **environ);
 void			run_cmd(char *complete, t_env *env);
 t_env			*store_environ();
+void			sort_mtx(char **mtx);
 
 //Builtins
 int				ft_builtins(t_transformer *runner, t_env *env);
@@ -109,6 +110,7 @@ void			set_fds(t_totems *input, int section);
 char			*ft_srchlist_var(char *tofind, t_list **env);
 char			*ft_vsrch_var(char *tofind, char **env);
 void			ft_print_mtx(char **env);
+void			ft_print_export(char **env);
 
 
 //Totem

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmds1.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
+/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/04/27 15:25:02 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/04/27 18:46:38 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,6 @@ void    ft_export(t_transformer *orunner, t_env *env)
 		{
     		aux = ft_export_add(orunner, env->array);
 			env->array = aux;
-			dprintf(2, "entro------\n");
 			aux = ft_export_add(orunner, env->export);
 			ft_free_matrix(env->export);
 			env->export = aux;
@@ -107,18 +106,7 @@ void    ft_export(t_transformer *orunner, t_env *env)
 			env->export = ft_export_add(orunner, env->export);
 	}
 	else
-	{
-		//imprimir de manera ordenada, b
-		/*sort = "env | sort";
-    	input = sp_split(sort);
-    	runner = transform(input);
- 		if (input)
-		{
-			ft_pipes(&runner, input, env);
-			ft_clear_input(&input, free);
-		}
-    	ft_clear_transformer(&runner, free);*/
-	}
+		sort_mtx(env->export);
 }
 
 
@@ -135,14 +123,14 @@ char	**ft_export_add(t_transformer *runner, char **environ)
 	while (environ[i])
 	{
 		env[i] = environ[i];
-		dprintf(2, "env[%i]: %s\n", i, env[i]);
 		i++;
 	}
 	j = 1;
 	while (runner->flags[j])
 	{
 		env[i] = ft_strdup(runner->flags[j]);
-		i++ && j++;
+		i++;
+		j++;
 	}
 	env[i] = 0;
 	return (env);
