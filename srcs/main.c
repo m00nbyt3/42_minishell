@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
+/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/04/27 17:31:57 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/04/28 12:02:53 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	main(void)
 	t_totems		*input;
 	t_transformer	*runner;
 	env = store_environ();
+
 	while (42)
 	{
 		signal(SIGINT, sign);
@@ -99,7 +100,7 @@ int	checkreds(char *str)
 	bigger = 0;
 	first = 0;
 	while(*str)
-	{	
+	{
 		i++;
 		if (*str == '|')
 		{

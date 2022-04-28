@@ -6,7 +6,7 @@
 /*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/04/27 18:41:47 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/04/28 12:57:39 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ t_global	g_util;
 t_list			*store_env_in_list(char **environ);
 void			run_cmd(char *complete, t_env *env);
 t_env			*store_environ();
+t_env			*basic_env();
 void			sort_mtx(char **mtx);
 
 //Builtins
@@ -105,6 +106,7 @@ void			ft_echo(t_transformer *runner);
 void			ft_cd(t_transformer *runner, char **env);
 void			ft_pwd(void);
 void   			ft_export(t_transformer *orunner, t_env *env);
+void			shell_level(t_env *env);
 char			**ft_export_add(t_transformer *runner, char **environ);
 void			set_fds(t_totems *input, int section);
 char			*ft_srchlist_var(char *tofind, t_list **env);
