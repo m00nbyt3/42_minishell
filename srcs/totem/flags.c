@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   flags.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
+/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 14:57:01 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/04 10:47:47 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/04 19:21:41 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ char	*getdollars(char *str)
 	{
 		if (orig[i] == '$')
 		{
-			dprintf(2, "Dollar: %s\n", orig + (i + 1));
 			aux = ft_strdup(orig + (i + 1));
 			cutstr(aux, ' ');
 			aux = getenv(aux);

@@ -6,7 +6,7 @@
 /*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 12:08:30 by agallipo          #+#    #+#             */
-/*   Updated: 2022/05/04 10:38:52 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/04 19:19:30 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void	here_doc(t_transformer *content)
 	{
 		signal(SIGINT, exit_here);
 		str = readline(">");
-		dprintf(2, "%d\n", content->qtype);
 		if (str == NULL)
 			exit_here(0);
 		if (ft_strcmp(str, content->heredoc))
@@ -85,7 +84,6 @@ void	find_variable(char	*str, int fd, int *i)
 
 	orig = ft_strdup(&str[*i]);
 	aux = orig + 1;
-	dprintf(2, "%s\n", aux);
 	cutstr(aux, ' ');
 	aux = getenv(aux);
 	ft_putstr_fd(aux, fd);

@@ -6,7 +6,7 @@
 /*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 14:52:39 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/04 12:24:03 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/04 18:49:46 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	ft_frst_child_pipe(t_transformer *smth, t_env *env, int *fd)
 		close(smth->fdout);
 	}
 	if (smth->fdin == -1 || smth->fdout == -1)
-		ft_error(smth, 0);
+		exit (1);
 	ft_execute(smth, env);
 }
 
@@ -62,7 +62,7 @@ void	ft_mid_child_pipe(t_transformer *smth, t_env *env, int *fd1, int *fd2)
 		close(smth->fdout);
 	}
 	if (smth->fdin == -1 || smth->fdout == -1)
-		ft_error(smth, 0);
+		exit (1);
 	ft_execute(smth, env);
 }
 
@@ -84,6 +84,6 @@ void	ft_bastard(t_transformer *smth, t_env *env, int *fd1)
 		close(smth->fdout);
 	}
 	if (smth->fdin == -1 || smth->fdout == -1)
-		ft_error(smth, 0);
+		exit (1);
 	ft_execute(smth, env);
 }

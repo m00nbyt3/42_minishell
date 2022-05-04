@@ -6,7 +6,7 @@
 /*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 14:53:51 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/04 17:51:28 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/04 19:14:13 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,20 @@ void	ft_execute(t_transformer *smth, t_env *env)
 	else
 	{
 		command = ft_env_path(env->array, smth->cmd, smth->flags);
+		if (command == 0)
+		{
+			write(2, "W4V3shell: ", 11);
+			ft_putstr_fd(smth->cmd, 2);
+			write(2, " :command not found\n", 20);
+			exit (1);
+		}
 		if (execve(command, smth->flags, env->array) < 0)
-			ft_error(smth, 1);
+		{
+			write(2, "W4V3shell: ", 11);
+			ft_putstr_fd(smth->cmd, 2);
+			perror(" ");
+			exit (1);
+		}
 	}
 	ft_free_matrix(smth->flags);
 	exit(0);

@@ -6,7 +6,7 @@
 /*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 11:58:28 by agallipo          #+#    #+#             */
-/*   Updated: 2022/05/04 18:01:54 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/04 19:12:22 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,7 @@ t_env	*store_environ(void)
 	extern char		**environ;
 
 	if (!(*environ))
-	{
-		dprintf(2, "HOLAAA\n");
 		return (basic_env());
-	}
 	env = malloc(sizeof(t_env));
 	env->export = ft_mtxdup(environ);
 	env->array = ft_mtxdup(environ);
