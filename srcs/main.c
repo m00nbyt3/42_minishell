@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
+/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/04 10:59:10 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/04 14:57:39 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,18 @@ int	main(void)
 	t_env			*env;
 	t_totems		*input;
 	t_transformer	*runner;
-	env = store_environ();
 
+	env = store_environ();
+	signal(SIGINT, sign);
+	signal(SIGQUIT, sign);
 	while (42)
 	{
-		signal(SIGINT, sign);
-		signal(SIGQUIT, sign);
 		str = read_my_line(str);
 		ctrl_d(str, runner);
 		add_history(str);
 		input = 0;
 		if (!ft_chk_quotes(str) && !checkreds(str))
 			input = sp_split(str);
-		//ft_print_totems(input);
 		runner = transform(input);
 		if (input)
 		{
@@ -81,12 +80,13 @@ void	sign(int sig)
 		g_util.ctr_c = 1;
 		rl_on_new_line();
 		ft_putstr_fd("\nminishell# ", 0);
+		//rl_replace_line("HOLA", 0);
 	}
 	if (sig == SIGQUIT)
 	{
 		g_util.ctr_b = 1;
 		ft_putstr_fd("\b\b", 1);
-		signal(SIGQUIT, SIG_IGN);
+		//signal(SIGQUIT, SIG_IGN);
 	}
 }
 
@@ -94,19 +94,19 @@ int	checkreds(char *str)
 {
 	int	smaller;
 	int	bigger;
-	int i;
-	int first;
+	int	i;
+	int	first;
 
 	smaller = 0;
 	bigger = 0;
 	first = 1;
-	while(*str)
+	while (*str)
 	{
 		i++;
 		if (*str == '|')
 		{
 			if ((smaller || bigger) && !first)
-				return(1);
+				return (1);
 			smaller = 0;
 			bigger = 0;
 			first = 0;
@@ -121,11 +121,10 @@ int	checkreds(char *str)
 		if (smaller && bigger)
 			return (1);
 		if (smaller > 2 || bigger > 2)
-			return(1);
+			return (1);
 		str++;
 	}
 	if ((smaller || bigger) && !first)
-		return(1);
+		return (1);
 	return (0);
 }
-

@@ -6,7 +6,7 @@
 /*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 14:16:08 by agallipo          #+#    #+#             */
-/*   Updated: 2022/04/28 12:35:39 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/04 15:31:05 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ char	*ft_env_path(char **env, char *argv, char **flags)
 	char	**path;
 	char	*cmd;
 	int		i;
-
 
 	if (access(argv, X_OK) == 0)
 		return (argv);

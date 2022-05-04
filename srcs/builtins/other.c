@@ -6,7 +6,7 @@
 /*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 14:32:09 by ycarro            #+#    #+#             */
-/*   Updated: 2022/04/27 18:06:34 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/04 12:23:02 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ char	*ft_srchlist_var(char *tofind, t_list **env);
 char	*ft_vsrch_var(char *tofind, char **env);
 void	ft_print_mtx(char **env);
 void	ft_print_export(char **env);
-
 
 char	*ft_srchlist_var(char *tofind, t_list **env)
 {
@@ -75,7 +74,7 @@ char	*ft_vsrch_var(char *tofind, char **env)
 
 void	ft_print_mtx(char **env)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (env[++i])
@@ -84,7 +83,7 @@ void	ft_print_mtx(char **env)
 
 void	ft_print_export(char **env)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (env[++i])

@@ -6,7 +6,7 @@
 /*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 14:52:39 by ycarro            #+#    #+#             */
-/*   Updated: 2022/04/26 15:57:33 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/04 12:24:03 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	ft_frst_child_pipe(t_transformer *smth, t_env *env, int *fd)
 	ft_execute(smth, env);
 }
 
-void	ft_mid_child_pipe(t_transformer *smth,  t_env *env, int *fd1, int *fd2)
+void	ft_mid_child_pipe(t_transformer *smth, t_env *env, int *fd1, int *fd2)
 {
 	if (smth->fdin == -2)
 	{
@@ -66,7 +66,7 @@ void	ft_mid_child_pipe(t_transformer *smth,  t_env *env, int *fd1, int *fd2)
 	ft_execute(smth, env);
 }
 
-void	ft_bastard(t_transformer *smth,  t_env *env, int *fd1)
+void	ft_bastard(t_transformer *smth, t_env *env, int *fd1)
 {
 	if (smth->fdin == -2)
 	{
