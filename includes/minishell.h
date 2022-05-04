@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/04 10:59:47 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/04 12:28:45 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # define SIGMINE 30
 
 //Headers
-# include "readline/readline.h"
 # include "../libft/libft.h"
 # include <stdio.h>
 # include <stdlib.h>
@@ -30,6 +29,9 @@
 # include <fcntl.h>
 # include <limits.h>
 # include <signal.h>
+# include "readline/readline.h"
+# include "readline/history.h"
+
 
 //Structs
 
@@ -163,5 +165,7 @@ void			ft_print_error(char *error, char *arg);
 void			ft_error(t_transformer *smth, int cond);
 void			here_doc(t_transformer *content);
 void			cutstr(char *str, char c);
+
+//System functions
 void			rl_replace_line(const char *text, int clear_undo);
 #endif

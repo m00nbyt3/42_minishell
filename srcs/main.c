@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/04 10:59:10 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/04 14:52:54 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void	ctrl_d(char *str, t_transformer *runner)
 		if (g_util.ctr_c == 0 || g_util.ctr_b == 0)
 		{
 			ft_clear_transformer(&runner, free);
+			ft_putstr_fd("exit", 0);
 			exit(0);
 		}
 	}
@@ -79,13 +80,16 @@ void	sign(int sig)
 	if (sig == SIGINT)
 	{
 		g_util.ctr_c = 1;
+		//write(1, "\b\b", 2);
+		//write(1, "  ", 2);
+		write(1, "\n", 1);
+		rl_replace_line("", 0);
 		rl_on_new_line();
-		ft_putstr_fd("\nminishell# ", 0);
+		rl_redisplay();
 	}
 	if (sig == SIGQUIT)
 	{
 		g_util.ctr_b = 1;
-		ft_putstr_fd("\b\b", 1);
 		signal(SIGQUIT, SIG_IGN);
 	}
 }
