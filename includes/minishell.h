@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/04 10:35:31 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/04 10:59:47 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@
 typedef struct s_global
 {
 	int	ctr_c;
-	int	ctr_d;
 	int	ctr_b;
+	int	shlvl;
 }				t_global;
 
 typedef struct s_totems
@@ -96,8 +96,10 @@ t_global	g_util;
 t_list			*store_env_in_list(char **environ);
 void			run_cmd(char *complete, t_env *env);
 t_env			*store_environ();
+t_env			*basic_env();
 void			sort_mtx(char **mtx);
 char			*fvck_quotes(char *vector, char qtype);
+void			shell_level(t_env *env);
 
 //Builtins
 int				ft_builtins(t_transformer *runner, t_env *env);

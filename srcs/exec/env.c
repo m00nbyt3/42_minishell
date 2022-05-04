@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
+/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 14:16:08 by agallipo          #+#    #+#             */
-/*   Updated: 2022/04/05 15:08:14 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/04/28 12:35:39 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,12 @@ char	*ft_env_path(char **env, char *argv, char **flags)
 	char	*cmd;
 	int		i;
 
-	//if (ft_check_directory(flags) == 0)
-		//return (0);
+
 	if (access(argv, X_OK) == 0)
 		return (argv);
 	path = ft_path_split(env);
-	i = 0;
+	if (!path)
+		return (0);
 	while (path[i])
 	{
 		cmd = strdup(path[i]);
@@ -64,9 +64,9 @@ char	**ft_path_split(char **env)
 		if (ft_strncmp("PATH=", env[i], 5) == 0)
 		{
 			path = ft_split(env[i], ':');
-			break ;
+			return (path);
 		}
 		i++;
 	}
-	return (path);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/04 10:35:09 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/04 10:59:10 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	main(void)
 	t_totems		*input;
 	t_transformer	*runner;
 	env = store_environ();
+
 	while (42)
 	{
 		signal(SIGINT, sign);
@@ -100,7 +101,7 @@ int	checkreds(char *str)
 	bigger = 0;
 	first = 1;
 	while(*str)
-	{	
+	{
 		i++;
 		if (*str == '|')
 		{

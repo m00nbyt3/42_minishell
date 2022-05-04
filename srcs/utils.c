@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 11:58:28 by agallipo          #+#    #+#             */
-/*   Updated: 2022/04/28 11:20:47 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/04 10:58:53 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,55 @@ void	run_cmd(char *complete, t_env *env);
 t_env	*store_environ();
 void	sort_mtx(char **mtx);
 char	*fvck_quotes(char *vector, char qtype);
+t_env	*basic_env();
+void	shell_level(t_env *env);
 
+t_env	*basic_env()
+{
+	t_env			*env;
+
+	env = malloc(sizeof(t_env));
+
+	env->array = malloc(sizeof(char *) * 3);
+	env->array[0] = ft_strdup(ft_strjoin("PWD=", getcwd(0,0)));
+	env->array[1] = ft_strdup(ft_strjoin("SHLVL=", ft_itoa(g_util.shlvl)));
+	env->array[2] = 0;
+	env->export = ft_mtxdup(env->array);
+	env->list = store_env_in_list(env->array);
+	return (env);
+}
+
+void	shell_level(t_env *env)
+{
+	int		i;
+	//char	*aux;
+
+	i = 0;
+	while (env->array[i])
+	{
+		//dprintf(2, "AHHHH%s\n", env->array[i - 1]);
+		if (ft_strncmp("SHLVL=", env->array[i], 6) == 0)
+		{
+			g_util.shlvl++;
+			break ;
+		}
+		i++;
+	}
+	env->array[i] = ft_strdup(ft_strjoin("SHLVL=", ft_itoa(g_util.shlvl)));
+}
 
 t_env	*store_environ()
 {
 	t_env			*env;
 	extern char		**environ;
 
+	if (!(*environ))
+		return (basic_env());
 	env = malloc(sizeof(t_env));
 	env->export = ft_mtxdup(environ);
 	env->array = environ;
 	env->list = store_env_in_list(environ);
+	//shell_level(env);
 	return (env);
 }
 t_list	*store_env_in_list(char **environ)
