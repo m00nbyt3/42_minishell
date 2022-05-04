@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 14:57:01 by ycarro            #+#    #+#             */
-/*   Updated: 2022/04/19 12:22:02 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/04 10:47:47 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ void	save_flag(t_totems *input, int sect, char **vector, int *i)
 			vector[*i] = ft_strjoin("-\0", vector[*i]);
 		if (*vector[*i] == '$' && input->qtype != '\'' && input->type != 'h')
 			vector[*i] = getdollars(vector[*i]);
+		//else
+			//vector[*i] = fvck_quotes(vector[*i], input->qtype);
 		(*i)++;
 	}
 }
@@ -70,7 +72,8 @@ char	*getdollars(char *str)
 	{
 		if (orig[i] == '$')
 		{
-			aux = ft_strdup(orig + 1);
+			dprintf(2, "Dollar: %s\n", orig + (i + 1));
+			aux = ft_strdup(orig + (i + 1));
 			cutstr(aux, ' ');
 			aux = getenv(aux);
 			ret = ft_strjoin(ret, aux);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 11:58:28 by agallipo          #+#    #+#             */
-/*   Updated: 2022/04/27 18:07:16 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/04/28 11:20:47 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ t_list	*store_env_in_list(char **environ);
 void	run_cmd(char *complete, t_env *env);
 t_env	*store_environ();
 void	sort_mtx(char **mtx);
+char	*fvck_quotes(char *vector, char qtype);
+
 
 t_env	*store_environ()
 {
@@ -77,4 +79,34 @@ void	sort_mtx(char **mtx)
 		i++;
 	}
 	ft_print_export(mtx);
+}
+
+char	*fvck_quotes(char *vector, char qtype)
+{
+	int 	count;
+	char	*orig;
+	
+	orig = vector;
+	count = 0;
+	if (qtype == '\'')
+		count += 1;
+	if (qtype == '\"')
+			count += 2;
+	printf("First: %s\n", vector);
+	while (*vector == '\'' || *vector == '\"')
+	{
+		if (*vector == '\'')
+			count += 1;
+		if (*vector == '\"')
+			count += 2;
+		vector++;
+	}
+	printf("%d", count);
+	if (!(count % 2))
+	{
+		ft_strtrim(vector, "\'");
+		printf("hey%s\n", vector);
+		return (getdollars(vector));
+	}
+	return (orig);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/04/27 18:41:47 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/04 10:35:31 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ typedef struct s_oncreate
 	int		section;
 	int		inquotes;
 	char	qtype;
+	char	qtrue;
 }				t_oncreate;
 
 typedef struct s_tools
@@ -96,6 +97,7 @@ t_list			*store_env_in_list(char **environ);
 void			run_cmd(char *complete, t_env *env);
 t_env			*store_environ();
 void			sort_mtx(char **mtx);
+char			*fvck_quotes(char *vector, char qtype);
 
 //Builtins
 int				ft_builtins(t_transformer *runner, t_env *env);
@@ -135,6 +137,7 @@ void			vectorize_flags(t_transformer *runner, \
 				t_totems *input, int sect);
 int				count_flags(t_totems *input, int sect);
 void			print_vector(t_transformer *runner);
+char			*getdollars(char *str);
 t_transformer	*transform(t_totems *input);
 void   			ft_clear_transformer(t_transformer **runner, void (*del)(void *));
 //Pipes
