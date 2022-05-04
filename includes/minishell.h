@@ -6,7 +6,7 @@
 /*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/04/28 12:57:39 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/04/29 18:21:05 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@
 typedef struct s_global
 {
 	int	ctr_c;
-	int	ctr_d;
 	int	ctr_b;
+	int	shlvl;
 }				t_global;
 
 typedef struct s_totems
@@ -97,6 +97,7 @@ void			run_cmd(char *complete, t_env *env);
 t_env			*store_environ();
 t_env			*basic_env();
 void			sort_mtx(char **mtx);
+void			shell_level(t_env *env);
 
 //Builtins
 int				ft_builtins(t_transformer *runner, t_env *env);
@@ -106,7 +107,6 @@ void			ft_echo(t_transformer *runner);
 void			ft_cd(t_transformer *runner, char **env);
 void			ft_pwd(void);
 void   			ft_export(t_transformer *orunner, t_env *env);
-void			shell_level(t_env *env);
 char			**ft_export_add(t_transformer *runner, char **environ);
 void			set_fds(t_totems *input, int section);
 char			*ft_srchlist_var(char *tofind, t_list **env);

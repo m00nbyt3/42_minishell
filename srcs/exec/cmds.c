@@ -6,7 +6,7 @@
 /*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 14:53:51 by ycarro            #+#    #+#             */
-/*   Updated: 2022/04/26 16:14:30 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/04/29 18:21:00 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,7 @@ int	single_cmd(int npipes, t_transformer *smth,  t_env *env)
 		{
 			pid = fork();
 			if (pid == 0)
-			{
 				ft_execute(smth, env);
-			}
 		}
 		//-----------------------------
 		sigignore(SIGINT);
@@ -89,6 +87,8 @@ void	ft_execute(t_transformer *smth,  t_env *env)
 {
 	char	*command;
 
+	if (ft_strcmp(smth->cmd, "./minishell"))
+		shell_level(env);
 	if (smth->heredoc)
 		here_doc(smth);
 	if (ft_builtins(smth, env))

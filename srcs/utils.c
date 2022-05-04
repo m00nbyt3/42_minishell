@@ -6,7 +6,7 @@
 /*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 11:58:28 by agallipo          #+#    #+#             */
-/*   Updated: 2022/04/28 12:43:58 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/04/29 18:20:57 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,31 @@ t_env	*basic_env()
 
 	env->array = malloc(sizeof(char *) * 3);
 	env->array[0] = ft_strdup(ft_strjoin("PWD=", getcwd(0,0)));
-	env->array[1] = ft_strdup("SHLVL=1");
+	env->array[1] = ft_strdup(ft_strjoin("SHLVL=", ft_itoa(g_util.shlvl)));
 	env->array[2] = 0;
 	env->export = ft_mtxdup(env->array);
 	env->list = store_env_in_list(env->array);
 	return (env);
 }
+void	shell_level(t_env *env)
+{
+	int		i;
+	//char	*aux;
+
+	i = 0;
+	while (env->array[i])
+	{
+		//dprintf(2, "AHHHH%s\n", env->array[i - 1]);
+		if (ft_strncmp("SHLVL=", env->array[i], 6) == 0)
+		{
+			g_util.shlvl++;
+			break ;
+		}
+		i++;
+	}
+	env->array[i] = ft_strdup(ft_strjoin("SHLVL=", ft_itoa(g_util.shlvl)));
+}
+
 t_env	*store_environ()
 {
 	t_env			*env;
@@ -43,6 +62,7 @@ t_env	*store_environ()
 	env->export = ft_mtxdup(environ);
 	env->array = environ;
 	env->list = store_env_in_list(environ);
+	//shell_level(env);
 	return (env);
 }
 t_list	*store_env_in_list(char **environ)
