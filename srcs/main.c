@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/04 14:52:54 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/04 18:33:38 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ int	main(void)
 			ft_pipes(&runner, input, env);
 			ft_clear_input(&input, free);
 		}
-		free(str);
 		ft_clear_transformer(&runner, free);
 		g_util.ctr_c = 0;
 		g_util.ctr_b = 0;
@@ -80,8 +79,6 @@ void	sign(int sig)
 	if (sig == SIGINT)
 	{
 		g_util.ctr_c = 1;
-		//write(1, "\b\b", 2);
-		//write(1, "  ", 2);
 		write(1, "\n", 1);
 		rl_replace_line("", 0);
 		rl_on_new_line();

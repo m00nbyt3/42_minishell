@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 14:57:01 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/04 10:47:47 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/04 19:06:05 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ char	*getdollars(char *str)
 	{
 		if (orig[i] == '$')
 		{
-			dprintf(2, "Dollar: %s\n", orig + (i + 1));
 			aux = ft_strdup(orig + (i + 1));
 			cutstr(aux, ' ');
 			aux = getenv(aux);

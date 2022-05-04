@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/04 12:28:45 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/04 17:48:38 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ typedef struct s_oncreate
 	int		section;
 	int		inquotes;
 	char	qtype;
-	char	qtrue;
 }				t_oncreate;
 
 typedef struct s_tools
@@ -102,6 +101,8 @@ t_env			*basic_env();
 void			sort_mtx(char **mtx);
 char			*fvck_quotes(char *vector, char qtype);
 void			shell_level(t_env *env);
+char			*set_quotes(char *str);
+char			*chr2str(char toadd, char *str);
 
 //Builtins
 int				ft_builtins(t_transformer *runner, t_env *env);

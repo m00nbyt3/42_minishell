@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmds1.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/04/27 18:46:38 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/04 18:39:49 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ void	ft_echo(t_transformer *runner)
 	orig = runner;
 	newline = 1;
 	i = 1;
+	if (*(runner->flags + i) == 0)
+		return ;
 	if (ft_strcmp(*(runner->flags + i), "-n"))
 	{
 			newline = 0;

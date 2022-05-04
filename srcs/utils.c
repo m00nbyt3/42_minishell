@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 11:58:28 by agallipo          #+#    #+#             */
-/*   Updated: 2022/05/04 10:58:53 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/04 19:01:25 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void	sort_mtx(char **mtx);
 char	*fvck_quotes(char *vector, char qtype);
 t_env	*basic_env();
 void	shell_level(t_env *env);
+char	*set_quotes(char *str);
+char	*chr2str(char toadd, char *str);
 
 t_env	*basic_env()
 {
@@ -147,4 +149,60 @@ char	*fvck_quotes(char *vector, char qtype)
 		return (getdollars(vector));
 	}
 	return (orig);
+}
+
+char	*set_quotes(char *str)
+{
+	int		i;
+	int		squote;
+	int		dquote;
+	char	*tmp;
+
+	tmp = 0;
+	squote = 0;
+	dquote = 0;
+	i = 0;
+	while(str[i])
+	{
+		if (squote || dquote)
+		{
+			if (squote == 2 || dquote == 2)
+			{
+				squote = 0;
+				dquote = 0;
+			}
+			else
+				tmp = chr2str(str[i], tmp);
+
+		}
+		if (str[i] == '\'')
+			squote++;
+		if (str[i] == '\"')
+			dquote++;
+		i++;
+	}
+	return (tmp);
+}
+
+char	*chr2str(char toadd, char *str)
+{
+	char	*new;
+	int		i;
+
+	i = 0;
+	if (!str)
+		new = malloc(2 * sizeof(char));
+	else
+	{
+		new = malloc((ft_strlen(str) + 2) * sizeof(char));
+		while (str[i])
+		{
+			new[i] = str[i];
+			i++;
+		}
+		free(str);
+	}
+	new[i] = toadd;
+	new[i + 1] = 0;
+	return(new);
 }
