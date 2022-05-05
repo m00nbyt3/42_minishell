@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/04 18:39:49 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/05 12:41:58 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,13 @@ void	ft_cd(t_transformer *runner, char **env)
 		chdir(*(runner->flags + 1));
 	else
 	{
+		tmp = 0;
 		tmp = ft_vsrch_var("USER", env);
+		if (!tmp)
+		{
+			write(2, "W4V3shell: cd: HOME not set\n", 28);
+			return ;
+		}
 		home = ft_strjoin("/Users/", tmp);
 		free(tmp);
 		printf("%s\n", home);

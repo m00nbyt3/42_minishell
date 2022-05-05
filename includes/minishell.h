@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/04 17:48:38 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/05 14:24:03 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,6 +158,7 @@ int *fd2);
 void			ft_bastard(t_transformer *smth, t_env *env, int *fd1);
 int				count_cmds(t_transformer *data);
 int				single_cmd(int npipes, t_transformer *smth, t_env *env);
+void			single_cmd_2(int ofdin, int	ofdout, t_transformer *smth,  t_env *env);
 void			ft_execute(t_transformer *smth, t_env *env);
 int				ft_check_directory(char **flags);
 char			*ft_env_path(char **env, char *argv, char **flags);

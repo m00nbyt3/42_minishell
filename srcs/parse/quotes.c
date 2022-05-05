@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 15:36:54 by agallipo          #+#    #+#             */
-/*   Updated: 2022/05/04 18:55:05 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/05 11:30:29 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,8 @@ char	*remove_quotes(char *str, t_oncreate *shared)
 	char	*mod;
 	char	*new;
 
-	set_quotes(str);
+	//str = set_quotes(str);
+	//printf("RESULTING: %s\n", str);
 	qcount = count_quotes(str, shared);
 	if (!qcount)
 		return (ft_strdup(str));

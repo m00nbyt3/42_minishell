@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 11:58:28 by agallipo          #+#    #+#             */
-/*   Updated: 2022/05/04 19:01:25 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/05 14:03:53 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ void	run_cmd(char *complete, t_env *env)
 	content->fdout = -2;
 	content->heredoc = 0;
 	content->append = 0;
+	printf("hjey\n");
 	single_cmd(0, content, env);
 }
 
@@ -164,24 +165,29 @@ char	*set_quotes(char *str)
 	i = 0;
 	while(str[i])
 	{
-		if (squote || dquote)
-		{
-			if (squote == 2 || dquote == 2)
+		printf("Char %c ->", str[i]);
+		if (squote == 2 || dquote == 2)
 			{
 				squote = 0;
 				dquote = 0;
 			}
-			else
-				tmp = chr2str(str[i], tmp);
-
-		}
-		if (str[i] == '\'')
+		if (str[i] == '\'' && dquote != 1)
 			squote++;
-		if (str[i] == '\"')
+		else if (str[i] == '\"' && squote != 1)
 			dquote++;
+		else if (squote || dquote)
+		{
+			//else
+				tmp = chr2str(str[i], tmp);
+		}
+		printf("NOT SAVED (%c)\n", str[i]);
+		printf("STATUS: s->%d  d->%d\n", squote, dquote);
 		i++;
 	}
-	return (tmp);
+	if (tmp)
+		return (tmp);
+	else
+		return (str);
 }
 
 char	*chr2str(char toadd, char *str)
@@ -189,6 +195,7 @@ char	*chr2str(char toadd, char *str)
 	char	*new;
 	int		i;
 
+	printf("SAVED (%c)\n", toadd);
 	i = 0;
 	if (!str)
 		new = malloc(2 * sizeof(char));

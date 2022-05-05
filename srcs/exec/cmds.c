@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmds.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 14:53:51 by ycarro            #+#    #+#             */
-/*   Updated: 2022/04/29 18:21:00 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/05 14:24:24 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 int		count_cmds(t_transformer *data);
 int		single_cmd(int npipes, t_transformer *smth,  t_env *env);
+void	single_cmd_2(int ofdin, int	ofdout, t_transformer *smth,  t_env *env);
 void	ft_execute(t_transformer *smth,  t_env *env);
+
 
 int	count_cmds(t_transformer *data)
 {
@@ -35,7 +37,6 @@ int	count_cmds(t_transformer *data)
 
 int	single_cmd(int npipes, t_transformer *smth,  t_env *env)
 {
-	int	pid;
 	int	ofdin;
 	int	ofdout;
 
@@ -43,8 +44,6 @@ int	single_cmd(int npipes, t_transformer *smth,  t_env *env)
 	{
 		ofdin = dup(STDIN_FILENO);
 		ofdout = dup(STDOUT_FILENO);
-
-		//------------------------
 		if (!*smth->cmd)
 			ft_error(smth, 1);
 		if (smth->fdin != -2)
@@ -59,28 +58,35 @@ int	single_cmd(int npipes, t_transformer *smth,  t_env *env)
 		}
 		if (smth->fdin == -1 || smth->fdout == -1)
 			ft_error(smth, 0);
-		//-----------------------------
-
-		//-----------------------------
-		if (ft_builtins(smth, env))
-		{
-			dup2(ofdin, STDIN_FILENO);
-			close(ofdin);
-			dup2(ofdout, STDOUT_FILENO);
-			close(ofdout);
-		}
-		else
-		{
-			pid = fork();
-			if (pid == 0)
-				ft_execute(smth, env);
-		}
-		//-----------------------------
-		sigignore(SIGINT);
-		wait(&pid);
+		single_cmd_2(ofdin, ofdout, smth, env);
 		return (1);
 	}
 	return (0);
+}
+
+void	single_cmd_2(int ofdin, int	ofdout, t_transformer *smth,  t_env *env)
+{
+	int	pid;
+
+	if (ft_builtins(smth, env))
+	{
+		dup2(ofdin, STDIN_FILENO);
+		close(ofdin);
+		dup2(ofdout, STDOUT_FILENO);
+		close(ofdout);
+	}
+	else
+	{
+		pid = fork();
+		if (pid == 0)
+			ft_execute(smth, env);
+	}
+	sigignore(SIGINT);
+	wait(&pid);
+	dup2(ofdin, STDIN_FILENO);
+	close(ofdin);
+	dup2(ofdout, STDOUT_FILENO);
+	close(ofdout);
 }
 
 void	ft_execute(t_transformer *smth,  t_env *env)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   other.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 14:32:09 by ycarro            #+#    #+#             */
-/*   Updated: 2022/04/27 18:06:34 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/05 12:41:25 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ char	*ft_vsrch_var(char *tofind, char **env)
 	orig = env;
 	len = ft_strlen(tofind);
 	result = 0;
+	tmp = 0;
 	while (*env)
 	{
 		if (!ft_strncmp(tofind, *env, len))
