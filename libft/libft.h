@@ -6,7 +6,7 @@
 /*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/03 19:11:28 by agallipo          #+#    #+#             */
-/*   Updated: 2022/04/27 10:35:47 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/05 15:46:04 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,4 +89,5 @@ void	ft_print_lst(t_list *lst);
 int		ft_strcmp(char *s1, char *s2);
 char	**ft_mtxdup(char **mtx);
 int		ft_mtxlen(char **mtx);
+char	**ft_mtxjoin(char **m1, char **m2);
 #endif

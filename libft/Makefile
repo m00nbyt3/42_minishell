@@ -6,7 +6,7 @@
 #    By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/21 13:59:32 by agallipo          #+#    #+#              #
-#    Updated: 2022/04/27 10:36:16 by agallipo         ###   ########.fr        #
+#    Updated: 2022/05/05 15:45:53 by agallipo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,7 +59,8 @@ SRCS	=	ft_atoi.c \
 			ft_print_lst.c \
 			ft_strcmp.c \
 			ft_mtxdup.c \
-			ft_mtxlen.c
+			ft_mtxlen.c \
+			ft_mtxjoin.c
 
 OBJS	= $(SRCS:.c=.o)
 OBJS_B	= $(BONUS:.c=.o)

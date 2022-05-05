@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmds1.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
+/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/05 14:38:30 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/05 16:34:44 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	ft_cd(t_transformer *runner, char **env);
 void	ft_pwd(void);
 void	ft_export(t_transformer *orunner, t_env *env);
 char	**ft_export_add(t_transformer *runner, char **environ);
+void	ft_unset(t_transformer *orunner, t_env *env);
+char	**find_and_quit(char **env, char *var);
 
 void	ft_echo(t_transformer *runner)
 {
@@ -95,9 +97,6 @@ int	add_to_env(t_transformer *orunner)
 
 void	ft_export(t_transformer *orunner, t_env *env)
 {
-	t_totems			*input;
-	t_transformer		*runner;
-	char				*sort;
 	char				**aux;
 
 	if (orunner->flags[1])
@@ -107,7 +106,6 @@ void	ft_export(t_transformer *orunner, t_env *env)
 			aux = ft_export_add(orunner, env->array);
 			env->array = aux;
 			aux = ft_export_add(orunner, env->export);
-			ft_free_matrix(env->export);
 			env->export = aux;
 		}
 		else
@@ -141,4 +139,53 @@ char	**ft_export_add(t_transformer *runner, char **environ)
 	}
 	env[i] = 0;
 	return (env);
+}
+
+void	ft_unset(t_transformer *orunner, t_env *env)
+{
+	char	**aux;
+	char	*env_name;
+	int		i;
+
+	if (orunner->flags[1])
+	{
+		aux = find_and_quit(env->array, orunner->flags[1]);
+		env->array = aux;
+	}
+}
+
+int		variable_match(char *var, char *name)
+{
+	int	i;
+
+	i = 0;
+	while (var[i] && name[i] && var[i] != '=')
+	{
+		if (var[i] != name[i])
+			return (0);
+		i++;
+	}
+	return (1);
+}
+char	**find_and_quit(char **env, char *var_name)
+{
+	int		i;
+	char	**copy;
+	char	**aux;
+
+	copy =  ft_mtxdup(env);
+	i = 0;
+	while (copy[i])
+	{
+		if (variable_match(copy[i], var_name))
+			break ;
+		i++;
+	}
+	copy[i] = 0;
+	aux = copy + (i + 1);
+	/*for (int j = 0; aux[j]; j++)
+		dprintf(2, "----%s---\n", aux[j]);
+	dprintf(2, "HOLAA\n");*/
+	copy = ft_mtxjoin(copy,  aux);
+	return (copy);
 }
