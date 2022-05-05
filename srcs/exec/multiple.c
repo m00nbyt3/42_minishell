@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   multiple.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
+/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/04/27 15:26:35 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/05 17:40:31 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,37 @@ void	ft_pipes(t_transformer **contents, t_totems *input, t_env *env);
 void	ft_while_pipes(t_transformer *content, t_tools *tools, t_env *env);
 void	ft_final_pipe(t_transformer *content, t_tools *tools, t_env *env, \
 		int i);
+void	allocate_fds(t_tools *tools);
+void	close_all_fds(t_tools *tools, int fdin, int fdout);
+
+void	allocate_fds(t_tools *tools)
+{
+	int	i;
+
+	i = 0;
+	tools->fd = malloc(tools->npipes * sizeof(int *));
+	while (i < tools->npipes)
+	{
+		tools->fd[i] = malloc(2 * sizeof(int));
+		tools->fd[i][0] = -42;
+		tools->fd[i][1] = -42;
+		i++;
+	}
+}
+
+void	close_all_fds(t_tools *tools, int fdin, int fdout)
+{
+	int	i;
+
+	i = 0;
+	while (i < tools->npipes)
+	{
+		if (tools->fd[i][0] != fdin && tools->fd[i][0] != fdout)
+			close(tools->fd[i][0]);
+		else if (tools->fd[i][1] != fdin && tools->fd[i][1] != fdout)
+			close(tools->fd[i][1]);
+	}
+}
 void	ft_pipes(t_transformer **contents, t_totems *input, t_env *env)
 {
 	int				i;
@@ -28,8 +59,7 @@ void	ft_pipes(t_transformer **contents, t_totems *input, t_env *env)
 	tools->pid = malloc((tools->npipes + 1) * sizeof(int));
 	if (single_cmd(tools->npipes, content, env))
 		return ;
-	tools->fd = malloc(tools->npipes * sizeof(int *));
-	tools->fd[0] = malloc(2 * sizeof(int));
+	allocate_fds(tools);
 	pipe(tools->fd[0]);
 	tools->pid[0] = fork();
 	if (tools->pid[0] == 0)
@@ -50,7 +80,6 @@ void	ft_while_pipes(t_transformer *content, t_tools *tools, t_env *env)
 	while (content && content->next)
 	{
 		close(tools->fd[i][WRITE_END]);
-		tools->fd[i + 1] = malloc(2 * sizeof(int));
 		pipe(tools->fd[i + 1]);
 		tools->pid[i] = fork();
 		if (tools->pid[i] == 0)

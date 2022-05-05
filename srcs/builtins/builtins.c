@@ -6,7 +6,7 @@
 /*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 12:14:54 by agallipo          #+#    #+#             */
-/*   Updated: 2022/04/29 17:14:14 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/05 15:04:44 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ int	select_cmd(t_transformer *runner, t_env *env, int ofdin, int ofdout)
 		ft_pwd();
 	else if (ft_strcmp(runner->cmd, "export"))
 		ft_export(runner, env);
+	else if (ft_strcmp(runner->cmd, "unset"))
+		ft_unset(runner, env);
 	else if (ft_strcmp(runner->cmd, "exit"))
 		exit(0); //Add function to exit freeing all
 	else

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
+/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/05 14:39:20 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/05 17:37:44 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,8 @@ char			*ft_srchlist_var(char *tofind, t_list **env);
 char			*ft_vsrch_var(char *tofind, char **env);
 void			ft_print_mtx(char **env);
 void			ft_print_export(char **env);
+void			ft_unset(t_transformer *orunner, t_env *env);
+char			**find_and_quit(char **env, char *var);
 
 //Totem
 t_totems		*sp_split(char *s);
@@ -166,6 +168,8 @@ void			ft_print_error(char *error, char *arg);
 void			ft_error(t_transformer *smth, int cond);
 void			here_doc(t_transformer *content);
 void			cutstr(char *str, char c);
+void			allocate_fds(t_tools *tools);
+void			close_all_fds(t_tools *tools, int fdin, int fdout);
 
 //System functions
 void			rl_replace_line(const char *text, int clear_undo);

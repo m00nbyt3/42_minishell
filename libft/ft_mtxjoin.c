@@ -1,39 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   ft_mtxjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/21 13:33:24 by agallipo          #+#    #+#             */
-/*   Updated: 2022/05/05 16:32:39 by agallipo         ###   ########.fr       */
+/*   Created: 2022/05/05 15:32:42 by agallipo          #+#    #+#             */
+/*   Updated: 2022/05/05 16:34:47 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strjoin(const char *s1, const char *s2)
+char	**ft_mtxjoin(char **m1, char **m2)
 {
-	char	*ptr;
-	size_t	lens1;
-	size_t	lens2;
-	size_t	i;
-	size_t	j;
+	char	**joined;
+	int		len1;
+	int		len2;
+	int		i;
+	int		j;
 
-	if (!s2)
+	if (!m2)
 		return (NULL);
-	lens1 = ft_strlen(s1);
-	lens2 = ft_strlen(s2);
-	ptr = malloc(lens1 + lens2 + 1);
-	if (!ptr)
-		return (NULL);
+	len1 = ft_mtxlen(m1);
+	len2 = ft_mtxlen(m2);
+	joined = malloc(sizeof(char *) * (len1 + len2 + 1));
 	i = 0;
+	while (m1[i])
+	{
+		joined[i] = ft_strdup(m1[i]);
+		i++;
+	}
+	//dprintf(2, "AAAQUII\n");
 	j = 0;
-	while (s1[i])
-		ptr[i++] = s1[j++];
-	j = 0;
-	while (s2[j])
-		ptr[i++] = s2[j++];
-	ptr[i] = '\0';
-	return (ptr);
+	while (m2[j])
+	{
+		joined[i] = ft_strdup(m2[j]);
+		i++;
+		j++;
+	}
+	joined[i] = 0;
+	return (joined);
 }
