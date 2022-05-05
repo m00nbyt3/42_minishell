@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/05 14:24:03 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/05 14:39:20 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ typedef struct s_global
 {
 	int	ctr_c;
 	int	ctr_b;
-	int	shlvl;
 }				t_global;
 
 typedef struct s_totems
@@ -80,7 +79,6 @@ typedef struct s_tools
 	t_list		*envlist;
 }				t_tools;
 
-
 typedef struct s_env
 {
 	t_list	*list;
@@ -96,11 +94,11 @@ t_global	g_util;
 //Utils
 t_list			*store_env_in_list(char **environ);
 void			run_cmd(char *complete, t_env *env);
-t_env			*store_environ();
-t_env			*basic_env();
+t_env			*store_environ(void);
+t_env			*basic_env(void);
 void			sort_mtx(char **mtx);
 char			*fvck_quotes(char *vector, char qtype);
-void			shell_level(t_env *env);
+void			shell_level(char **env);
 char			*set_quotes(char *str);
 char			*chr2str(char toadd, char *str);
 
@@ -111,14 +109,13 @@ int ofdin, int ofdout);
 void			ft_echo(t_transformer *runner);
 void			ft_cd(t_transformer *runner, char **env);
 void			ft_pwd(void);
-void   			ft_export(t_transformer *orunner, t_env *env);
+void			ft_export(t_transformer *orunner, t_env *env);
 char			**ft_export_add(t_transformer *runner, char **environ);
 void			set_fds(t_totems *input, int section);
 char			*ft_srchlist_var(char *tofind, t_list **env);
 char			*ft_vsrch_var(char *tofind, char **env);
 void			ft_print_mtx(char **env);
 void			ft_print_export(char **env);
-
 
 //Totem
 t_totems		*sp_split(char *s);
@@ -144,9 +141,11 @@ int				count_flags(t_totems *input, int sect);
 void			print_vector(t_transformer *runner);
 char			*getdollars(char *str);
 t_transformer	*transform(t_totems *input);
-void   			ft_clear_transformer(t_transformer **runner, void (*del)(void *));
+void			ft_clear_transformer(t_transformer **runner, \
+void (*del)(void *));
 //Pipes
-void			ft_pipes(t_transformer **contents,	 t_totems *input, t_env *env);
+void			ft_pipes(t_transformer **contents, t_totems *input, \
+t_env *env);
 void			ft_while_pipes(t_transformer *content, t_tools *tools, \
 t_env *env);
 void			ft_final_pipe(t_transformer *content, t_tools *tools, \

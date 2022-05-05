@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 11:58:28 by agallipo          #+#    #+#             */
-/*   Updated: 2022/05/05 14:03:53 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/05 14:31:25 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,49 +14,52 @@
 
 t_list	*store_env_in_list(char **environ);
 void	run_cmd(char *complete, t_env *env);
-t_env	*store_environ();
+t_env	*store_environ(void);
 void	sort_mtx(char **mtx);
 char	*fvck_quotes(char *vector, char qtype);
-t_env	*basic_env();
-void	shell_level(t_env *env);
+t_env	*basic_env(void);
+void	shell_level(char **env);
 char	*set_quotes(char *str);
 char	*chr2str(char toadd, char *str);
 
-t_env	*basic_env()
+t_env	*basic_env(void)
 {
-	t_env			*env;
+	t_env	*env;
 
 	env = malloc(sizeof(t_env));
-
-	env->array = malloc(sizeof(char *) * 3);
-	env->array[0] = ft_strdup(ft_strjoin("PWD=", getcwd(0,0)));
-	env->array[1] = ft_strdup(ft_strjoin("SHLVL=", ft_itoa(g_util.shlvl)));
+	env->array = ft_calloc(3, sizeof(char *));
+	env->array[0] = ft_strdup(ft_strjoin("PWD=", getcwd(0, 0)));
+	shell_level(env->array);
 	env->array[2] = 0;
 	env->export = ft_mtxdup(env->array);
 	env->list = store_env_in_list(env->array);
 	return (env);
 }
 
-void	shell_level(t_env *env)
+void	shell_level(char **env)
 {
 	int		i;
-	//char	*aux;
+	int		lvl;
+	char	*aux;
 
 	i = 0;
-	while (env->array[i])
+	lvl = 1;
+	while (env[i])
 	{
-		//dprintf(2, "AHHHH%s\n", env->array[i - 1]);
-		if (ft_strncmp("SHLVL=", env->array[i], 6) == 0)
+		if (ft_strncmp("SHLVL=", env[i], 6) == 0)
 		{
-			g_util.shlvl++;
+			aux = env[i] + 6;
+			lvl = ft_atoi(aux) + 1;
+			if (lvl <= 0)
+				lvl = 1;
 			break ;
 		}
 		i++;
 	}
-	env->array[i] = ft_strdup(ft_strjoin("SHLVL=", ft_itoa(g_util.shlvl)));
+	env[i] = ft_strdup(ft_strjoin("SHLVL=", ft_itoa(lvl)));
 }
 
-t_env	*store_environ()
+t_env	*store_environ(void)
 {
 	t_env			*env;
 	extern char		**environ;
@@ -65,11 +68,12 @@ t_env	*store_environ()
 		return (basic_env());
 	env = malloc(sizeof(t_env));
 	env->export = ft_mtxdup(environ);
-	env->array = environ;
+	env->array = ft_mtxdup(environ);
+	shell_level(env->array);
 	env->list = store_env_in_list(environ);
-	//shell_level(env);
 	return (env);
 }
+
 t_list	*store_env_in_list(char **environ)
 {
 	t_list	*env;
@@ -104,7 +108,7 @@ void	sort_mtx(char **mtx)
 	int		j;
 
 	i = 0;
-	while(mtx[i])
+	while (mtx[i])
 	{
 		j = i + 1;
 		while (mtx[j])
@@ -124,9 +128,9 @@ void	sort_mtx(char **mtx)
 
 char	*fvck_quotes(char *vector, char qtype)
 {
-	int 	count;
+	int		count;
 	char	*orig;
-	
+
 	orig = vector;
 	count = 0;
 	if (qtype == '\'')

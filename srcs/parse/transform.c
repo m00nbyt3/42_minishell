@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   transform.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
+/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 12:41:32 by ycarro            #+#    #+#             */
-/*   Updated: 2022/04/19 12:26:23 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/04 19:20:14 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,8 @@ void	find_fds(t_totems *input, t_transformer *runner)
 		runner->fdout = open(input->content, O_RDWR | O_CREAT | O_TRUNC, 0644);
 	if (runner->fdout == -1 || runner->fdin == -1)
 	{
-		dprintf(2, "W4V3shell: %s", input->content);
+		write(2, "W4V3shell: ", 11);
+		ft_putstr_fd(input->content, 2);
 		perror(" ");
 	}
 }

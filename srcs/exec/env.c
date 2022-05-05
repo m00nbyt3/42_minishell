@@ -6,7 +6,7 @@
 /*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 14:16:08 by agallipo          #+#    #+#             */
-/*   Updated: 2022/04/28 12:35:39 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/04 19:13:04 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ int	ft_check_directory(char **flags)
 
 	fd = open(flags[0], O_DIRECTORY);
 	if (fd != -1)
-		return (0);
+	{
+		write(2, "W4V3shell# ", 11);
+		perror(" ");
+	}
 	return (1);
 }
 
@@ -31,7 +34,6 @@ char	*ft_env_path(char **env, char *argv, char **flags)
 	char	**path;
 	char	*cmd;
 	int		i;
-
 
 	if (access(argv, X_OK) == 0)
 		return (argv);

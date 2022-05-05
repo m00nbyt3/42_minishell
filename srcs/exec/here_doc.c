@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 12:08:30 by agallipo          #+#    #+#             */
-/*   Updated: 2022/05/04 18:54:04 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/05 14:35:08 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ void	find_variable(char	*str, int fd, int *i)
 
 	orig = ft_strdup(&str[*i]);
 	aux = orig + 1;
-	dprintf(2, "%s\n", aux);
 	cutstr(aux, ' ');
 	aux = getenv(aux);
 	ft_putstr_fd(aux, fd);

@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/05 12:41:58 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/05 14:38:30 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	ft_echo(t_transformer *runner);
 void	ft_cd(t_transformer *runner, char **env);
 void	ft_pwd(void);
-void    ft_export(t_transformer *orunner, t_env *env);
+void	ft_export(t_transformer *orunner, t_env *env);
 char	**ft_export_add(t_transformer *runner, char **environ);
 
 void	ft_echo(t_transformer *runner)
@@ -79,7 +79,7 @@ void	ft_pwd(void)
 	free(buf);
 }
 
-int		add_to_env(t_transformer *orunner)
+int	add_to_env(t_transformer *orunner)
 {
 	int	i;
 
@@ -93,18 +93,18 @@ int		add_to_env(t_transformer *orunner)
 	return (0);
 }
 
-void    ft_export(t_transformer *orunner, t_env *env)
+void	ft_export(t_transformer *orunner, t_env *env)
 {
-    t_totems            *input;
-    t_transformer   	*runner;
-    char           		 *sort;
-	char **aux;
-	int i = 0;
-    if (orunner->flags[1])
+	t_totems			*input;
+	t_transformer		*runner;
+	char				*sort;
+	char				**aux;
+
+	if (orunner->flags[1])
 	{
 		if (add_to_env(orunner))
 		{
-    		aux = ft_export_add(orunner, env->array);
+			aux = ft_export_add(orunner, env->array);
 			env->array = aux;
 			aux = ft_export_add(orunner, env->export);
 			ft_free_matrix(env->export);
@@ -117,13 +117,12 @@ void    ft_export(t_transformer *orunner, t_env *env)
 		sort_mtx(env->export);
 }
 
-
 char	**ft_export_add(t_transformer *runner, char **environ)
 {
-	int len;
-	int i;
-	int j;
-	char **env;
+	int		len;
+	int		i;
+	int		j;
+	char	**env;
 
 	len = ft_mtxlen(runner->flags) + ft_mtxlen(environ);
 	env = malloc((len) * sizeof(char *));

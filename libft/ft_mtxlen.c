@@ -6,7 +6,7 @@
 /*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 10:34:55 by agallipo          #+#    #+#             */
-/*   Updated: 2022/04/27 11:33:37 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/04 11:58:46 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 int	ft_mtxlen(char **mtx)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (mtx[i])
 	{
-		while(mtx[i])
+		while (mtx[i])
 			i++;
 		return (i);
 	}

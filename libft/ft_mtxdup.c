@@ -6,7 +6,7 @@
 /*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 10:34:51 by agallipo          #+#    #+#             */
-/*   Updated: 2022/04/27 12:17:38 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/04 11:54:40 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	**ft_mtxdup(char **mtx)
 	char	**ret;
 	int		i;
 
-	ret = malloc((ft_mtxlen(mtx) + 1 ) * sizeof(char *));
+	ret = malloc((ft_mtxlen(mtx) + 1) * sizeof(char *));
 	i = 0;
 	while (mtx[i])
 	{

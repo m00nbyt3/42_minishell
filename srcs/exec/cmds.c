@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 14:53:51 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/05 14:24:24 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/05 14:37:57 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ int		count_cmds(t_transformer *data);
 int		single_cmd(int npipes, t_transformer *smth,  t_env *env);
 void	single_cmd_2(int ofdin, int	ofdout, t_transformer *smth,  t_env *env);
 void	ft_execute(t_transformer *smth,  t_env *env);
-
+void	redirection(t_transformer *smth, t_env *env);
+void	set_origina_fd(void);
 
 int	count_cmds(t_transformer *data)
 {
@@ -35,7 +36,25 @@ int	count_cmds(t_transformer *data)
 	return (i);
 }
 
-int	single_cmd(int npipes, t_transformer *smth,  t_env *env)
+void	redirection(t_transformer *smth, t_env *env)
+{
+	if (!*smth->cmd)
+		ft_error(smth, 1);
+	if (smth->fdin != -2)
+	{
+		dup2(smth->fdin, STDIN_FILENO);
+		close(smth->fdin);
+	}
+	if (smth->fdout != -2)
+	{
+		dup2(smth->fdout, STDOUT_FILENO);
+		close(smth->fdout);
+	}
+	if (smth->fdin == -1 || smth->fdout == -1)
+		ft_error(smth, 0);
+}
+
+void	set_origina_fd(void)
 {
 	int	ofdin;
 	int	ofdout;
@@ -93,8 +112,6 @@ void	ft_execute(t_transformer *smth,  t_env *env)
 {
 	char	*command;
 
-	if (ft_strcmp(smth->cmd, "./minishell"))
-		shell_level(env);
 	if (smth->heredoc)
 		here_doc(smth);
 	if (ft_builtins(smth, env))
@@ -102,8 +119,20 @@ void	ft_execute(t_transformer *smth,  t_env *env)
 	else
 	{
 		command = ft_env_path(env->array, smth->cmd, smth->flags);
+		if (command == 0)
+		{
+			write(2, "W4V3shell: ", 11);
+			ft_putstr_fd(smth->cmd, 2);
+			write(2, " :command not found\n", 20);
+			exit (1);
+		}
 		if (execve(command, smth->flags, env->array) < 0)
-			ft_error(smth, 1);
+		{
+			write(2, "W4V3shell: ", 11);
+			ft_putstr_fd(smth->cmd, 2);
+			perror(" ");
+			exit (1);
+		}
 	}
 	ft_free_matrix(smth->flags);
 	exit(0);
