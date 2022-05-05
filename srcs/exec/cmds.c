@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 14:53:51 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/05 14:37:57 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/05 14:47:13 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,19 @@ void	redirection(t_transformer *smth, t_env *env)
 }
 
 void	set_origina_fd(void)
+{
+	int	ofdin;
+	int	ofdout;
+
+	ofdin = dup(STDIN_FILENO);
+	ofdout = dup(STDOUT_FILENO);
+	dup2(ofdin, STDIN_FILENO);
+	close(ofdin);
+	dup2(ofdout, STDOUT_FILENO);
+	close(ofdout);
+}
+
+int		single_cmd(int npipes, t_transformer *smth,  t_env *env)
 {
 	int	ofdin;
 	int	ofdout;
