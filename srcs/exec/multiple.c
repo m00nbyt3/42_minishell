@@ -6,7 +6,7 @@
 /*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/06 16:37:27 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/06 16:49:04 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ft_while_pipes(t_transformer *content, t_tools *tools, t_env *env);
 void	ft_final_pipe(t_transformer *content, t_tools *tools, t_env *env, \
 		int i);
 void	allocate_fds(t_tools *tools);
-void	close_all_fds(t_tools *tools, int fdin, int fdout);
+void	close_all_fds(t_tools *tools);
 
 void	allocate_fds(t_tools *tools)
 {
@@ -34,17 +34,15 @@ void	allocate_fds(t_tools *tools)
 	}
 }
 
-void	close_all_fds(t_tools *tools, int fdin, int fdout)
+void	close_all_fds(t_tools *tools)
 {
 	int	i;
 
 	i = 0;
 	while (i < tools->npipes)
 	{
-		if (tools->fd[i][0] != fdin && tools->fd[i][0] != fdout)
-			close(tools->fd[i][0]);
-		if (tools->fd[i][1] != fdin && tools->fd[i][1] != fdout)
-			close(tools->fd[i][1]);
+		close(tools->fd[i][0]);
+		close(tools->fd[i][1]);
 		i++;
 	}
 }

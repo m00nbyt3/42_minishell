@@ -6,7 +6,7 @@
 /*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/06 09:40:36 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/06 16:49:21 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,7 +168,7 @@ void			ft_error(t_transformer *smth, int cond);
 void			here_doc(t_transformer *content);
 void			cutstr(char *str, char c);
 void			allocate_fds(t_tools *tools);
-void			close_all_fds(t_tools *tools, int fdin, int fdout);
+void			close_all_fds(t_tools *tools);
 
 //System functions
 void			rl_replace_line(const char *text, int clear_undo);
