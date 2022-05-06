@@ -6,7 +6,7 @@
 /*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/05 17:40:31 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/06 10:41:42 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ void	close_all_fds(t_tools *tools, int fdin, int fdout)
 	i = 0;
 	while (i < tools->npipes)
 	{
-		if (tools->fd[i][0] != fdin && tools->fd[i][0] != fdout)
+		if (tools->fd[i][0] == fdin /*&& tools->fd[i][0] != fdout*/)
 			close(tools->fd[i][0]);
-		else if (tools->fd[i][1] != fdin && tools->fd[i][1] != fdout)
+		else if (tools->fd[i][1] == fdin /*&& tools->fd[i][1] != fdout*/)
 			close(tools->fd[i][1]);
 	}
 }
@@ -63,7 +63,7 @@ void	ft_pipes(t_transformer **contents, t_totems *input, t_env *env)
 	pipe(tools->fd[0]);
 	tools->pid[0] = fork();
 	if (tools->pid[0] == 0)
-		ft_frst_child_pipe(content, env, tools->fd[0]);
+		ft_frst_child_pipe(content, env, tools);
 	else
 		ft_while_pipes(content, tools, env);
 	i = -1;
@@ -79,11 +79,11 @@ void	ft_while_pipes(t_transformer *content, t_tools *tools, t_env *env)
 	content = content->next;
 	while (content && content->next)
 	{
-		close(tools->fd[i][WRITE_END]);
 		pipe(tools->fd[i + 1]);
 		tools->pid[i] = fork();
+		close(tools->fd[i][WRITE_END]);
 		if (tools->pid[i] == 0)
-			ft_mid_child_pipe(content, env, tools->fd[i], tools->fd[i + 1]);
+			ft_mid_child_pipe(content, env, tools, i);
 		close(tools->fd[i][READ_END]);
 		i++;
 		content = content->next;
@@ -97,6 +97,6 @@ void	ft_final_pipe(t_transformer *content, t_tools *tools, t_env *env, int i)
 	close(tools->fd[i][WRITE_END]);
 	tools->pid[i] = fork();
 	if (tools->pid[i] == 0)
-		ft_bastard(content, env, tools->fd[i]);
+		ft_bastard(content, env, tools, i);
 	close(tools->fd[i][READ_END]);
 }

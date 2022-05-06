@@ -6,72 +6,80 @@
 /*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 14:52:39 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/05 17:51:22 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/06 10:43:26 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_frst_child_pipe(t_transformer *smth, t_env *env, int *fd);
-void	ft_mid_child_pipe(t_transformer *smth, t_env *env, int *fd1, int *fd2);
-void	ft_bastard(t_transformer *smth, t_env *env, int *fd1);
+void	ft_frst_child_pipe(t_transformer *smth, t_env *env, t_tools *tools);
+void	ft_mid_child_pipe(t_transformer *smth, t_env *env, t_tools *tools, int i);
+void	ft_bastard(t_transformer *smth, t_env *env, t_tools *tools, int i);
 
-void	ft_frst_child_pipe(t_transformer *smth, t_env *env, int *fd)
+void	ft_frst_child_pipe(t_transformer *smth, t_env *env,t_tools *tools)
 {
-	close(fd[READ_END]);
+	close(tools->fd[0][READ_END]);
 	if (smth->fdin != -2)
 	{
 		dup2(smth->fdin, STDIN_FILENO);
 		close(smth->fdin);
+		//close_all_fds(tools, tools->fd[0][READ_END], smth->fdin);
 	}
 	if (smth->fdout == -2)
 	{
-		dup2(fd[WRITE_END], STDOUT_FILENO);
-		close(fd[WRITE_END]);
+		dup2(tools->fd[0][WRITE_END], STDOUT_FILENO);
+		close(tools->fd[0][WRITE_END]);
+		//close_all_fds(tools, tools->fd[0][READ_END], tools->fd[0][WRITE_END]);
 	}
 	else
 	{
 		dup2(smth->fdout, STDOUT_FILENO);
 		close(smth->fdout);
+		//close_all_fds(tools, tools->fd[0][READ_END], smth->fdout);
 	}
 	if (smth->fdin == -1 || smth->fdout == -1)
 		exit (1);
 	ft_execute(smth, env);
 }
 
-void	ft_mid_child_pipe(t_transformer *smth, t_env *env, int *fd1, int *fd2)
+void	ft_mid_child_pipe(t_transformer *smth, t_env *env, t_tools *tools, int i)
 {
+	close(tools->fd[i][WRITE_END]);
 	if (smth->fdin == -2)
 	{
-		dup2(fd1[READ_END], STDIN_FILENO);
-		close(fd1[READ_END]);
+		dup2(tools->fd[i][READ_END], STDIN_FILENO);
+		close(tools->fd[i][READ_END]);
+		//close_all_fds(tools, tools->fd[i][READ_END], tools->fd[i][WRITE_END]);
 	}
 	else
 	{
 		dup2(smth->fdin, STDIN_FILENO);
 		close(smth->fdin);
+		//close_all_fds(tools, smth->fdin, tools->fd[i][WRITE_END]);
 	}
 	if (smth->fdout == -2)
 	{
-		dup2(fd2[WRITE_END], STDOUT_FILENO);
-		close(fd2[WRITE_END]);
+		dup2(tools->fd[i + 1][WRITE_END], STDOUT_FILENO);
+		close(tools->fd[i + 1][WRITE_END]);
+		//close_all_fds(tools, smth->fdin, tools->fd[i][WRITE_END]);
 	}
 	else
 	{
 		dup2(smth->fdout, STDOUT_FILENO);
 		close(smth->fdout);
 	}
+	close(tools->fd[i][READ_END]);
 	if (smth->fdin == -1 || smth->fdout == -1)
 		exit (1);
 	ft_execute(smth, env);
 }
 
-void	ft_bastard(t_transformer *smth, t_env *env, int *fd1)
+void	ft_bastard(t_transformer *smth, t_env *env, t_tools *tools, int i)
 {
 	if (smth->fdin == -2)
 	{
-		dup2(fd1[READ_END], STDIN_FILENO);
-		close(fd1[READ_END]);
+		dup2(tools->fd[i][READ_END], STDIN_FILENO);
+		close(tools->fd[i][READ_END]);
 	}
 	else
 	{

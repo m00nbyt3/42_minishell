@@ -6,7 +6,7 @@
 /*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/05 17:37:44 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/06 09:40:36 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,10 +153,9 @@ t_env *env);
 void			ft_final_pipe(t_transformer *content, t_tools *tools, \
 t_env *env, int i);
 void			ft_exit_process(int condition, char *argv);
-void			ft_frst_child_pipe(t_transformer *smth, t_env *env, int *fd);
-void			ft_mid_child_pipe(t_transformer *smth, t_env *env, int *fd1, \
-int *fd2);
-void			ft_bastard(t_transformer *smth, t_env *env, int *fd1);
+void			ft_frst_child_pipe(t_transformer *smth, t_env *env, t_tools *tools);
+void			ft_mid_child_pipe(t_transformer *smth, t_env *env, t_tools *tools, int i);
+void			ft_bastard(t_transformer *smth, t_env *env, t_tools *tools, int i);
 int				count_cmds(t_transformer *data);
 int				single_cmd(int npipes, t_transformer *smth, t_env *env);
 void			single_cmd_2(int ofdin, int	ofdout, t_transformer *smth,  t_env *env);

@@ -6,7 +6,7 @@
 /*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 12:41:32 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/04 19:20:14 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/06 10:53:20 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,13 @@ void	set_doubles(t_totems *input, t_transformer *runner)
 	if (input->type == 'h')
 		runner->heredoc = input->content;
 	if (input->type == 'p')
-		runner->append = input->content;
+		runner->fdout = open(input->content, O_RDWR | O_CREAT | O_APPEND, 0644);
+		//runner->append = input->content;
+	if (runner->fdout == -1 || runner->fdin == -1)
+	{
+		write(2, "W4V3shell: ", 11);
+		ft_putstr_fd(input->content, 2);
+		perror(" ");
+	}
 	runner->qtype = input->qtype;
 }

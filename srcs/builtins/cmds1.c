@@ -6,7 +6,7 @@
 /*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/05 16:34:44 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/06 09:26:09 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,8 @@ void	ft_unset(t_transformer *orunner, t_env *env)
 	{
 		aux = find_and_quit(env->array, orunner->flags[1]);
 		env->array = aux;
+		aux = find_and_quit(env->export, orunner->flags[1]);
+		env->export = aux;
 	}
 }
 
