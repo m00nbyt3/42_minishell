@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
+/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 12:08:30 by agallipo          #+#    #+#             */
-/*   Updated: 2022/05/05 14:35:08 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/06 17:11:44 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	here_doc(t_transformer *content)
 	int		i;
 	int		quotes;
 
+	set_origina_fd();
 	str = malloc(sizeof(char *));
 	content->fdin = open("/private/tmp/tmp", O_RDWR | O_CREAT | O_TRUNC, 0644);
 	quotes = 0;

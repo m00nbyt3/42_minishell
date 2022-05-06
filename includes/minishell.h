@@ -6,7 +6,7 @@
 /*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/06 16:49:21 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/06 17:12:31 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ typedef struct s_global
 {
 	int	ctr_c;
 	int	ctr_b;
+	int ofdin;
+	int	ofdout;
 }				t_global;
 
 typedef struct s_totems
@@ -101,6 +103,7 @@ char			*fvck_quotes(char *vector, char qtype);
 void			shell_level(char **env);
 char			*set_quotes(char *str);
 char			*chr2str(char toadd, char *str);
+void			set_origina_fd(void);
 
 //Builtins
 int				ft_builtins(t_transformer *runner, t_env *env);

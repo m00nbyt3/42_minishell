@@ -6,7 +6,7 @@
 /*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 14:53:51 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/06 12:50:04 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/06 17:09:50 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,15 +56,10 @@ void	redirection(t_transformer *smth, t_env *env)
 
 void	set_origina_fd(void)
 {
-	int	ofdin;
-	int	ofdout;
-
-	ofdin = dup(STDIN_FILENO);
-	ofdout = dup(STDOUT_FILENO);
-	dup2(ofdin, STDIN_FILENO);
-	close(ofdin);
-	dup2(ofdout, STDOUT_FILENO);
-	close(ofdout);
+	dup2(g_util.ofdin, STDIN_FILENO);
+	close(g_util.ofdin);
+	dup2(g_util.ofdout, STDOUT_FILENO);
+	close(g_util.ofdout);
 }
 
 int		single_cmd(int npipes, t_transformer *smth,  t_env *env)

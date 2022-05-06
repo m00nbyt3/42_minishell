@@ -6,7 +6,7 @@
 /*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/06 16:49:04 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/06 17:07:35 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ void	ft_pipes(t_transformer **contents, t_totems *input, t_env *env)
 	t_transformer	*content;
 	t_tools			*tools;
 
+	g_util.ofdin = dup(STDIN_FILENO);
+	g_util.ofdout = dup(STDOUT_FILENO);
 	content = *contents;
 	tools = malloc(sizeof(t_tools));
 	tools->npipes = count_cmds(content) - 1;
@@ -64,9 +66,7 @@ void	ft_pipes(t_transformer **contents, t_totems *input, t_env *env)
 	if (tools->pid[0] == 0)
 		ft_frst_child_pipe(content, env, tools);
 	else
-	{
 		ft_while_pipes(content, tools, env);
-	}
 	i = -1;
 	while (++i < (tools->npipes + 1))
 		wait(&(tools->pid[i]));
