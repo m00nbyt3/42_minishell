@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   transform.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 12:41:32 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/06 10:53:20 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/07 15:33:22 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ void	set_doubles(t_totems *input, t_transformer *runner)
 		runner->heredoc = input->content;
 	if (input->type == 'p')
 		runner->fdout = open(input->content, O_RDWR | O_CREAT | O_APPEND, 0644);
-		//runner->append = input->content;
 	if (runner->fdout == -1 || runner->fdin == -1)
 	{
 		write(2, "W4V3shell: ", 11);

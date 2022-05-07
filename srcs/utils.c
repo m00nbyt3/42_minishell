@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 11:58:28 by agallipo          #+#    #+#             */
-/*   Updated: 2022/05/05 14:31:25 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/07 18:59:14 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,9 @@ void	sort_mtx(char **mtx);
 char	*fvck_quotes(char *vector, char qtype);
 t_env	*basic_env(void);
 void	shell_level(char **env);
-char	*set_quotes(char *str);
-char	*chr2str(char toadd, char *str);
+char	*set_quotes(char *str, t_oncreate *shared);
+char	*inside_quote(char *str, char **tmp, t_oncreate *shared, int *force);
+char	*chr2str(char toadd, char *str, int *force);
 
 t_env	*basic_env(void)
 {
@@ -156,51 +157,53 @@ char	*fvck_quotes(char *vector, char qtype)
 	return (orig);
 }
 
-char	*set_quotes(char *str)
+char	*set_quotes(char *str, t_oncreate *shared)
 {
-	int		i;
-	int		squote;
-	int		dquote;
 	char	*tmp;
+	int		force;
 
 	tmp = 0;
-	squote = 0;
-	dquote = 0;
-	i = 0;
-	while(str[i])
+	force = 0;
+	while(*str)
 	{
-		printf("Char %c ->", str[i]);
-		if (squote == 2 || dquote == 2)
-			{
-				squote = 0;
-				dquote = 0;
-			}
-		if (str[i] == '\'' && dquote != 1)
-			squote++;
-		else if (str[i] == '\"' && squote != 1)
-			dquote++;
-		else if (squote || dquote)
+		if (*str == '\'' || *str == '\"')
+			str = inside_quote(str, &tmp, shared, &force);
+		else
 		{
-			//else
-				tmp = chr2str(str[i], tmp);
+			shared->qtype = 0;
+			tmp = chr2str(*str, tmp, &force);
 		}
-		printf("NOT SAVED (%c)\n", str[i]);
-		printf("STATUS: s->%d  d->%d\n", squote, dquote);
-		i++;
+		str++;
 	}
 	if (tmp)
 		return (tmp);
 	else
-		return (str);
+		return (ft_strdup(str));
 }
 
-char	*chr2str(char toadd, char *str)
+char	*inside_quote(char *str, char **tmp, t_oncreate *shared, int *force)
+{
+	char qtype = *str;
+
+	str++;
+	if (!(*force))
+			shared->qtype = qtype;
+	while(*str != qtype)
+	{		
+		*tmp = chr2str(*str, *tmp, force);
+		str++;
+	}
+	return (str);
+}
+
+char	*chr2str(char toadd, char *str, int *force)
 {
 	char	*new;
 	int		i;
 
-	printf("SAVED (%c)\n", toadd);
 	i = 0;
+	if (toadd == '$')
+		*force = 1;
 	if (!str)
 		new = malloc(2 * sizeof(char));
 	else
@@ -216,4 +219,9 @@ char	*chr2str(char toadd, char *str)
 	new[i] = toadd;
 	new[i + 1] = 0;
 	return(new);
+}
+
+void	cleaan_quotes(t_totems *input)
+{
+
 }

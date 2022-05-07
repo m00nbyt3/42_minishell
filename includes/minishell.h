@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/06 17:12:31 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/07 17:57:12 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,9 @@ t_env			*basic_env(void);
 void			sort_mtx(char **mtx);
 char			*fvck_quotes(char *vector, char qtype);
 void			shell_level(char **env);
-char			*set_quotes(char *str);
-char			*chr2str(char toadd, char *str);
+char			*set_quotes(char *str, t_oncreate *shared);
+char			*inside_quote(char *str, char **tmp, t_oncreate *shared, int *force);
+char			*chr2str(char toadd, char *str, int *force);
 void			set_origina_fd(void);
 
 //Builtins

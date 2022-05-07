@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/05 14:34:49 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/07 18:59:27 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	main(void)
 		input = 0;
 		if (!ft_chk_quotes(str) && !checkreds(str))
 			input = sp_split(str);
+		//ft_print_totems(input);
 		runner = transform(input);
 		if (input)
 		{

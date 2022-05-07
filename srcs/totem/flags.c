@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 14:57:01 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/05 14:32:09 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/07 15:49:48 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	vectorize_flags(t_transformer *runner, t_totems *input, int sect)
 
 void	save_flag(t_totems *input, int sect, char **vector, int *i)
 {
+	//clean_quotes(input);
 	if ((input->type == 'f' || input->type == 'a' || input->type == 'c') \
 		&& input->section == sect)
 	{
