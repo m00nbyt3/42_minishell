@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
+/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 11:58:28 by agallipo          #+#    #+#             */
-/*   Updated: 2022/05/05 14:31:25 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/07 16:57:54 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,11 @@ t_env	*basic_env(void)
 	t_env	*env;
 
 	env = malloc(sizeof(t_env));
-	env->array = ft_calloc(3, sizeof(char *));
+	env->array = ft_calloc(4, sizeof(char *));
 	env->array[0] = ft_strdup(ft_strjoin("PWD=", getcwd(0, 0)));
 	shell_level(env->array);
-	env->array[2] = 0;
+	env->array[2] = ft_strdup("_=/usr/bin/env");
+	env->array[3] = 0;
 	env->export = ft_mtxdup(env->array);
 	env->list = store_env_in_list(env->array);
 	return (env);

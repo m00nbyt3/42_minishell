@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
+/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/05 14:34:49 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/07 17:21:21 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	main(void)
 
 	env = store_environ();
 	signal(SIGINT, sign);
-	signal(SIGQUIT, sign);
+	signal(SIGQUIT, SIG_IGN);
 	while (42)
 	{
 		str = read_my_line(str);
@@ -72,22 +72,16 @@ void	ctrl_d(char *str, t_transformer *runner)
 	}
 }
 
-//mirar rl_replace_line
 void	sign(int sig)
 {
 	if (sig == SIGINT)
 	{
 		g_util.ctr_c = 1;
+		g_util.exit_value = 130;
 		write(1, "\n", 1);
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
-	}
-	if (sig == SIGQUIT)
-	{
-		g_util.ctr_b = 1;
-		signal(SIGQUIT, SIG_IGN);
-		//ft_putstr_fd("\b\b", 1);
 	}
 }
 

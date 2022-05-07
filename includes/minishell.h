@@ -6,7 +6,7 @@
 /*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/06 17:12:31 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/07 16:59:25 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct s_global
 	int	ctr_b;
 	int ofdin;
 	int	ofdout;
+	int	exit_value;
 }				t_global;
 
 typedef struct s_totems
@@ -104,6 +105,7 @@ void			shell_level(char **env);
 char			*set_quotes(char *str);
 char			*chr2str(char toadd, char *str);
 void			set_origina_fd(void);
+void			set_last_command(t_transformer *smth,  t_env *env);
 
 //Builtins
 int				ft_builtins(t_transformer *runner, t_env *env);
@@ -112,15 +114,19 @@ int ofdin, int ofdout);
 void			ft_echo(t_transformer *runner);
 void			ft_cd(t_transformer *runner, char **env);
 void			ft_pwd(void);
-void			ft_export(t_transformer *orunner, t_env *env);
-char			**ft_export_add(t_transformer *runner, char **environ);
 void			set_fds(t_totems *input, int section);
 char			*ft_srchlist_var(char *tofind, t_list **env);
 char			*ft_vsrch_var(char *tofind, char **env);
 void			ft_print_mtx(char **env);
 void			ft_print_export(char **env);
+void			ft_export(t_transformer *orunner, t_env *env);
+int				var_exist(t_transformer *runner, char **environ);
+char			**replace_env(t_transformer *runner, char **environ);
+char			**ft_export_add(t_transformer *runner, char **environ);
 void			ft_unset(t_transformer *orunner, t_env *env);
 char			**find_and_quit(char **env, char *var);
+int				variable_match(char *var, char *name);
+int				add_to_env(t_transformer *orunner);
 
 //Totem
 t_totems		*sp_split(char *s);
