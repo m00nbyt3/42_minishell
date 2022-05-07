@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+         #
+#    By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/07 10:43:28 by agallipo          #+#    #+#              #
-#    Updated: 2022/05/04 12:28:21 by ycarro           ###   ########.fr        #
+#    Updated: 2022/05/06 18:10:21 by agallipo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,8 @@ SRCS :=	main.c \
 		exec/childs.c \
 		exec/cmds.c \
 		exec/here_doc.c \
-		exec/error.c
+		exec/error.c \
+		builtins/export.c
 
 OBJS := $(SRCS:%.c=obj/%.o)
 

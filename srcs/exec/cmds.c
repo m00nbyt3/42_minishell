@@ -6,7 +6,7 @@
 /*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 14:53:51 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/06 17:09:50 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/07 17:24:40 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	single_cmd_2(int ofdin, int	ofdout, t_transformer *smth,  t_env *env);
 void	ft_execute(t_transformer *smth,  t_env *env);
 void	redirection(t_transformer *smth, t_env *env);
 void	set_origina_fd(void);
+void	set_last_command(t_transformer *smth,  t_env *env);
 
 int	count_cmds(t_transformer *data)
 {
@@ -116,6 +117,22 @@ void	single_cmd_2(int ofdin, int	ofdout, t_transformer *smth,  t_env *env)
 	close(ofdout);
 }
 
+void	set_last_command(t_transformer *smth,  t_env *env)
+{
+	int		i;
+
+	i = 0;
+	while (env->array[i])
+	{
+		if (ft_strncmp(env->array[i], "_=", 2) == 0)
+		{
+			break ;
+		}
+		i++;
+	}
+	env->array[i] = ft_strdup("_=/usr/bin/env");
+}
+
 void	ft_execute(t_transformer *smth,  t_env *env)
 {
 	char	*command;
@@ -132,6 +149,7 @@ void	ft_execute(t_transformer *smth,  t_env *env)
 			write(2, "W4V3shell: ", 11);
 			ft_putstr_fd(smth->cmd, 2);
 			write(2, " :command not found\n", 20);
+			g_util.exit_value = 127;
 			exit (1);
 		}
 		if (execve(command, smth->flags, env->array) < 0)
@@ -139,6 +157,7 @@ void	ft_execute(t_transformer *smth,  t_env *env)
 			write(2, "W4V3shell: ", 11);
 			ft_putstr_fd(smth->cmd, 2);
 			perror(" ");
+			g_util.exit_value = 1;
 			exit (1);
 		}
 	}

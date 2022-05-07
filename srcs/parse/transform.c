@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 12:41:32 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/07 15:33:22 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/07 19:03:14 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ void	find_fds(t_totems *input, t_transformer *runner)
 		write(2, "W4V3shell: ", 11);
 		ft_putstr_fd(input->content, 2);
 		perror(" ");
+		g_util.exit_value = 1;
 	}
 }
 
@@ -93,6 +94,7 @@ void	set_doubles(t_totems *input, t_transformer *runner)
 		write(2, "W4V3shell: ", 11);
 		ft_putstr_fd(input->content, 2);
 		perror(" ");
+		g_util.exit_value = 1;
 	}
 	runner->qtype = input->qtype;
 }
