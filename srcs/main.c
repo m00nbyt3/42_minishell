@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/07 19:03:35 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/09 12:25:08 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	sign(int sig);
 void	ctrl_d(char *str, t_transformer *runner);
 char	*read_my_line(char *str);
 int		checkreds(char *str);
+int		checkpipes(char *str, int count, int things, int err);
+
 
 int	main(void)
 {
@@ -35,9 +37,8 @@ int	main(void)
 		input = 0;
 		if (!ft_chk_quotes(str) && !checkreds(str))
 			input = sp_split(str);
-		//ft_print_totems(input);
 		runner = transform(input);
-		if (input)
+		if (input && checkargs(runner))
 		{
 			ft_pipes(&runner, input, env);
 			ft_clear_input(&input, free);
@@ -93,6 +94,8 @@ int	checkreds(char *str)
 	int	i;
 	int	first;
 
+	if (!checkpipes(str, 0, 0, 0))
+		return (1);
 	smaller = 0;
 	bigger = 0;
 	first = 1;
@@ -123,4 +126,29 @@ int	checkreds(char *str)
 	if ((smaller || bigger) && !first)
 		return (1);
 	return (0);
+}
+
+int	checkpipes(char *str, int count, int things, int err)
+{
+	if (*str == '|')
+		err++;
+	while (*str)
+	{
+		if (*str == '|')
+		{
+			count++;
+			things = 0;
+		}
+		else
+			things++;
+		str++;
+	}
+	if (things == 0 || err)
+	{
+		write(2, "W4V3shell: syntax error near unexpected token `|'\n", 50);
+		g_util.exit_value = 1;
+		return (0);
+	}
+	else
+		return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 11:58:28 by agallipo          #+#    #+#             */
-/*   Updated: 2022/05/07 19:03:49 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/09 12:27:42 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	shell_level(char **env);
 char	*set_quotes(char *str, t_oncreate *shared);
 char	*inside_quote(char *str, char **tmp, t_oncreate *shared, int *force);
 char	*chr2str(char toadd, char *str, int *force);
+int		checkargs(t_transformer *runner);
 
 t_env	*basic_env(void)
 {
@@ -222,7 +223,21 @@ char	*chr2str(char toadd, char *str, int *force)
 	return(new);
 }
 
-void	cleaan_quotes(t_totems *input)
+int		checkargs(t_transformer *runner)
 {
+	void	*orig;
 
+	orig =  runner;
+	while (runner)
+	{
+		if (!(runner->cmd))
+		{
+			write(2, "W4V3shell: command not found\n", 29);
+			g_util.exit_value = 127;
+			return (0);
+		}
+		runner = runner->next;
+	}
+	runner = orig;
+	return (1);
 }

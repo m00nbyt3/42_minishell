@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmds.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 14:53:51 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/07 17:24:40 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/09 12:26:22 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,7 @@ void	ft_execute(t_transformer *smth,  t_env *env)
 		{
 			write(2, "W4V3shell: ", 11);
 			ft_putstr_fd(smth->cmd, 2);
-			write(2, " :command not found\n", 20);
+			write(2, " : command not found\n", 20);
 			g_util.exit_value = 127;
 			exit (1);
 		}

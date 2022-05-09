@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 12:41:32 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/07 19:03:14 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/09 12:04:05 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ t_transformer	*transform(t_totems *input)
 	runner = malloc(sizeof(t_transformer));
 	orig = runner;
 	lap = 0;
+	runner->cmd = 0;
 	runner->fdin = -2;
 	runner->fdout = -2;
 	runner->heredoc = 0;

@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/07 19:04:00 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/09 11:54:49 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,8 @@ char			*inside_quote(char *str, char **tmp, t_oncreate *shared, int *force);
 char			*chr2str(char toadd, char *str, int *force);
 void			set_origina_fd(void);
 void			set_last_command(t_transformer *smth,  t_env *env);
+int				checkargs(t_transformer *runner);
+
 
 //Builtins
 int				ft_builtins(t_transformer *runner, t_env *env);
