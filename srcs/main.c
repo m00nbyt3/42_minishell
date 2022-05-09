@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/09 18:49:55 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/09 19:56:46 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ int	main(void)
 		ctrl_d(str, runner);
 		add_history(str);
 		input = 0;
+		g_util.ofdin = -1;
+		g_util.ofdout = -1;
 		if (!ft_chk_quotes(str) && !checkreds(str))
 			input = sp_split(str);
 		runner = transform(input, env);
