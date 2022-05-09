@@ -6,7 +6,7 @@
 /*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/09 15:19:28 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/09 16:21:08 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@ int	main(void)
 	t_transformer	*runner;
 
 	env = store_environ();
-	signal(SIGINT, sign);
-	signal(SIGQUIT, SIG_IGN);
 	while (42)
 	{
+		signal(SIGINT, sign);
+		signal(SIGQUIT, sign);
 		str = read_my_line(str);
 		ctrl_d(str, runner);
 		add_history(str);
@@ -83,6 +83,11 @@ void	sign(int sig)
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
+	}
+	if (sig == SIGQUIT)
+	{
+		signal(SIGQUIT, SIG_IGN);
+		g_util.ctr_c = 1;
 	}
 }
 
