@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/09 11:54:49 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/09 14:48:14 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,6 +177,7 @@ char			*ft_env_path(char **env, char *argv, char **flags);
 char			**ft_path_split(char **env);
 void			ft_print_error(char *error, char *arg);
 void			ft_error(t_transformer *smth, int cond);
+int				rederror(void);
 void			here_doc(t_transformer *content);
 void			cutstr(char *str, char c);
 void			allocate_fds(t_tools *tools);

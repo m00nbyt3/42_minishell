@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/09 12:25:08 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/09 14:47:56 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	ctrl_d(char *str, t_transformer *runner);
 char	*read_my_line(char *str);
 int		checkreds(char *str);
 int		checkpipes(char *str, int count, int things, int err);
-
 
 int	main(void)
 {
@@ -98,6 +97,38 @@ int	checkreds(char *str)
 		return (1);
 	smaller = 0;
 	bigger = 0;
+	while (*str)
+	{
+		if (*str == '<')
+			smaller++;
+		else if (*str == '>')
+			bigger++;
+		else if (*str == '|')
+		{
+			if ((smaller || bigger) && !first)
+				return (rederror());
+			smaller = 0;
+			bigger = 0;
+			first = 0;
+		}
+		else
+		{
+			smaller = 0;
+			bigger = 0;
+			first++;
+		}
+		if (smaller && bigger)
+			return (rederror());
+		if (smaller > 2 || bigger > 2)
+			return (rederror());
+		str++;
+
+	}
+	if ((smaller || bigger) && !first)
+		return (rederror());
+	return (0);
+	/*smaller = 0;
+	bigger = 0;
 	first = 1;
 	while (*str)
 	{
@@ -116,8 +147,12 @@ int	checkreds(char *str)
 		else if (*str == '>')
 			bigger++;
 		else if (!smaller && !bigger && *str != ' ')
+		{
+			smaller = 0;
+			bigger = 0;
 			first++;
-		if (smaller && bigger)
+		}
+		if (smaller && bigger && !first)
 			return (1);
 		if (smaller > 2 || bigger > 2)
 			return (1);
@@ -125,7 +160,7 @@ int	checkreds(char *str)
 	}
 	if ((smaller || bigger) && !first)
 		return (1);
-	return (0);
+	return (0);*/
 }
 
 int	checkpipes(char *str, int count, int things, int err)
