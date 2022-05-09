@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmds.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 14:53:51 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/09 15:28:01 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/09 16:35:06 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,10 @@ void	single_cmd_2(int ofdin, int	ofdout, t_transformer *smth,  t_env *env)
 	}
 	sigignore(SIGINT);
 	wait(&pid);
+	if (WIFEXITED(pid))
+			g_util.exit_value = WEXITSTATUS(pid);
+	if (WIFSIGNALED(pid))
+		g_util.exit_value = 130;
 	dup2(ofdin, STDIN_FILENO);
 	close(ofdin);
 	dup2(ofdout, STDOUT_FILENO);
@@ -132,7 +136,7 @@ void	ft_execute(t_transformer *smth,  t_env *env)
 			ft_putstr_fd(smth->cmd, 2);
 			write(2, " : command not found\n", 21);
 			g_util.exit_value = 127;
-			exit (1);
+			exit (127);
 		}
 		if (execve(command, smth->flags, env->array) < 0)
 		{

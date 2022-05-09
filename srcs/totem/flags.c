@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   flags.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 14:57:01 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/09 15:17:46 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/09 16:01:09 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ char	*getdollars(char *str, t_env *env)
 				free(orig);
 				return("$");
 			}
+			if (orig[i + 1] == '?' && (orig[i + 2] == ' ' || !orig[i + 2]))
+				return(ft_itoa(g_util.exit_value));
 			aux = ft_strdup(orig + (i + 1));
 			cutstr(aux, ' ');
 			aux = get_my_env(aux, env->array);

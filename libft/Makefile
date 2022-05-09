@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+         #
+#    By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/21 13:59:32 by agallipo          #+#    #+#              #
-#    Updated: 2022/05/05 15:45:53 by agallipo         ###   ########.fr        #
+#    Updated: 2022/05/09 15:43:51 by ycarro           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,7 +60,8 @@ SRCS	=	ft_atoi.c \
 			ft_strcmp.c \
 			ft_mtxdup.c \
 			ft_mtxlen.c \
-			ft_mtxjoin.c
+			ft_mtxjoin.c \
+			ft_mtxcat.c
 
 OBJS	= $(SRCS:.c=.o)
 OBJS_B	= $(BONUS:.c=.o)

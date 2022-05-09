@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   multiple.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/07 16:07:39 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/09 16:44:01 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,13 @@ void	ft_pipes(t_transformer **contents, t_totems *input, t_env *env)
 		ft_while_pipes(content, tools, env);
 	i = -1;
 	while (++i < (tools->npipes + 1))
+	{
 		wait(&(tools->pid[i]));
+		if (WIFEXITED(tools->pid[i]))
+			g_util.exit_value = WEXITSTATUS(tools->pid[i]);
+		if (WIFSIGNALED(tools->pid[i]))
+			g_util.exit_value = 130;
+	}
 }
 
 void	ft_while_pipes(t_transformer *content, t_tools *tools, t_env *env)
