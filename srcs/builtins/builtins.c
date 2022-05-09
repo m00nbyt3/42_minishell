@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 12:14:54 by agallipo          #+#    #+#             */
-/*   Updated: 2022/05/07 16:18:44 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/09 18:02:41 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	select_cmd(t_transformer *runner, t_env *env, int ofdin, int ofdout)
 	else if (ft_strcmp(runner->cmd, "unset"))
 		ft_unset(runner, env);
 	else if (ft_strcmp(runner->cmd, "exit"))
-		exit(0); //Add function to exit freeing all
+		exit(0);
 	else
 	{
 		runner = orig;

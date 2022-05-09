@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/09 16:21:08 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/09 18:49:55 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ int	main(void)
 		ft_clear_transformer(&runner, free);
 		g_util.ctr_c = 0;
 		g_util.ctr_b = 0;
+		close(g_util.ofdin);
+		close(g_util.ofdout);
 	}
 }
 
@@ -132,58 +134,27 @@ int	checkreds(char *str)
 	if ((smaller || bigger) && !first)
 		return (rederror());
 	return (0);
-	/*smaller = 0;
-	bigger = 0;
-	first = 1;
-	while (*str)
-	{
-		i++;
-		if (*str == '|')
-		{
-			if ((smaller || bigger) && !first)
-				return (1);
-			smaller = 0;
-			bigger = 0;
-			first = 0;
-			str++;
-		}
-		if (*str == '<')
-			smaller++;
-		else if (*str == '>')
-			bigger++;
-		else if (!smaller && !bigger && *str != ' ')
-		{
-			smaller = 0;
-			bigger = 0;
-			first++;
-		}
-		if (smaller && bigger && !first)
-			return (1);
-		if (smaller > 2 || bigger > 2)
-			return (1);
-		str++;
-	}
-	if ((smaller || bigger) && !first)
-		return (1);
-	return (0);*/
 }
 
 int	checkpipes(char *str, int count, int things, int err)
 {
-	if (*str == '|')
+	int i;
+
+	i = 0;
+	if (str[i] == '|')
 		err++;
-	while (*str)
+	while (str[i])
 	{
-		if (*str == '|')
+		if (str[i] == '|')
 		{
 			count++;
 			things = 0;
 		}
 		else
 			things++;
-		str++;
+		i++;
 	}
-	if (things == 0 || err)
+	if ((things == 0 || err) && i)
 	{
 		write(2, "W4V3shell: syntax error near unexpected token `|'\n", 50);
 		g_util.exit_value = 1;
