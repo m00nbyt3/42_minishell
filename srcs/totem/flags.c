@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 14:57:01 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/07 19:22:56 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/09 15:07:09 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,19 @@ char	*getdollars(char *str)
 	{
 		if (orig[i] == '$')
 		{
+			if (orig[i + 1] == ' ' || !orig[i + 1])
+			{
+				free(orig);
+				return("$");
+			}	
 			aux = ft_strdup(orig + (i + 1));
 			cutstr(aux, ' ');
 			aux = getenv(aux);
+			if (!aux)
+			{
+				free(orig);
+				return(0);
+			}
 			ret = ft_strjoin(ret, aux);
 		}
 		i++;
