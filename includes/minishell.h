@@ -6,7 +6,7 @@
 /*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/09 15:01:22 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/09 15:27:38 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,11 +102,14 @@ t_env			*basic_env(void);
 void			sort_mtx(char **mtx);
 char			*fvck_quotes(char *vector, char qtype, t_env *env);
 void			shell_level(char **env);
-char			*set_quotes(char *str);
-char			*chr2str(char toadd, char *str);
+char			*set_quotes(char *str, t_oncreate *shared);
+char			*inside_quote(char *str, char **tmp, t_oncreate *shared, int *force);
+char			*chr2str(char toadd, char *str, int *force);
 void			set_origina_fd(void);
 void			set_last_command(t_transformer *smth,  t_env *env);
 char			*get_my_env(char *name, char **env);
+int				checkargs(t_transformer *runner);
+
 
 //Builtins
 int				ft_builtins(t_transformer *runner, t_env *env);
@@ -174,7 +177,8 @@ char			*ft_env_path(char **env, char *argv, char **flags);
 char			**ft_path_split(char **env);
 void			ft_print_error(char *error, char *arg);
 void			ft_error(t_transformer *smth, int cond);
-void			here_doc(t_transformer *content, t_env *env);;
+int				rederror(void);
+void			here_doc(t_transformer *content, t_env *env);
 void			cutstr(char *str, char c);
 void			allocate_fds(t_tools *tools);
 void			close_all_fds(t_tools *tools);

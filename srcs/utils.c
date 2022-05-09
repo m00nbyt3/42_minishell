@@ -6,7 +6,7 @@
 /*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 11:58:28 by agallipo          #+#    #+#             */
-/*   Updated: 2022/05/09 15:06:00 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/09 15:15:26 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,11 @@ void	sort_mtx(char **mtx);
 char	*fvck_quotes(char *vector, char qtype, t_env *env);
 t_env	*basic_env(void);
 void	shell_level(char **env);
-char	*set_quotes(char *str);
-char	*chr2str(char toadd, char *str);
+char	*set_quotes(char *str, t_oncreate *shared);
+char	*inside_quote(char *str, char **tmp, t_oncreate *shared, int *force);
+char	*chr2str(char toadd, char *str, int *force);
+int		checkargs(t_transformer *runner);
 char	*get_my_env(char *name, char **env);
-
 
 char	*get_my_env(char *name, char **env)
 {
@@ -180,51 +181,53 @@ char	*fvck_quotes(char *vector, char qtype, t_env *env)
 	return (orig);
 }
 
-char	*set_quotes(char *str)
+char	*set_quotes(char *str, t_oncreate *shared)
 {
-	int		i;
-	int		squote;
-	int		dquote;
 	char	*tmp;
+	int		force;
 
 	tmp = 0;
-	squote = 0;
-	dquote = 0;
-	i = 0;
-	while(str[i])
+	force = 0;
+	while(*str)
 	{
-		printf("Char %c ->", str[i]);
-		if (squote == 2 || dquote == 2)
-			{
-				squote = 0;
-				dquote = 0;
-			}
-		if (str[i] == '\'' && dquote != 1)
-			squote++;
-		else if (str[i] == '\"' && squote != 1)
-			dquote++;
-		else if (squote || dquote)
+		if (*str == '\'' || *str == '\"')
+			str = inside_quote(str, &tmp, shared, &force);
+		else
 		{
-			//else
-				tmp = chr2str(str[i], tmp);
+			shared->qtype = 0;
+			tmp = chr2str(*str, tmp, &force);
 		}
-		printf("NOT SAVED (%c)\n", str[i]);
-		printf("STATUS: s->%d  d->%d\n", squote, dquote);
-		i++;
+		str++;
 	}
 	if (tmp)
 		return (tmp);
 	else
-		return (str);
+		return (ft_strdup(str));
 }
 
-char	*chr2str(char toadd, char *str)
+char	*inside_quote(char *str, char **tmp, t_oncreate *shared, int *force)
+{
+	char qtype = *str;
+
+	str++;
+	if (!(*force))
+			shared->qtype = qtype;
+	while(*str != qtype)
+	{
+		*tmp = chr2str(*str, *tmp, force);
+		str++;
+	}
+	return (str);
+}
+
+char	*chr2str(char toadd, char *str, int *force)
 {
 	char	*new;
 	int		i;
 
-	printf("SAVED (%c)\n", toadd);
 	i = 0;
+	if (toadd == '$')
+		*force = 1;
 	if (!str)
 		new = malloc(2 * sizeof(char));
 	else
@@ -240,4 +243,23 @@ char	*chr2str(char toadd, char *str)
 	new[i] = toadd;
 	new[i + 1] = 0;
 	return(new);
+}
+
+int		checkargs(t_transformer *runner)
+{
+	void	*orig;
+
+	orig =  runner;
+	while (runner)
+	{
+		if (!(runner->cmd))
+		{
+			write(2, "W4V3shell: command not found\n", 29);
+			g_util.exit_value = 127;
+			return (0);
+		}
+		runner = runner->next;
+	}
+	runner = orig;
+	return (1);
 }

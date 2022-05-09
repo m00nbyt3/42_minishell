@@ -6,7 +6,7 @@
 /*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 14:53:51 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/09 14:19:45 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/09 15:28:01 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ int		count_cmds(t_transformer *data);
 int		single_cmd(int npipes, t_transformer *smth,  t_env *env);
 void	single_cmd_2(int ofdin, int	ofdout, t_transformer *smth,  t_env *env);
 void	ft_execute(t_transformer *smth,  t_env *env);
-void	redirection(t_transformer *smth, t_env *env);
 void	set_origina_fd(void);
+void	here_doc(t_transformer *content, t_env *env);
 void	set_last_command(t_transformer *smth,  t_env *env);
 
 int	count_cmds(t_transformer *data)
@@ -35,24 +35,6 @@ int	count_cmds(t_transformer *data)
 	}
 	data = orig;
 	return (i);
-}
-
-void	redirection(t_transformer *smth, t_env *env)
-{
-	if (!*smth->cmd)
-		ft_error(smth, 1);
-	if (smth->fdin != -2)
-	{
-		dup2(smth->fdin, STDIN_FILENO);
-		close(smth->fdin);
-	}
-	if (smth->fdout != -2)
-	{
-		dup2(smth->fdout, STDOUT_FILENO);
-		close(smth->fdout);
-	}
-	if (smth->fdin == -1 || smth->fdout == -1)
-		ft_error(smth, 0);
 }
 
 void	set_origina_fd(void)
@@ -73,7 +55,7 @@ int		single_cmd(int npipes, t_transformer *smth,  t_env *env)
 		ofdin = dup(STDIN_FILENO);
 		ofdout = dup(STDOUT_FILENO);
 		if (!*smth->cmd)
-			ft_error(smth, 1);
+			return (1);
 		if (smth->fdin != -2)
 		{
 			dup2(smth->fdin, STDIN_FILENO);
@@ -85,7 +67,7 @@ int		single_cmd(int npipes, t_transformer *smth,  t_env *env)
 			close(smth->fdout);
 		}
 		if (smth->fdin == -1 || smth->fdout == -1)
-			ft_error(smth, 0);
+			return (1);
 		single_cmd_2(ofdin, ofdout, smth, env);
 		return (1);
 	}
@@ -148,7 +130,7 @@ void	ft_execute(t_transformer *smth,  t_env *env)
 		{
 			write(2, "W4V3shell: ", 11);
 			ft_putstr_fd(smth->cmd, 2);
-			write(2, " :command not found\n", 20);
+			write(2, " : command not found\n", 21);
 			g_util.exit_value = 127;
 			exit (1);
 		}

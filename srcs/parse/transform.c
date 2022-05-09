@@ -6,7 +6,7 @@
 /*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 12:41:32 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/09 15:00:03 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/09 15:18:20 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ t_transformer	*transform(t_totems *input, t_env *env)
 	runner = malloc(sizeof(t_transformer));
 	orig = runner;
 	lap = 0;
+	runner->cmd = 0;
 	runner->fdin = -2;
 	runner->fdout = -2;
 	runner->heredoc = 0;
@@ -89,7 +90,6 @@ void	set_doubles(t_totems *input, t_transformer *runner)
 		runner->heredoc = input->content;
 	if (input->type == 'p')
 		runner->fdout = open(input->content, O_RDWR | O_CREAT | O_APPEND, 0644);
-		//runner->append = input->content;
 	if (runner->fdout == -1 || runner->fdin == -1)
 	{
 		write(2, "W4V3shell: ", 11);

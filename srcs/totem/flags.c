@@ -6,7 +6,7 @@
 /*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 14:57:01 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/09 15:07:15 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/09 15:17:46 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	vectorize_flags(t_transformer *runner, t_totems *input, int sect, t_env *en
 
 void	save_flag(t_totems *input, int sect, char **vector, int *i, t_env *env)
 {
+	//clean_quotes(input);
 	if ((input->type == 'f' || input->type == 'a' || input->type == 'c') \
 		&& input->section == sect)
 	{
@@ -72,9 +73,19 @@ char	*getdollars(char *str, t_env *env)
 	{
 		if (orig[i] == '$')
 		{
+			if (orig[i + 1] == ' ' || !orig[i + 1])
+			{
+				free(orig);
+				return("$");
+			}
 			aux = ft_strdup(orig + (i + 1));
 			cutstr(aux, ' ');
 			aux = get_my_env(aux, env->array);
+			if (!aux)
+			{
+				free(orig);
+				return(0);
+			}
 			ret = ft_strjoin(ret, aux);
 		}
 		i++;
