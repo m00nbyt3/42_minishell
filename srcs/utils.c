@@ -6,7 +6,7 @@
 /*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 11:58:28 by agallipo          #+#    #+#             */
-/*   Updated: 2022/05/07 16:57:54 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/09 15:06:00 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,34 @@ t_list	*store_env_in_list(char **environ);
 void	run_cmd(char *complete, t_env *env);
 t_env	*store_environ(void);
 void	sort_mtx(char **mtx);
-char	*fvck_quotes(char *vector, char qtype);
+char	*fvck_quotes(char *vector, char qtype, t_env *env);
 t_env	*basic_env(void);
 void	shell_level(char **env);
 char	*set_quotes(char *str);
 char	*chr2str(char toadd, char *str);
+char	*get_my_env(char *name, char **env);
+
+
+char	*get_my_env(char *name, char **env)
+{
+	int		i;
+	int		len;
+	char	*expanded;
+
+	len = ft_strlen(name);
+	i = 0;
+	expanded = 0;
+	while (env[i])
+	{
+		if (ft_strncmp(name, env[i], len) == 0)
+		{
+			expanded = ft_strdup(env[i] + (len + 1));
+			break ;
+		}
+		i++;
+	}
+	return (expanded);
+}
 
 t_env	*basic_env(void)
 {
@@ -127,7 +150,7 @@ void	sort_mtx(char **mtx)
 	ft_print_export(mtx);
 }
 
-char	*fvck_quotes(char *vector, char qtype)
+char	*fvck_quotes(char *vector, char qtype, t_env *env)
 {
 	int		count;
 	char	*orig;
@@ -152,7 +175,7 @@ char	*fvck_quotes(char *vector, char qtype)
 	{
 		ft_strtrim(vector, "\'");
 		printf("hey%s\n", vector);
-		return (getdollars(vector));
+		return (getdollars(vector, env));
 	}
 	return (orig);
 }

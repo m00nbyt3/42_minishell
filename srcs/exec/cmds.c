@@ -6,7 +6,7 @@
 /*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 14:53:51 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/07 17:24:40 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/09 14:19:45 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ void	ft_execute(t_transformer *smth,  t_env *env)
 	char	*command;
 
 	if (smth->heredoc)
-		here_doc(smth);
+		here_doc(smth, env);
 	if (ft_builtins(smth, env))
 		;
 	else

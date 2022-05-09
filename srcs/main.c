@@ -6,7 +6,7 @@
 /*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/07 17:21:21 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/09 15:03:57 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	main(void)
 		input = 0;
 		if (!ft_chk_quotes(str) && !checkreds(str))
 			input = sp_split(str);
-		runner = transform(input);
+		runner = transform(input, env);
 		if (input)
 		{
 			ft_pipes(&runner, input, env);

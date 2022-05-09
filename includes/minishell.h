@@ -6,7 +6,7 @@
 /*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/07 16:59:25 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/09 15:01:22 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,12 +100,13 @@ void			run_cmd(char *complete, t_env *env);
 t_env			*store_environ(void);
 t_env			*basic_env(void);
 void			sort_mtx(char **mtx);
-char			*fvck_quotes(char *vector, char qtype);
+char			*fvck_quotes(char *vector, char qtype, t_env *env);
 void			shell_level(char **env);
 char			*set_quotes(char *str);
 char			*chr2str(char toadd, char *str);
 void			set_origina_fd(void);
 void			set_last_command(t_transformer *smth,  t_env *env);
+char			*get_my_env(char *name, char **env);
 
 //Builtins
 int				ft_builtins(t_transformer *runner, t_env *env);
@@ -146,12 +147,11 @@ void			ft_add_totem(t_totems **input, t_totems *new);
 void			ft_print_totems(t_totems *input);
 void			ft_clear_input(t_totems **lst, \
 				void (*del)(void *));
-void			vectorize_flags(t_transformer *runner, \
-				t_totems *input, int sect);
+void			vectorize_flags(t_transformer *runner, t_totems *input, int sect, t_env *env);
 int				count_flags(t_totems *input, int sect);
 void			print_vector(t_transformer *runner);
-char			*getdollars(char *str);
-t_transformer	*transform(t_totems *input);
+char			*getdollars(char *str, t_env *env);
+t_transformer	*transform(t_totems *input, t_env *env);
 void			ft_clear_transformer(t_transformer **runner, \
 void (*del)(void *));
 //Pipes
@@ -174,7 +174,7 @@ char			*ft_env_path(char **env, char *argv, char **flags);
 char			**ft_path_split(char **env);
 void			ft_print_error(char *error, char *arg);
 void			ft_error(t_transformer *smth, int cond);
-void			here_doc(t_transformer *content);
+void			here_doc(t_transformer *content, t_env *env);;
 void			cutstr(char *str, char c);
 void			allocate_fds(t_tools *tools);
 void			close_all_fds(t_tools *tools);

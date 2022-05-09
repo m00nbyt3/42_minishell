@@ -6,18 +6,18 @@
 /*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 12:08:30 by agallipo          #+#    #+#             */
-/*   Updated: 2022/05/06 17:11:44 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/09 15:08:03 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	here_doc(t_transformer *content);
-void	find_variable(char	*str, int fd, int *i);
+void	here_doc(t_transformer *content, t_env *env);
+void	find_variable(char	*str, int fd, int *i, t_env *env);
 void	cutstr(char *str, char c);
 void	exit_here(int sig);
 
-void	here_doc(t_transformer *content)
+void	here_doc(t_transformer *content, t_env *env)
 {
 	char	*str;
 	int		i;
@@ -41,7 +41,7 @@ void	here_doc(t_transformer *content)
 		while (str[i])
 		{
 			if (str[i] == '$' && quotes == 0)
-				find_variable(str, content->fdin, &i);
+				find_variable(str, content->fdin, &i, env);
 			else
 			{
 				write(content->fdin, &str[i], 1);
@@ -62,7 +62,7 @@ void	exit_here(int sig)
 	exit (0);
 }
 
-void	find_variable(char	*str, int fd, int *i)
+void	find_variable(char	*str, int fd, int *i, t_env *env)
 {
 	char	*aux;
 	char	*orig;
@@ -70,7 +70,7 @@ void	find_variable(char	*str, int fd, int *i)
 	orig = ft_strdup(&str[*i]);
 	aux = orig + 1;
 	cutstr(aux, ' ');
-	aux = getenv(aux);
+	aux = get_my_env(aux, env->array);
 	ft_putstr_fd(aux, fd);
 	free(orig);
 	(*i)++;

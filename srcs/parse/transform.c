@@ -6,19 +6,19 @@
 /*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 12:41:32 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/07 17:25:23 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/09 15:00:03 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_transformer	*transform(t_totems *input);
+t_transformer	*transform(t_totems *input, t_env *env);
 void			find_fds(t_totems *input, t_transformer *runner);
 void			create_transformer(t_transformer **runner, int *lap);
-void			fill_content(t_totems *input, t_transformer *runner);
+void			fill_content(t_totems *input, t_transformer *runner, t_env *env);
 void			set_doubles(t_totems *input, t_transformer *runner);
 
-t_transformer	*transform(t_totems *input)
+t_transformer	*transform(t_totems *input, t_env *env)
 {
 	t_transformer	*runner;
 	t_transformer	*orig;
@@ -36,7 +36,7 @@ t_transformer	*transform(t_totems *input)
 		if (lap != input->section)
 			create_transformer(&runner, &lap);
 		if (input->type == 'c')
-			fill_content(input, runner);
+			fill_content(input, runner, env);
 		if (input->type == 'i' || input->type == 'o')
 			find_fds(input, runner);
 		if (input->type == 'h' || input->type == 'p')
@@ -62,10 +62,10 @@ void	create_transformer(t_transformer **p_runner, int *lap)
 	*p_runner = runner;
 }
 
-void	fill_content(t_totems *input, t_transformer *runner)
+void	fill_content(t_totems *input, t_transformer *runner, t_env *env)
 {
 	runner->cmd = input->content;
-	vectorize_flags(runner, input, input->section);
+	vectorize_flags(runner, input, input->section, env);
 }
 
 void	find_fds(t_totems *input, t_transformer *runner)
