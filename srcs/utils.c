@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 11:58:28 by agallipo          #+#    #+#             */
-/*   Updated: 2022/05/09 15:15:26 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/10 11:29:19 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,6 @@ void	run_cmd(char *complete, t_env *env)
 	content->fdout = -2;
 	content->heredoc = 0;
 	content->append = 0;
-	printf("hjey\n");
 	single_cmd(0, content, env);
 }
 
@@ -162,7 +161,6 @@ char	*fvck_quotes(char *vector, char qtype, t_env *env)
 		count += 1;
 	if (qtype == '\"')
 			count += 2;
-	printf("First: %s\n", vector);
 	while (*vector == '\'' || *vector == '\"')
 	{
 		if (*vector == '\'')
@@ -171,11 +169,9 @@ char	*fvck_quotes(char *vector, char qtype, t_env *env)
 			count += 2;
 		vector++;
 	}
-	printf("%d", count);
 	if (!(count % 2))
 	{
 		ft_strtrim(vector, "\'");
-		printf("hey%s\n", vector);
 		return (getdollars(vector, env));
 	}
 	return (orig);

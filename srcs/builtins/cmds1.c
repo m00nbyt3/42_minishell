@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/09 15:05:19 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/10 11:38:18 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	ft_echo(t_transformer *runner)
 	i = 1;
 	if (*(runner->flags + i) == 0)
 	{
-		printf("\n");
+		write(1, "\n", 1);
 		return ;
 	}
 	if (ft_strcmp(*(runner->flags + i), "-n"))
@@ -38,13 +38,16 @@ void	ft_echo(t_transformer *runner)
 	while (*(runner->flags + i))
 	{
 		if (*(runner->flags + i + 1))
-			printf("%s ", *(runner->flags + i));
+		{
+			ft_putstr_fd(*(runner->flags + i), 1);
+			write(1, " ", 1);
+		}
 		else
-			printf("%s", *(runner->flags + i));
+			ft_putstr_fd(*(runner->flags + i), 1);
 		i++;
 	}
 	if (newline)
-		printf("\n");
+		write(1, "\n", 1);
 	runner = orig;
 }
 
@@ -67,7 +70,6 @@ void	ft_cd(t_transformer *runner, char **env)
 		}
 		home = ft_strjoin("/Users/", tmp);
 		free(tmp);
-		printf("%s\n", home);
 		chdir(home);
 	}
 }
@@ -77,6 +79,7 @@ void	ft_pwd(void)
 	char	*buf;
 
 	buf = getcwd(0, 0);
-	printf("%s\n", buf);
+	ft_putstr_fd(buf, 1);
+	write(1, "\n", 1);
 	free(buf);
 }
