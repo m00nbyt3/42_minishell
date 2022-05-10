@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/09 16:44:01 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/10 10:53:08 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,21 +81,18 @@ void	ft_pipes(t_transformer **contents, t_totems *input, t_env *env)
 void	ft_while_pipes(t_transformer *content, t_tools *tools, t_env *env)
 {
 	int	i;
-	int	j;
 
 	i = 0;
-	j = 1;
 	content = content->next;
 	while (content && content->next)
 	{
-		pipe(tools->fd[j]);
 		close(tools->fd[i][WRITE_END]);
-		tools->pid[j] = fork();
-		if (tools->pid[j] == 0)
+		pipe(tools->fd[i + 1]);
+		tools->pid[i + 1] = fork();
+		if (tools->pid[i + 1] == 0)
 			ft_mid_child_pipe(content, env, tools, i);
 		close(tools->fd[i][READ_END]);
 		i++;
-		j++;
 		content = content->next;
 	}
 	if (content)
