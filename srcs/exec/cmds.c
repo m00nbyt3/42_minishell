@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 14:53:51 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/09 18:41:58 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/10 12:43:40 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,17 +90,17 @@ void	single_cmd_2(int ofdin, int	ofdout, t_transformer *smth,  t_env *env)
 		pid = fork();
 		if (pid == 0)
 			ft_execute(smth, env);
+		sigignore(SIGINT);
+		wait(&pid);
+		if (WIFEXITED(pid))
+				g_util.exit_value = WEXITSTATUS(pid);
+		if (WIFSIGNALED(pid))
+			g_util.exit_value = 130;
+		dup2(ofdin, STDIN_FILENO);
+		close(ofdin);
+		dup2(ofdout, STDOUT_FILENO);
+		close(ofdout);
 	}
-	sigignore(SIGINT);
-	wait(&pid);
-	if (WIFEXITED(pid))
-			g_util.exit_value = WEXITSTATUS(pid);
-	if (WIFSIGNALED(pid))
-		g_util.exit_value = 130;
-	dup2(ofdin, STDIN_FILENO);
-	close(ofdin);
-	dup2(ofdout, STDOUT_FILENO);
-	close(ofdout);
 }
 
 void	set_last_command(t_transformer *smth,  t_env *env)
@@ -124,7 +124,11 @@ void	ft_execute(t_transformer *smth,  t_env *env)
 	char	*command;
 
 	if (smth->heredoc)
-		here_doc(smth, env);
+	{
+		smth->fdin = open("/private/tmp/tmp", O_RDONLY);
+		dup2(smth->fdin, STDIN_FILENO);
+		close(smth->fdin);
+	}
 	if (ft_builtins(smth, env))
 		;
 	else

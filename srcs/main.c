@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/10 11:26:51 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/10 12:08:07 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	main(void)
 		if (!ft_chk_quotes(str) && !checkreds(str))
 			input = sp_split(str);
 		runner = transform(input, env);
-		if (input && checkargs(runner))
+		if (input && checkargs(runner, env))
 		{
 			ft_pipes(&runner, input, env);
 			ft_clear_input(&input, free);
