@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 14:32:09 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/05 14:38:18 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/10 11:36:02 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,10 @@ void	ft_print_mtx(char **env)
 
 	i = -1;
 	while (env[++i])
-		printf("%s\n", env[i]);
+	{
+		ft_putstr_fd(env[i], 1);
+		write(1, "\n", 1);
+	}
 }
 
 void	ft_print_export(char **env)

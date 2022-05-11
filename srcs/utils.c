@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 11:58:28 by agallipo          #+#    #+#             */
-/*   Updated: 2022/05/09 15:15:26 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/10 15:15:30 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	shell_level(char **env);
 char	*set_quotes(char *str, t_oncreate *shared);
 char	*inside_quote(char *str, char **tmp, t_oncreate *shared, int *force);
 char	*chr2str(char toadd, char *str, int *force);
-int		checkargs(t_transformer *runner);
+int		checkargs(t_transformer *runner, t_env *env);
 char	*get_my_env(char *name, char **env);
 
 char	*get_my_env(char *name, char **env)
@@ -122,7 +122,6 @@ void	run_cmd(char *complete, t_env *env)
 	content->fdout = -2;
 	content->heredoc = 0;
 	content->append = 0;
-	printf("hjey\n");
 	single_cmd(0, content, env);
 }
 
@@ -162,7 +161,6 @@ char	*fvck_quotes(char *vector, char qtype, t_env *env)
 		count += 1;
 	if (qtype == '\"')
 			count += 2;
-	printf("First: %s\n", vector);
 	while (*vector == '\'' || *vector == '\"')
 	{
 		if (*vector == '\'')
@@ -171,11 +169,9 @@ char	*fvck_quotes(char *vector, char qtype, t_env *env)
 			count += 2;
 		vector++;
 	}
-	printf("%d", count);
 	if (!(count % 2))
 	{
 		ft_strtrim(vector, "\'");
-		printf("hey%s\n", vector);
 		return (getdollars(vector, env));
 	}
 	return (orig);
@@ -245,17 +241,29 @@ char	*chr2str(char toadd, char *str, int *force)
 	return(new);
 }
 
-int		checkargs(t_transformer *runner)
+int		checkargs(t_transformer *runner, t_env *env)
 {
 	void	*orig;
+	int		pid;
 
 	orig =  runner;
 	while (runner)
 	{
+		if (runner->heredoc)
+		{
+			pid = fork();
+			if (!pid)
+				here_doc(runner, env);
+			else
+				wait(&pid);
+		}
 		if (!(runner->cmd))
 		{
-			write(2, "W4V3shell: command not found\n", 29);
-			g_util.exit_value = 127;
+			if (!runner->heredoc && runner->fdout == -2)
+			{
+				write(2, "W4V3shell: command not found\n", 29);
+				g_util.exit_value = 127;
+			}
 			return (0);
 		}
 		runner = runner->next;

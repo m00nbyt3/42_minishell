@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   childs.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 14:52:39 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/06 16:48:04 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/10 10:58:58 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,20 @@ void	ft_frst_child_pipe(t_transformer *smth, t_env *env,t_tools *tools)
 void	ft_mid_child_pipe(t_transformer *smth, t_env *env, t_tools *tools, int i)
 {
 	if (smth->fdin == -2)
+	{
+		dup2(tools->fd[i][READ_END], STDIN_FILENO);
 		close(tools->fd[i][READ_END]);
+	}
 	else
 	{
 		dup2(smth->fdin, STDIN_FILENO);
 		close(smth->fdin);
 	}
 	if (smth->fdout == -2)
+	{
 		dup2(tools->fd[i + 1][WRITE_END], STDOUT_FILENO);
+		close(tools->fd[i][WRITE_END]);
+	}
 	else
 	{
 		dup2(smth->fdout, STDOUT_FILENO);

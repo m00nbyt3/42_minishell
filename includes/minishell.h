@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/09 15:27:38 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/10 12:08:57 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ char			*chr2str(char toadd, char *str, int *force);
 void			set_origina_fd(void);
 void			set_last_command(t_transformer *smth,  t_env *env);
 char			*get_my_env(char *name, char **env);
-int				checkargs(t_transformer *runner);
+int				checkargs(t_transformer *runner, t_env *env);
 
 
 //Builtins

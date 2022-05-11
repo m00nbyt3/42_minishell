@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 12:08:30 by agallipo          #+#    #+#             */
-/*   Updated: 2022/05/09 15:08:03 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/10 12:48:00 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ void	here_doc(t_transformer *content, t_env *env)
 		quotes = 1;
 	while (42)
 	{
-		signal(SIGINT, exit_here);
+		signal(SIGINT, exit);
 		str = readline(">");
 		if (str == NULL)
-			exit_here(0);
+			exit(0);
 		if (ft_strcmp(str, content->heredoc))
 			break ;
 		i = 0;
@@ -51,15 +51,7 @@ void	here_doc(t_transformer *content, t_env *env)
 		write(content->fdin, "\n", 1);
 	}
 	close(content->fdin);
-	content->fdin = open("/private/tmp/tmp", O_RDONLY);
-	dup2(content->fdin, STDIN_FILENO);
-	close(content->fdin);
-}
-
-void	exit_here(int sig)
-{
-	ft_putstr_fd("\n", 2);
-	exit (0);
+	exit(0);
 }
 
 void	find_variable(char	*str, int fd, int *i, t_env *env)
