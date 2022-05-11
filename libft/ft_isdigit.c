@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agallipo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 13:28:56 by agallipo          #+#    #+#             */
-/*   Updated: 2021/06/21 13:29:45 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/11 16:35:45 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,4 +18,15 @@ int	ft_isdigit(int c)
 		return (1);
 	else
 		return (0);
+}
+
+int	ft_is_str_num(char *str)
+{
+	while (*str)
+	{
+		if (*str <= '0' || *str >= '9')
+			return (0);
+		str++;
+	}
+	return(1);
 }

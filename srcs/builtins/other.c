@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 14:32:09 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/10 11:36:02 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/11 16:01:17 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ char	*ft_vsrch_var(char *tofind, char **env)
 	}
 	if (tmp)
 	{
-		result = ft_strdup(tmp + (len + 1));
+		result = ft_strdup(tmp + (len));
 		free(tmp);
 	}
 	env = orig;

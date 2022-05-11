@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/10 11:54:43 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/11 16:54:09 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 void	ft_echo(t_transformer *runner);
 void	ft_cd(t_transformer *runner, char **env);
 void	ft_pwd(void);
+int		echo_comp_n(char *str);
+void	ft_builtin_exit(t_transformer *runner);
 
 void	ft_echo(t_transformer *runner)
 {
@@ -30,7 +32,7 @@ void	ft_echo(t_transformer *runner)
 		write(1, "\n", 1);
 		return ;
 	}
-	if (ft_strcmp(*(runner->flags + i), "-n"))
+	if (echo_comp_n(*(runner->flags + i)))
 	{
 			newline = 0;
 			i++;
@@ -51,26 +53,38 @@ void	ft_echo(t_transformer *runner)
 	runner = orig;
 }
 
+int	echo_comp_n(char *str)
+{
+	if (*str != '-')
+		return (0);
+	str++;
+	while (*str)
+	{
+		if (*str != 'n')
+			return (0);
+		str++;
+	}
+	return(1);
+}
+
 void	ft_cd(t_transformer *runner, char **env)
 {
-	char	*tmp;
 	char	*home;
 
 	if (*(runner->flags + 1))
 		chdir(*(runner->flags + 1));
 	else
 	{
-		tmp = 0;
-		tmp = ft_vsrch_var("USER", env);
-		if (!tmp)
+		home = 0;
+		home = ft_vsrch_var("HOME=", env);
+		if (!home)
 		{
 			write(2, "W4V3shell: cd: HOME not set\n", 28);
 			g_util.exit_value = 2;
 			return ;
 		}
-		home = ft_strjoin("/Users/", tmp);
-		free(tmp);
 		chdir(home);
+		free(home);
 	}
 }
 
@@ -82,4 +96,32 @@ void	ft_pwd(void)
 	ft_putstr_fd(buf, 1);
 	write(1, "\n", 1);
 	free(buf);
+}
+
+void	ft_builtin_exit(t_transformer *runner)
+{
+	if (runner->flags[1])
+	{
+		if (!ft_is_str_num(runner->flags[1]))
+		{
+			write(2, "W4V3shell: exit: ", 17);
+			ft_putstr_fd(runner->flags[1], 2);
+			write(2, " : numeric argument required\n", 29);
+			g_util.exit_value = 255;
+			exit (255);
+		}
+		else if (runner->flags[2])
+		{
+			write(2, "exit\nW4V3shell: exit: too many arguments\n", 41);
+			g_util.exit_value = 1;
+			return ;
+		}
+		else
+		{
+			g_util.exit_value = ft_atoi(runner->flags[1]);
+			exit(ft_atoi(runner->flags[1]));
+		}
+	}
+	else
+		exit (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/03 19:11:28 by agallipo          #+#    #+#             */
-/*   Updated: 2022/05/05 15:46:04 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/11 16:34:59 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,4 +90,5 @@ int		ft_strcmp(char *s1, char *s2);
 char	**ft_mtxdup(char **mtx);
 int		ft_mtxlen(char **mtx);
 char	**ft_mtxjoin(char **m1, char **m2);
+int		ft_is_str_num(char *str);
 #endif
