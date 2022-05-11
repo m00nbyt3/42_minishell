@@ -6,14 +6,14 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 18:09:46 by agallipo          #+#    #+#             */
-/*   Updated: 2022/05/11 12:00:59 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/11 18:47:40 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 void	ft_export(t_transformer *orunner, t_env *env);
-int		var_exist(t_transformer *runner, char **environ);
+int		var_exist(char *str, char **environ, int i, int len);
 char	**replace_env(t_transformer *runner, char **environ);
 char	**ft_export_add(t_transformer *runner, char **environ);
 void	ft_unset(t_transformer *orunner, t_env *env);
@@ -56,18 +56,28 @@ int		variable_match(char *var, char *name)
 	return (1);
 }
 
-int	var_exist(t_transformer *runner, char **environ)
+int	var_exist(char *str, char **environ, int i, int len)
 {
-	int	i;
-
-	i = 0;
-	while (environ[i])
+	if (!len)
 	{
-		if (variable_match(environ[i], runner->flags[1]))
-			return (1);
-		i++;
+		while (str[len] != '=' && str[len])
+			len++;
 	}
-	return (0);
+	else
+		str = chr2str('=', str, 0);
+	if (i != -1)
+		return(ft_strncmp(environ[i], str, len + 1));
+	else
+	{
+		i = 0;
+		while (environ[i])
+		{
+			if (!ft_strncmp(environ[i], str, len + 1))
+				return (0);
+			i++;
+		}
+		return (1);
+	}
 }
 
 char	**replace_env(t_transformer *runner, char **environ)
@@ -78,7 +88,7 @@ char	**replace_env(t_transformer *runner, char **environ)
 	i = 0;
 	while (environ[i])
 	{
-		if (variable_match(environ[i], runner->flags[1]))
+		if (!var_exist(runner->flags[1], environ, i, 0))
 			environ[i] = ft_strdup(runner->flags[1]);
 		i++;
 	}
@@ -92,7 +102,7 @@ char	**ft_export_add(t_transformer *runner, char **environ)
 	int		j;
 	char	**env;
 
-	if (var_exist(runner, environ))
+	if (!var_exist(runner->flags[1], environ, -1, 0))
 		return (replace_env(runner, environ));
 	len = ft_mtxlen(runner->flags) + ft_mtxlen(environ);
 	env = malloc((len) * sizeof(char *));
@@ -142,6 +152,8 @@ void	ft_unset(t_transformer *orunner, t_env *env)
 
 	if (orunner->flags[1])
 	{
+		if (var_exist(orunner->flags[1], env->array, -1, ft_strlen(orunner->flags[1])))
+			return ;
 		aux = find_and_quit(env->array, orunner->flags[1]);
 		env->array = aux;
 		aux = find_and_quit(env->export, orunner->flags[1]);
@@ -159,7 +171,7 @@ char	**find_and_quit(char **env, char *var_name)
 	i = 0;
 	while (copy[i])
 	{
-		if (variable_match(copy[i], var_name))
+		if (!var_exist(var_name, env, i, ft_strlen(var_name)))
 			break ;
 		i++;
 	}

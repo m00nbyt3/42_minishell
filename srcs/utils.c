@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 11:58:28 by agallipo          #+#    #+#             */
-/*   Updated: 2022/05/11 12:01:39 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/11 18:45:44 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,7 +241,8 @@ char	*chr2str(char toadd, char *str, int *force)
 			new[i] = str[i];
 			i++;
 		}
-		free(str);
+		if (force)
+			free(str);
 	}
 	new[i] = toadd;
 	new[i + 1] = 0;

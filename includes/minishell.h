@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/11 16:44:28 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/11 17:57:31 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ char			*ft_vsrch_var(char *tofind, char **env);
 void			ft_print_mtx(char **env);
 void			ft_print_export(char **env);
 void			ft_export(t_transformer *orunner, t_env *env);
-int				var_exist(t_transformer *runner, char **environ);
+int				var_exist(char *str, char **environ, int i, int len);
 char			**replace_env(t_transformer *runner, char **environ);
 char			**ft_export_add(t_transformer *runner, char **environ);
 char			**ft_env_add(char *toadd, char **environ);

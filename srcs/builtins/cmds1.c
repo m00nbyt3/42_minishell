@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/11 16:54:09 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/11 17:23:30 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,13 @@ void	ft_cd(t_transformer *runner, char **env)
 			g_util.exit_value = 2;
 			return ;
 		}
-		chdir(home);
+		if (chdir(home) == -1)
+		{
+			write(2, "W4V3shell: cd: ", 15);
+			ft_putstr_fd(home, 2);
+			write(2, " : No such file or directory\n", 30);
+			g_util.exit_value = 1;
+		}
 		free(home);
 	}
 }
