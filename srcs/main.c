@@ -6,7 +6,7 @@
 /*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/09 16:21:08 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/09 18:08:13 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ void	ctrl_d(char *str, t_transformer *runner)
 
 void	sign(int sig)
 {
+	char *str;
 	if (sig == SIGINT)
 	{
 		g_util.ctr_c = 1;
@@ -87,6 +88,9 @@ void	sign(int sig)
 	if (sig == SIGQUIT)
 	{
 		signal(SIGQUIT, SIG_IGN);
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
 		g_util.ctr_c = 1;
 	}
 }
