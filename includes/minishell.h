@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/10 12:08:57 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/11 12:00:44 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ t_env			*store_environ(void);
 t_env			*basic_env(void);
 void			sort_mtx(char **mtx);
 char			*fvck_quotes(char *vector, char qtype, t_env *env);
-void			shell_level(char **env);
+char			**shell_level(char **env);
 char			*set_quotes(char *str, t_oncreate *shared);
 char			*inside_quote(char *str, char **tmp, t_oncreate *shared, int *force);
 char			*chr2str(char toadd, char *str, int *force);
@@ -127,6 +127,7 @@ void			ft_export(t_transformer *orunner, t_env *env);
 int				var_exist(t_transformer *runner, char **environ);
 char			**replace_env(t_transformer *runner, char **environ);
 char			**ft_export_add(t_transformer *runner, char **environ);
+char			**ft_env_add(char *toadd, char **environ);
 void			ft_unset(t_transformer *orunner, t_env *env);
 char			**find_and_quit(char **env, char *var);
 int				variable_match(char *var, char *name);

@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 11:58:28 by agallipo          #+#    #+#             */
-/*   Updated: 2022/05/10 15:15:30 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/11 12:01:39 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_env	*store_environ(void);
 void	sort_mtx(char **mtx);
 char	*fvck_quotes(char *vector, char qtype, t_env *env);
 t_env	*basic_env(void);
-void	shell_level(char **env);
+char	**shell_level(char **env);
 char	*set_quotes(char *str, t_oncreate *shared);
 char	*inside_quote(char *str, char **tmp, t_oncreate *shared, int *force);
 char	*chr2str(char toadd, char *str, int *force);
@@ -61,18 +61,21 @@ t_env	*basic_env(void)
 	return (env);
 }
 
-void	shell_level(char **env)
+char	**shell_level(char **env)
 {
 	int		i;
 	int		lvl;
 	char	*aux;
+	int		found;
 
 	i = 0;
 	lvl = 1;
+	found = 0;
 	while (env[i])
 	{
 		if (ft_strncmp("SHLVL=", env[i], 6) == 0)
-		{
+		{	
+			found++;
 			aux = env[i] + 6;
 			lvl = ft_atoi(aux) + 1;
 			if (lvl <= 0)
@@ -81,7 +84,11 @@ void	shell_level(char **env)
 		}
 		i++;
 	}
-	env[i] = ft_strdup(ft_strjoin("SHLVL=", ft_itoa(lvl)));
+	if (!found)
+		env = ft_env_add(ft_strjoin("SHLVL=", ft_itoa(lvl)), env);
+	else
+		env[i] = ft_strdup(ft_strjoin("SHLVL=", ft_itoa(lvl)));
+	return(env);
 }
 
 t_env	*store_environ(void)
@@ -94,7 +101,7 @@ t_env	*store_environ(void)
 	env = malloc(sizeof(t_env));
 	env->export = ft_mtxdup(environ);
 	env->array = ft_mtxdup(environ);
-	shell_level(env->array);
+	env->array = shell_level(env->array);
 	env->list = store_env_in_list(environ);
 	return (env);
 }

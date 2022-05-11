@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 18:09:46 by agallipo          #+#    #+#             */
-/*   Updated: 2022/05/10 15:12:14 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/11 12:00:59 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	ft_unset(t_transformer *orunner, t_env *env);
 char	**find_and_quit(char **env, char *var);
 int		variable_match(char *var, char *name);
 int		add_to_env(t_transformer *orunner);
+char	**ft_env_add(char *toadd, char **environ);
 
 void	ft_export(t_transformer *orunner, t_env *env)
 {
@@ -109,6 +110,27 @@ char	**ft_export_add(t_transformer *runner, char **environ)
 		j++;
 	}
 	env[i] = 0;
+	return (env);
+}
+
+char	**ft_env_add(char *toadd, char **environ)
+{
+	int		len;
+	int		i;
+	int		j;
+	char	**env;
+
+	len = 2 + ft_mtxlen(environ);
+	env = malloc((len) * sizeof(char *));
+	i = 0;
+	while (environ[i])
+	{
+		env[i] = environ[i];
+		i++;
+	}
+	env[i] = ft_strdup(toadd);
+	env[i + 1] = 0;
+	free(environ);
 	return (env);
 }
 
