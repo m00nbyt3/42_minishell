@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
+/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 12:08:30 by agallipo          #+#    #+#             */
-/*   Updated: 2022/05/10 12:48:00 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/11 16:19:59 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	here_doc(t_transformer *content, t_env *env)
 		quotes = 1;
 	while (42)
 	{
-		signal(SIGINT, exit);
+		signal(SIGINT, exit_here);
 		str = readline(">");
 		if (str == NULL)
 			exit(0);
@@ -52,6 +52,12 @@ void	here_doc(t_transformer *content, t_env *env)
 	}
 	close(content->fdin);
 	exit(0);
+}
+
+void	exit_here(int sig)
+{
+	ft_putstr_fd("\n", 2);
+	exit (0);
 }
 
 void	find_variable(char	*str, int fd, int *i, t_env *env)
