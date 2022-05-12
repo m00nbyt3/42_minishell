@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   flags.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
+/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 14:57:01 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/09 16:01:09 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/12 10:47:06 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ void	vectorize_flags(t_transformer *runner, t_totems *input, int sect, t_env *en
 
 void	save_flag(t_totems *input, int sect, char **vector, int *i, t_env *env)
 {
-	//clean_quotes(input);
 	if ((input->type == 'f' || input->type == 'a' || input->type == 'c') \
 		&& input->section == sect)
 	{
@@ -53,8 +52,6 @@ void	save_flag(t_totems *input, int sect, char **vector, int *i, t_env *env)
 			vector[*i] = ft_strjoin("-\0", vector[*i]);
 		if (*vector[*i] == '$' && input->qtype != '\'' && input->type != 'h')
 			vector[*i] = getdollars(vector[*i], env);
-		//else
-			//vector[*i] = fvck_quotes(vector[*i], input->qtype);
 		(*i)++;
 	}
 }

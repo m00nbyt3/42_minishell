@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
+/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 11:58:28 by agallipo          #+#    #+#             */
-/*   Updated: 2022/05/11 18:45:44 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/12 10:37:40 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ char	**shell_level(char **env)
 	while (env[i])
 	{
 		if (ft_strncmp("SHLVL=", env[i], 6) == 0)
-		{	
+		{
 			found++;
 			aux = env[i] + 6;
 			lvl = ft_atoi(aux) + 1;
@@ -84,10 +84,7 @@ char	**shell_level(char **env)
 		}
 		i++;
 	}
-	if (!found)
-		env = ft_env_add(ft_strjoin("SHLVL=", ft_itoa(lvl)), env);
-	else
-		env[i] = ft_strdup(ft_strjoin("SHLVL=", ft_itoa(lvl)));
+	env[i] = ft_strdup(ft_strjoin("SHLVL=", ft_itoa(lvl)));
 	return(env);
 }
 

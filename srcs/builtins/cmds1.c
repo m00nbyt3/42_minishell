@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmds1.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
+/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/11 17:23:30 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/12 10:46:52 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	ft_echo(t_transformer *runner)
 	if (newline)
 		write(1, "\n", 1);
 	runner = orig;
+	g_util.exit_value = 0;
 }
 
 int	echo_comp_n(char *str)
@@ -92,6 +93,7 @@ void	ft_cd(t_transformer *runner, char **env)
 		}
 		free(home);
 	}
+	g_util.exit_value = 0;
 }
 
 void	ft_pwd(void)
@@ -102,6 +104,7 @@ void	ft_pwd(void)
 	ft_putstr_fd(buf, 1);
 	write(1, "\n", 1);
 	free(buf);
+	g_util.exit_value = 0;
 }
 
 void	ft_builtin_exit(t_transformer *runner)
@@ -129,5 +132,8 @@ void	ft_builtin_exit(t_transformer *runner)
 		}
 	}
 	else
+	{
+		g_util.exit_value = 0;
 		exit (0);
+	}
 }

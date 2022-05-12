@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
+/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 18:09:46 by agallipo          #+#    #+#             */
-/*   Updated: 2022/05/11 18:47:40 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/12 10:25:34 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ char	**ft_env_add(char *toadd, char **environ)
 	}
 	env[i] = ft_strdup(toadd);
 	env[i + 1] = 0;
-	free(environ);
+	//free(environ);
 	return (env);
 }
 
