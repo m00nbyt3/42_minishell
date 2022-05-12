@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/12 11:35:49 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/12 12:59:29 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,15 @@ void	ft_cd(t_transformer *runner, char **env)
 		if (!path)
 		{
 			write(2, "W4V3shell: cd: HOME not set\n", 28);
-			g_util.exit_value = 2;
+			g_util.exit_value = 1;
 			return ;
 		}
+	}
+	if (ft_strcmp(path, "-"))
+	{
+		path = get_my_env("OLDPWD", env);
+		ft_putstr_fd(path, 1);
+		write(1, "\n", 1);
 	}
 	if (chdir(path) == -1)
 	{
@@ -92,10 +98,11 @@ void	ft_cd(t_transformer *runner, char **env)
 		ft_putstr_fd(path, 2);
 		write(2, " : No such file or directory\n", 30);
 		g_util.exit_value = 1;
+		return ;
 	}
-	//free(path);
 	mod_env_pwd(env);
 	g_util.exit_value = 0;
+	//free(path);
 }
 
 void	mod_env_pwd(char **env)
