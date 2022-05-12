@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmds1.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/12 10:46:52 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/12 11:35:49 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	ft_cd(t_transformer *runner, char **env);
 void	ft_pwd(void);
 int		echo_comp_n(char *str);
 void	ft_builtin_exit(t_transformer *runner);
+void	mod_env_pwd(char **env);
 
 void	ft_echo(t_transformer *runner)
 {
@@ -70,30 +71,49 @@ int	echo_comp_n(char *str)
 
 void	ft_cd(t_transformer *runner, char **env)
 {
-	char	*home;
+	char	*path;
 
 	if (*(runner->flags + 1))
-		chdir(*(runner->flags + 1));
+		path = *(runner->flags + 1);
 	else
 	{
-		home = 0;
-		home = ft_vsrch_var("HOME=", env);
-		if (!home)
+		path = 0;
+		path = ft_vsrch_var("HOME=", env);
+		if (!path)
 		{
 			write(2, "W4V3shell: cd: HOME not set\n", 28);
 			g_util.exit_value = 2;
 			return ;
 		}
-		if (chdir(home) == -1)
-		{
-			write(2, "W4V3shell: cd: ", 15);
-			ft_putstr_fd(home, 2);
-			write(2, " : No such file or directory\n", 30);
-			g_util.exit_value = 1;
-		}
-		free(home);
 	}
+	if (chdir(path) == -1)
+	{
+		write(2, "W4V3shell: cd: ", 15);
+		ft_putstr_fd(path, 2);
+		write(2, " : No such file or directory\n", 30);
+		g_util.exit_value = 1;
+	}
+	//free(path);
+	mod_env_pwd(env);
 	g_util.exit_value = 0;
+}
+
+void	mod_env_pwd(char **env)
+{
+	char *toadd1;
+	char *toadd2;
+
+	toadd1 = ft_strjoin("OLDPWD=", g_util.pwd);
+	g_util.pwd = getcwd(0, 0);
+	toadd2 = ft_strjoin("PWD=", g_util.pwd);
+	if (!var_exist("OLDPWD=", env, -1, 0))
+			replace_env(toadd1, env);
+		else
+			ft_env_add(toadd1, env);
+	if (!var_exist("PWD=", env, -1, 0))
+			replace_env(toadd2, env);
+		else
+			ft_env_add(toadd2, env);
 }
 
 void	ft_pwd(void)

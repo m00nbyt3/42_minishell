@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/11 10:53:42 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/12 11:38:07 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	main(void)
 		input = 0;
 		g_util.ofdin = -1;
 		g_util.ofdout = -1;
+		g_util.pwd = getcwd(0, 0);
 		if (!ft_chk_quotes(str) && !checkreds(str))
 			input = sp_split(str);
 		runner = transform(input, env);

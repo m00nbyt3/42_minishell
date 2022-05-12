@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 18:09:46 by agallipo          #+#    #+#             */
-/*   Updated: 2022/05/12 10:25:34 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/12 11:29:09 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_export(t_transformer *orunner, t_env *env);
 int		var_exist(char *str, char **environ, int i, int len);
-char	**replace_env(t_transformer *runner, char **environ);
+char	**replace_env(char *toadd, char **environ);
 char	**ft_export_add(t_transformer *runner, char **environ);
 void	ft_unset(t_transformer *orunner, t_env *env);
 char	**find_and_quit(char **env, char *var);
@@ -80,7 +80,7 @@ int	var_exist(char *str, char **environ, int i, int len)
 	}
 }
 
-char	**replace_env(t_transformer *runner, char **environ)
+char	**replace_env(char *toadd, char **environ)
 {
 	char	*aux;
 	int		i;
@@ -88,8 +88,8 @@ char	**replace_env(t_transformer *runner, char **environ)
 	i = 0;
 	while (environ[i])
 	{
-		if (!var_exist(runner->flags[1], environ, i, 0))
-			environ[i] = ft_strdup(runner->flags[1]);
+		if (!var_exist(toadd, environ, i, 0))
+			environ[i] = ft_strdup(toadd);
 		i++;
 	}
 	return (environ);
@@ -103,7 +103,7 @@ char	**ft_export_add(t_transformer *runner, char **environ)
 	char	**env;
 
 	if (!var_exist(runner->flags[1], environ, -1, 0))
-		return (replace_env(runner, environ));
+		return (replace_env(runner->flags[1], environ));
 	len = ft_mtxlen(runner->flags) + ft_mtxlen(environ);
 	env = malloc((len) * sizeof(char *));
 	i = 0;

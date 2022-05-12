@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/11 17:57:31 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/12 11:34:20 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,12 @@
 
 typedef struct s_global
 {
-	int	ctr_c;
-	int	ctr_b;
-	int ofdin;
-	int	ofdout;
-	int	exit_value;
+	int		ctr_c;
+	int		ctr_b;
+	int 	ofdin;
+	int		ofdout;
+	int		exit_value;
+	char	*pwd;
 }				t_global;
 
 typedef struct s_totems
@@ -126,7 +127,7 @@ void			ft_print_mtx(char **env);
 void			ft_print_export(char **env);
 void			ft_export(t_transformer *orunner, t_env *env);
 int				var_exist(char *str, char **environ, int i, int len);
-char			**replace_env(t_transformer *runner, char **environ);
+char			**replace_env(char *toadd, char **environ);
 char			**ft_export_add(t_transformer *runner, char **environ);
 char			**ft_env_add(char *toadd, char **environ);
 void			ft_unset(t_transformer *orunner, t_env *env);
