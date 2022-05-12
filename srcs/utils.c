@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 11:58:28 by agallipo          #+#    #+#             */
-/*   Updated: 2022/05/12 10:37:40 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/12 12:00:23 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,33 +152,6 @@ void	sort_mtx(char **mtx)
 		i++;
 	}
 	ft_print_export(mtx);
-}
-
-char	*fvck_quotes(char *vector, char qtype, t_env *env)
-{
-	int		count;
-	char	*orig;
-
-	orig = vector;
-	count = 0;
-	if (qtype == '\'')
-		count += 1;
-	if (qtype == '\"')
-			count += 2;
-	while (*vector == '\'' || *vector == '\"')
-	{
-		if (*vector == '\'')
-			count += 1;
-		if (*vector == '\"')
-			count += 2;
-		vector++;
-	}
-	if (!(count % 2))
-	{
-		ft_strtrim(vector, "\'");
-		return (getdollars(vector, env));
-	}
-	return (orig);
 }
 
 char	*set_quotes(char *str, t_oncreate *shared)

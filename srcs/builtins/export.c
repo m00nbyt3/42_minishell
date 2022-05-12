@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 18:09:46 by agallipo          #+#    #+#             */
-/*   Updated: 2022/05/12 11:29:09 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/12 12:35:05 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,14 +66,20 @@ int	var_exist(char *str, char **environ, int i, int len)
 	else
 		str = chr2str('=', str, 0);
 	if (i != -1)
-		return(ft_strncmp(environ[i], str, len + 1));
+	{
+		if (!ft_strncmp(environ[i], str, len))
+			if (environ[i][len] == '=' || !environ[i][len])
+				return (0);
+		return (1);
+	}
 	else
 	{
 		i = 0;
 		while (environ[i])
 		{
-			if (!ft_strncmp(environ[i], str, len + 1))
-				return (0);
+			if (!ft_strncmp(environ[i], str, len))
+				if (environ[i][len] == '=' || !environ[i][len])
+					return (0);
 			i++;
 		}
 		return (1);
@@ -152,12 +158,16 @@ void	ft_unset(t_transformer *orunner, t_env *env)
 
 	if (orunner->flags[1])
 	{
-		if (var_exist(orunner->flags[1], env->array, -1, ft_strlen(orunner->flags[1])))
-			return ;
-		aux = find_and_quit(env->array, orunner->flags[1]);
-		env->array = aux;
-		aux = find_and_quit(env->export, orunner->flags[1]);
-		env->export = aux;
+		if (!var_exist(orunner->flags[1], env->array, -1, ft_strlen(orunner->flags[1])))
+		{
+			aux = find_and_quit(env->array, orunner->flags[1]);
+			env->array = aux;
+		}
+		if (!var_exist(orunner->flags[1], env->export, -1, ft_strlen(orunner->flags[1])))
+		{
+			aux = find_and_quit(env->export, orunner->flags[1]);
+			env->export = aux;
+		}
 	}
 }
 
