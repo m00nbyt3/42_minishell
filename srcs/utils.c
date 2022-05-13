@@ -3,118 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
+/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 11:58:28 by agallipo          #+#    #+#             */
-/*   Updated: 2022/05/12 12:00:23 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/13 20:25:48 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_list	*store_env_in_list(char **environ);
 void	run_cmd(char *complete, t_env *env);
-t_env	*store_environ(void);
 void	sort_mtx(char **mtx);
-char	*fvck_quotes(char *vector, char qtype, t_env *env);
-t_env	*basic_env(void);
-char	**shell_level(char **env);
-char	*set_quotes(char *str, t_oncreate *shared);
-char	*inside_quote(char *str, char **tmp, t_oncreate *shared, int *force);
 char	*chr2str(char toadd, char *str, int *force);
 int		checkargs(t_transformer *runner, t_env *env);
-char	*get_my_env(char *name, char **env);
-
-char	*get_my_env(char *name, char **env)
-{
-	int		i;
-	int		len;
-	char	*expanded;
-
-	len = ft_strlen(name);
-	i = 0;
-	expanded = 0;
-	while (env[i])
-	{
-		if (ft_strncmp(name, env[i], len) == 0)
-		{
-			expanded = ft_strdup(env[i] + (len + 1));
-			break ;
-		}
-		i++;
-	}
-	return (expanded);
-}
-
-t_env	*basic_env(void)
-{
-	t_env	*env;
-
-	env = malloc(sizeof(t_env));
-	env->array = ft_calloc(4, sizeof(char *));
-	env->array[0] = ft_strdup(ft_strjoin("PWD=", getcwd(0, 0)));
-	shell_level(env->array);
-	env->array[2] = ft_strdup("_=/usr/bin/env");
-	env->array[3] = 0;
-	env->export = ft_mtxdup(env->array);
-	env->list = store_env_in_list(env->array);
-	return (env);
-}
-
-char	**shell_level(char **env)
-{
-	int		i;
-	int		lvl;
-	char	*aux;
-	int		found;
-
-	i = 0;
-	lvl = 1;
-	found = 0;
-	while (env[i])
-	{
-		if (ft_strncmp("SHLVL=", env[i], 6) == 0)
-		{
-			found++;
-			aux = env[i] + 6;
-			lvl = ft_atoi(aux) + 1;
-			if (lvl <= 0)
-				lvl = 1;
-			break ;
-		}
-		i++;
-	}
-	env[i] = ft_strdup(ft_strjoin("SHLVL=", ft_itoa(lvl)));
-	return(env);
-}
-
-t_env	*store_environ(void)
-{
-	t_env			*env;
-	extern char		**environ;
-
-	if (!(*environ))
-		return (basic_env());
-	env = malloc(sizeof(t_env));
-	env->export = ft_mtxdup(environ);
-	env->array = ft_mtxdup(environ);
-	env->array = shell_level(env->array);
-	env->list = store_env_in_list(environ);
-	return (env);
-}
-
-t_list	*store_env_in_list(char **environ)
-{
-	t_list	*env;
-
-	env = NULL;
-	while (*environ)
-	{
-		ft_lstadd_back(&env, ft_lstnew(*environ));
-		environ++;
-	}
-	return (env);
-}
+void	set_origina_fd(void);
 
 void	run_cmd(char *complete, t_env *env)
 {
@@ -154,45 +56,6 @@ void	sort_mtx(char **mtx)
 	ft_print_export(mtx);
 }
 
-char	*set_quotes(char *str, t_oncreate *shared)
-{
-	char	*tmp;
-	int		force;
-
-	tmp = 0;
-	force = 0;
-	while(*str)
-	{
-		if (*str == '\'' || *str == '\"')
-			str = inside_quote(str, &tmp, shared, &force);
-		else
-		{
-			shared->qtype = 0;
-			tmp = chr2str(*str, tmp, &force);
-		}
-		str++;
-	}
-	if (tmp)
-		return (tmp);
-	else
-		return (ft_strdup(str));
-}
-
-char	*inside_quote(char *str, char **tmp, t_oncreate *shared, int *force)
-{
-	char qtype = *str;
-
-	str++;
-	if (!(*force))
-			shared->qtype = qtype;
-	while(*str != qtype)
-	{
-		*tmp = chr2str(*str, *tmp, force);
-		str++;
-	}
-	return (str);
-}
-
 char	*chr2str(char toadd, char *str, int *force)
 {
 	char	*new;
@@ -216,25 +79,18 @@ char	*chr2str(char toadd, char *str, int *force)
 	}
 	new[i] = toadd;
 	new[i + 1] = 0;
-	return(new);
+	return (new);
 }
 
-int		checkargs(t_transformer *runner, t_env *env)
+int	checkargs(t_transformer *runner, t_env *env)
 {
 	void	*orig;
-	int		pid;
 
-	orig =  runner;
+	orig = runner;
 	while (runner)
 	{
 		if (runner->heredoc)
-		{
-			pid = fork();
-			if (!pid)
-				here_doc(runner, env);
-			else
-				wait(&pid);
-		}
+			execute_heredoc(runner, env);
 		if (!(runner->cmd))
 		{
 			if (!runner->heredoc && runner->fdout == -2)
@@ -248,4 +104,12 @@ int		checkargs(t_transformer *runner, t_env *env)
 	}
 	runner = orig;
 	return (1);
+}
+
+void	set_origina_fd(void)
+{
+	dup2(g_util.ofdin, STDIN_FILENO);
+	close(g_util.ofdin);
+	dup2(g_util.ofdout, STDOUT_FILENO);
+	close(g_util.ofdout);
 }

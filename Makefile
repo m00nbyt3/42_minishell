@@ -6,7 +6,7 @@
 #    By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/07 10:43:28 by agallipo          #+#    #+#              #
-#    Updated: 2022/05/06 18:10:21 by agallipo         ###   ########.fr        #
+#    Updated: 2022/05/13 20:44:02 by agallipo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,22 +20,30 @@ HEADERFILES := includes/minishell.h
 
 SRCS :=	main.c \
 		utils.c \
+		utils2.c \
 		builtins/builtins.c \
-		builtins/cmds1.c \
+		builtins/exit.c \
 		builtins/other.c \
+		builtins/export.c \
+		builtins/echo.c \
+		builtins/cd_pwd.c \
+		builtins/unset.c \
 		parse/quotes.c \
+		parse/quotes2.c \
 		parse/splitx.c \
+		parse/environ.c \
+		parse/check_reds_pipes.c \
 		totem/manage.c \
 		totem/flags.c \
 		totem/elements.c \
 		parse/transform.c \
-		exec/env.c \
+		exec/env_commands.c \
 		exec/multiple.c \
 		exec/childs.c \
 		exec/cmds.c \
 		exec/here_doc.c \
 		exec/error.c \
-		builtins/export.c
+		signals.c \
 
 OBJS := $(SRCS:%.c=obj/%.o)
 

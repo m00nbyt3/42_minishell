@@ -3,20 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   childs.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
+/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 14:52:39 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/10 10:58:58 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/13 13:59:20 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 void	ft_frst_child_pipe(t_transformer *smth, t_env *env, t_tools *tools);
-void	ft_mid_child_pipe(t_transformer *smth, t_env *env, t_tools *tools, int i);
+void	ft_mid_child_pipe(t_transformer *smth, t_env *env, t_tools *tools, \
+int i);
+void	mid_has_fdin_redirection(t_transformer *smth, t_tools *tools, int i);
 void	ft_bastard(t_transformer *smth, t_env *env, t_tools *tools, int i);
 
-void	ft_frst_child_pipe(t_transformer *smth, t_env *env,t_tools *tools)
+void	ft_frst_child_pipe(t_transformer *smth, t_env *env, t_tools *tools)
 {
 	close(tools->fd[0][READ_END]);
 	if (smth->fdin != -2)
@@ -38,18 +40,10 @@ void	ft_frst_child_pipe(t_transformer *smth, t_env *env,t_tools *tools)
 	ft_execute(smth, env);
 }
 
-void	ft_mid_child_pipe(t_transformer *smth, t_env *env, t_tools *tools, int i)
+void	ft_mid_child_pipe(t_transformer *smth, t_env *env, t_tools *tools, \
+int i)
 {
-	if (smth->fdin == -2)
-	{
-		dup2(tools->fd[i][READ_END], STDIN_FILENO);
-		close(tools->fd[i][READ_END]);
-	}
-	else
-	{
-		dup2(smth->fdin, STDIN_FILENO);
-		close(smth->fdin);
-	}
+	mid_has_fdin_redirection(smth, tools, i);
 	if (smth->fdout == -2)
 	{
 		dup2(tools->fd[i + 1][WRITE_END], STDOUT_FILENO);
@@ -66,6 +60,20 @@ void	ft_mid_child_pipe(t_transformer *smth, t_env *env, t_tools *tools, int i)
 		exit (1);
 	close_all_fds(tools);
 	ft_execute(smth, env);
+}
+
+void	mid_has_fdin_redirection(t_transformer *smth, t_tools *tools, int i)
+{
+	if (smth->fdin == -2)
+	{
+		dup2(tools->fd[i][READ_END], STDIN_FILENO);
+		close(tools->fd[i][READ_END]);
+	}
+	else
+	{
+		dup2(smth->fdin, STDIN_FILENO);
+		close(smth->fdin);
+	}
 }
 
 void	ft_bastard(t_transformer *smth, t_env *env, t_tools *tools, int i)

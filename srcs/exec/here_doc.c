@@ -6,21 +6,22 @@
 /*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 12:08:30 by agallipo          #+#    #+#             */
-/*   Updated: 2022/05/11 16:19:59 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/13 20:52:01 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 void	here_doc(t_transformer *content, t_env *env);
+void	while_heredoc(t_transformer *content, t_env *env, char *str, \
+int quotes);
 void	find_variable(char	*str, int fd, int *i, t_env *env);
-void	cutstr(char *str, char c);
 void	exit_here(int sig);
+void	execute_heredoc(t_transformer *runner, t_env *env);
 
 void	here_doc(t_transformer *content, t_env *env)
 {
 	char	*str;
-	int		i;
 	int		quotes;
 
 	set_origina_fd();
@@ -29,6 +30,16 @@ void	here_doc(t_transformer *content, t_env *env)
 	quotes = 0;
 	if (content->qtype == '\"' || content->qtype == '\'')
 		quotes = 1;
+	while_heredoc(content, env, str, quotes);
+	close(content->fdin);
+	exit(0);
+}
+
+void	while_heredoc(t_transformer *content, t_env *env, char *str, \
+int quotes)
+{
+	int	i;
+
 	while (42)
 	{
 		signal(SIGINT, exit_here);
@@ -36,7 +47,7 @@ void	here_doc(t_transformer *content, t_env *env)
 		if (str == NULL)
 			exit(0);
 		if (ft_strcmp(str, content->heredoc))
-			break ;
+			return ;
 		i = 0;
 		while (str[i])
 		{
@@ -50,8 +61,6 @@ void	here_doc(t_transformer *content, t_env *env)
 		}
 		write(content->fdin, "\n", 1);
 	}
-	close(content->fdin);
-	exit(0);
 }
 
 void	exit_here(int sig)
@@ -79,18 +88,20 @@ void	find_variable(char	*str, int fd, int *i, t_env *env)
 	}
 	while (str[*i] != '\0')
 	{
-		if (str[*i] == ' ' || str[*i] == '$'|| str[*i] == '\''|| str[*i] == '\"')
+		if (str[*i] == ' ' || str[*i] == '$' || str[*i] == '\'' \
+		|| str[*i] == '\"')
 			break ;
 		(*i)++;
 	}
 }
 
-void	cutstr(char *str, char c)
+void	execute_heredoc(t_transformer *runner, t_env *env)
 {
-	size_t	i;
+	int	pid;
 
-	i = 0;
-	while (str[i] && str[i] != c && str[i] != '$'&& str[i] != '\''&& str[i] != '\"')
-		i++;
-	str[i] = '\0';
+	pid = fork();
+	if (!pid)
+		here_doc(runner, env);
+	else
+		wait(&pid);
 }

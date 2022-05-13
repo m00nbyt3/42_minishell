@@ -3,20 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
+/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/12 11:38:07 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/13 12:21:23 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	sign(int sig);
-void	ctrl_d(char *str, t_transformer *runner);
 char	*read_my_line(char *str);
-int		checkreds(char *str);
-int		checkpipes(char *str, int count, int things, int err);
+void	parse_line(t_totems **input, t_transformer **runner, t_env *env, \
+char *str);
+void	execution(t_totems **input, t_transformer **runner, t_env *env);
 
 int	main(void)
 {
@@ -33,24 +32,35 @@ int	main(void)
 		str = read_my_line(str);
 		ctrl_d(str, runner);
 		add_history(str);
-		input = 0;
-		g_util.ofdin = -1;
-		g_util.ofdout = -1;
-		g_util.pwd = getcwd(0, 0);
-		if (!ft_chk_quotes(str) && !checkreds(str))
-			input = sp_split(str);
-		runner = transform(input, env);
-		if (input && checkargs(runner, env))
-		{
-			ft_pipes(&runner, input, env);
-			ft_clear_input(&input, free);
-		}
-		ft_clear_transformer(&runner, free);
-		g_util.ctr_c = 0;
-		g_util.ctr_b = 0;
-		close(g_util.ofdin);
-		close(g_util.ofdout);
+		parse_line(&input, &runner, env, str);
+		execution(&input, &runner, env);
 	}
+}
+
+void	parse_line(t_totems **input, t_transformer **runner, t_env *env, \
+char *str)
+{
+	*input = 0;
+	g_util.ofdin = -1;
+	g_util.ofdout = -1;
+	g_util.pwd = getcwd(0, 0);
+	if (!ft_chk_quotes(str) && !checkreds(str))
+		*input = sp_split(str);
+	*runner = transform(*input, env);
+}
+
+void	execution(t_totems **input, t_transformer **runner, t_env *env)
+{
+	if (*input && checkargs(*runner, env))
+	{
+		ft_pipes(runner, *input, env);
+		ft_clear_input(input, free);
+	}
+	ft_clear_transformer(runner, free);
+	g_util.ctr_c = 0;
+	g_util.ctr_b = 0;
+	close(g_util.ofdin);
+	close(g_util.ofdout);
 }
 
 char	*read_my_line(char *str)
@@ -63,110 +73,4 @@ char	*read_my_line(char *str)
 	}
 	str = readline("W4V3shell# ");
 	return (str);
-}
-
-void	ctrl_d(char *str, t_transformer *runner)
-{
-	if (str == NULL)
-	{
-		if (g_util.ctr_c == 0 || g_util.ctr_b == 0)
-		{
-			ft_clear_transformer(&runner, free);
-			ft_putstr_fd("exit", 0);
-			exit(0);
-		}
-	}
-}
-
-void	sign(int sig)
-{
-	char *str;
-	if (sig == SIGINT)
-	{
-		g_util.ctr_c = 1;
-		g_util.exit_value = 130;
-		write(1, "\n", 1);
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		rl_redisplay();
-	}
-	if (sig == SIGQUIT)
-	{
-		signal(SIGQUIT, SIG_IGN);
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		rl_redisplay();
-		g_util.ctr_c = 1;
-	}
-}
-
-int	checkreds(char *str)
-{
-	int	smaller;
-	int	bigger;
-	int	i;
-	int	first;
-
-	if (!checkpipes(str, 0, 0, 0))
-		return (1);
-	smaller = 0;
-	bigger = 0;
-	while (*str)
-	{
-		if (*str == '<')
-			smaller++;
-		else if (*str == '>')
-			bigger++;
-		else if (*str == '|')
-		{
-			if ((smaller || bigger) && !first)
-				return (rederror());
-			smaller = 0;
-			bigger = 0;
-			first = 0;
-		}
-		else
-		{
-			smaller = 0;
-			bigger = 0;
-			first++;
-		}
-		if (smaller && bigger)
-			return (rederror());
-		if (smaller > 2 || bigger > 2)
-			return (rederror());
-		str++;
-
-	}
-	if ((smaller || bigger) && !first)
-		return (rederror());
-	return (0);
-}
-
-int	checkpipes(char *str, int count, int things, int err)
-{
-	int i;
-
-	i = 0;
-	if (str[i] == '|')
-		err++;
-	while (str[i])
-	{
-		if (str[i] == '|')
-		{
-			count++;
-			things = 0;
-		}
-		else
-			things++;
-		i++;
-	}
-	if ((things == 0 || err) && i)
-	{
-		write(2, "W4V3shell: syntax error near unexpected token `|'\n", 50);
-		g_util.exit_value = 1;
-		return (0);
-	}
-	else
-		return (1);
 }

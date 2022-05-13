@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   multiple.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
+/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/10 10:53:08 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/13 21:01:51 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,36 +16,8 @@ void	ft_pipes(t_transformer **contents, t_totems *input, t_env *env);
 void	ft_while_pipes(t_transformer *content, t_tools *tools, t_env *env);
 void	ft_final_pipe(t_transformer *content, t_tools *tools, t_env *env, \
 		int i);
-void	allocate_fds(t_tools *tools);
-void	close_all_fds(t_tools *tools);
+void	while_wait(t_tools *tools, int i);
 
-void	allocate_fds(t_tools *tools)
-{
-	int	i;
-
-	i = 0;
-	tools->fd = malloc(tools->npipes * sizeof(int *));
-	while (i < tools->npipes)
-	{
-		tools->fd[i] = malloc(2 * sizeof(int));
-		tools->fd[i][0] = -42;
-		tools->fd[i][1] = -42;
-		i++;
-	}
-}
-
-void	close_all_fds(t_tools *tools)
-{
-	int	i;
-
-	i = 0;
-	while (i < tools->npipes)
-	{
-		close(tools->fd[i][0]);
-		close(tools->fd[i][1]);
-		i++;
-	}
-}
 void	ft_pipes(t_transformer **contents, t_totems *input, t_env *env)
 {
 	int				i;
@@ -68,6 +40,11 @@ void	ft_pipes(t_transformer **contents, t_totems *input, t_env *env)
 	else
 		ft_while_pipes(content, tools, env);
 	i = -1;
+	while_wait(tools, i);
+}
+
+void	while_wait(t_tools *tools, int i)
+{
 	while (++i < (tools->npipes + 1))
 	{
 		wait(&(tools->pid[i]));

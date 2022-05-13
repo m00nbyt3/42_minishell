@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
+/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/12 13:33:17 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/13 21:08:25 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,21 +93,32 @@ t_global	g_util;
 
 //Functions
 //Utils
-t_list			*store_env_in_list(char **environ);
 void			run_cmd(char *complete, t_env *env);
-t_env			*store_environ(void);
-t_env			*basic_env(void);
 void			sort_mtx(char **mtx);
-char			*fvck_quotes(char *vector, char qtype, t_env *env);
-char			**shell_level(char **env);
-char			*set_quotes(char *str, t_oncreate *shared);
-char			*inside_quote(char *str, char **tmp, t_oncreate *shared, \
-	int *force);
 char			*chr2str(char toadd, char *str, int *force);
 void			set_origina_fd(void);
 void			set_last_command(t_transformer *smth, t_env *env);
-char			*get_my_env(char *name, char **env);
 int				checkargs(t_transformer *runner, t_env *env);
+
+//Parse
+int				checkreds(char *str);
+int				checkpipes(char *str, int count, int things, int err);
+char			*set_quotes(char *str, t_oncreate *shared);
+char			*inside_quote(char *str, char **tmp, t_oncreate *shared, \
+	int *force);
+//error
+void			command_not_found(t_transformer *smth);
+
+//environ
+char			*get_my_env(char *name, char **env);
+t_env			*basic_env(void);
+char			**shell_level(char **env);
+t_env			*store_environ(void);
+t_list			*store_env_in_list(char **environ);
+
+//Signals
+void			sign(int sig);
+void			ctrl_d(char *str, t_transformer *runner);
 
 //Builtins
 int				ft_builtins(t_transformer *runner, t_env *env);
@@ -187,6 +198,7 @@ void			here_doc(t_transformer *content, t_env *env);
 void			cutstr(char *str, char c);
 void			allocate_fds(t_tools *tools);
 void			close_all_fds(t_tools *tools);
+void			execute_heredoc(t_transformer *runner, t_env *env);
 
 //System functions
 void			rl_replace_line(const char *text, int clear_undo);

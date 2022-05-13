@@ -3,22 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   cmds.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
+/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 14:53:51 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/10 12:43:40 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/13 20:41:36 by agallipo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int		count_cmds(t_transformer *data);
-int		single_cmd(int npipes, t_transformer *smth,  t_env *env);
-void	single_cmd_2(int ofdin, int	ofdout, t_transformer *smth,  t_env *env);
-void	ft_execute(t_transformer *smth,  t_env *env);
-void	set_origina_fd(void);
-void	here_doc(t_transformer *content, t_env *env);
-void	set_last_command(t_transformer *smth,  t_env *env);
+int		single_cmd(int npipes, t_transformer *smth, t_env *env);
+void	single_cmd_2(int ofdin, int ofdout, t_transformer *smth, t_env *env);
+void	ft_execute(t_transformer *smth, t_env *env);
+void	set_last_command(t_transformer *smth, t_env *env);
 
 int	count_cmds(t_transformer *data)
 {
@@ -37,15 +35,7 @@ int	count_cmds(t_transformer *data)
 	return (i);
 }
 
-void	set_origina_fd(void)
-{
-	dup2(g_util.ofdin, STDIN_FILENO);
-	close(g_util.ofdin);
-	dup2(g_util.ofdout, STDOUT_FILENO);
-	close(g_util.ofdout);
-}
-
-int		single_cmd(int npipes, t_transformer *smth,  t_env *env)
+int	single_cmd(int npipes, t_transformer *smth, t_env *env)
 {
 	int	ofdin;
 	int	ofdout;
@@ -74,7 +64,7 @@ int		single_cmd(int npipes, t_transformer *smth,  t_env *env)
 	return (0);
 }
 
-void	single_cmd_2(int ofdin, int	ofdout, t_transformer *smth,  t_env *env)
+void	single_cmd_2(int ofdin, int ofdout, t_transformer *smth, t_env *env)
 {
 	int	pid;
 
@@ -103,7 +93,7 @@ void	single_cmd_2(int ofdin, int	ofdout, t_transformer *smth,  t_env *env)
 	}
 }
 
-void	set_last_command(t_transformer *smth,  t_env *env)
+void	set_last_command(t_transformer *smth, t_env *env)
 {
 	int		i;
 
@@ -119,7 +109,7 @@ void	set_last_command(t_transformer *smth,  t_env *env)
 	env->array[i] = ft_strdup("_=/usr/bin/env");
 }
 
-void	ft_execute(t_transformer *smth,  t_env *env)
+void	ft_execute(t_transformer *smth, t_env *env)
 {
 	char	*command;
 
@@ -129,19 +119,11 @@ void	ft_execute(t_transformer *smth,  t_env *env)
 		dup2(smth->fdin, STDIN_FILENO);
 		close(smth->fdin);
 	}
-	if (ft_builtins(smth, env))
-		;
-	else
+	if (!ft_builtins(smth, env))
 	{
 		command = ft_env_path(env->array, smth->cmd, smth->flags);
 		if (command == 0)
-		{
-			write(2, "W4V3shell: ", 11);
-			ft_putstr_fd(smth->cmd, 2);
-			write(2, " : command not found\n", 21);
-			g_util.exit_value = 127;
-			exit (127);
-		}
+			command_not_found(smth);
 		if (execve(command, smth->flags, env->array) < 0)
 		{
 			write(2, "W4V3shell: ", 11);
