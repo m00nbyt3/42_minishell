@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/15 16:32:27 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/15 18:03:02 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@ void	parse_line(t_totems **input, t_transformer **runner, t_env *env, \
 char *str);
 void	execution(t_totems **input, t_transformer **runner, t_env *env);
 
+void	leaks(void)
+{
+	system("leaks minishell");
+}
+
 int	main(void)
 {
 	char			*str;
@@ -24,9 +29,11 @@ int	main(void)
 	t_totems		*input;
 	t_transformer	*runner;
 
+	atexit(leaks);
 	str = 0;
 	runner = 0;
 	env = store_environ();
+	g_util = malloc(1 * sizeof(t_global));
 	while (42)
 	{
 		signal(SIGINT, sign);
@@ -36,6 +43,7 @@ int	main(void)
 		add_history(str);
 		parse_line(&input, &runner, env, str);
 		execution(&input, &runner, env);
+		free(g_util->pwd);
 	}
 }
 
@@ -43,9 +51,9 @@ void	parse_line(t_totems **input, t_transformer **runner, t_env *env, \
 char *str)
 {
 	*input = 0;
-	g_util.ofdin = -1;
-	g_util.ofdout = -1;
-	g_util.pwd = getcwd(0, 0);
+	g_util->ofdin = -1;
+	g_util->ofdout = -1;
+	g_util->pwd = getcwd(0, 0);
 	if (!ft_chk_quotes(str) && !checkreds(str))
 		*input = sp_split(str, 0, 0, 0);
 	*runner = transform(*input, env);
@@ -59,10 +67,10 @@ void	execution(t_totems **input, t_transformer **runner, t_env *env)
 		ft_clear_input(input, free);
 	}
 	//ft_clear_transformer(runner, free);
-	g_util.ctr_c = 0;
-	g_util.ctr_b = 0;
-	close(g_util.ofdin);
-	close(g_util.ofdout);
+	g_util->ctr_c = 0;
+	g_util->ctr_b = 0;
+	close(g_util->ofdin);
+	close(g_util->ofdout);
 }
 
 char	*read_my_line(char *str)

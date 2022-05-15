@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   environ.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 12:23:04 by agallipo          #+#    #+#             */
-/*   Updated: 2022/05/13 21:04:38 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/15 17:30:18 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,13 @@ char	*get_my_env(char *name, char **env)
 t_env	*basic_env(void)
 {
 	t_env	*env;
+	char	*path;
 
 	env = malloc(sizeof(t_env));
 	env->array = ft_calloc(4, sizeof(char *));
-	env->array[0] = ft_strdup(ft_strjoin("PWD=", getcwd(0, 0)));
+	path = getcwd(0, 0);
+	env->array[0] = ft_strjoin("PWD=", path);
+	free(path);
 	shell_level(env->array);
 	env->array[2] = ft_strdup("_=/usr/bin/env");
 	env->array[3] = 0;
@@ -59,16 +62,14 @@ char	**shell_level(char **env)
 	int		i;
 	int		lvl;
 	char	*aux;
-	int		found;
+	char	*number;
 
 	i = 0;
 	lvl = 1;
-	found = 0;
 	while (env[i])
 	{
 		if (ft_strncmp("SHLVL=", env[i], 6) == 0)
 		{
-			found++;
 			aux = env[i] + 6;
 			lvl = ft_atoi(aux) + 1;
 			if (lvl <= 0)
@@ -77,7 +78,10 @@ char	**shell_level(char **env)
 		}
 		i++;
 	}
-	env[i] = ft_strdup(ft_strjoin("SHLVL=", ft_itoa(lvl)));
+	free(env[i]);
+	number = ft_itoa(lvl);
+	env[i] = ft_strjoin("SHLVL=", number);
+	free(number);
 	return (env);
 }
 

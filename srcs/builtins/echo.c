@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 12:48:26 by agallipo          #+#    #+#             */
-/*   Updated: 2022/05/13 13:38:35 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/15 17:57:08 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	ft_echo(t_transformer *runner)
 	if (newline)
 		write(1, "\n", 1);
 	runner = orig;
-	g_util.exit_value = 0;
+	g_util->exit_value = 0;
 }
 
 void	write_echo(t_transformer *runner, int i)

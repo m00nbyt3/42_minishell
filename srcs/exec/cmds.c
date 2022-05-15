@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 14:53:51 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/15 16:26:59 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/15 17:57:35 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,9 @@ void	single_cmd_2(int ofdin, int ofdout, t_transformer *smth, t_env *env)
 		sigignore(SIGINT);
 		wait(&pid);
 		if (WIFEXITED(pid))
-				g_util.exit_value = WEXITSTATUS(pid);
+				g_util->exit_value = WEXITSTATUS(pid);
 		if (WIFSIGNALED(pid))
-			g_util.exit_value = 130;
+			g_util->exit_value = 130;
 		dup2(ofdin, STDIN_FILENO);
 		close(ofdin);
 		dup2(ofdout, STDOUT_FILENO);
@@ -111,7 +111,7 @@ void	ft_execute(t_transformer *smth, t_env *env)
 			write(2, "W4V3shell: ", 11);
 			ft_putstr_fd(smth->cmd, 2);
 			perror(" ");
-			g_util.exit_value = 1;
+			g_util->exit_value = 1;
 			exit (1);
 		}
 	}

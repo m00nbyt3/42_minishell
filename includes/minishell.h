@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/15 16:41:21 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/15 17:53:09 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ typedef struct s_env
 }				t_env;
 
 //global
-t_global	g_util;
+t_global	*g_util;
 
 //Functions
 //Utils

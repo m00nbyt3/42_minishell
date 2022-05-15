@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 11:53:49 by agallipo          #+#    #+#             */
-/*   Updated: 2022/05/15 16:32:02 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/15 17:56:17 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ctrl_d(char *str)
 {
 	if (str == NULL)
 	{
-		if (g_util.ctr_c == 0 || g_util.ctr_b == 0)
+		if (g_util->ctr_c == 0 || g_util->ctr_b == 0)
 		{
 			//ft_clear_transformer(&runner, free);
 			ft_putstr_fd("exit", 0);
@@ -32,8 +32,8 @@ void	sign(int sig)
 {
 	if (sig == SIGINT)
 	{
-		g_util.ctr_c = 1;
-		g_util.exit_value = 130;
+		g_util->ctr_c = 1;
+		g_util->exit_value = 130;
 		write(1, "\n", 1);
 		rl_replace_line("", 0);
 		rl_on_new_line();
@@ -45,6 +45,6 @@ void	sign(int sig)
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
-		g_util.ctr_c = 1;
+		g_util->ctr_c = 1;
 	}
 }

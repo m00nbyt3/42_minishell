@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 18:09:46 by agallipo          #+#    #+#             */
-/*   Updated: 2022/05/15 16:14:59 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/15 17:05:11 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,6 @@ char	**ft_env_add(char *toadd, char **environ)
 	env[i + 1] = 0;
 	return (env);
 }
-//free(environ) in ft_env_add;
 
 int	add_to_env(t_transformer *orunner)
 {

@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/15 16:23:51 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/15 17:57:59 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ void	ft_pipes(t_transformer **contents, t_env *env)
 	t_transformer	*content;
 	t_tools			*tools;
 
-	g_util.ofdin = dup(STDIN_FILENO);
-	g_util.ofdout = dup(STDOUT_FILENO);
+	g_util->ofdin = dup(STDIN_FILENO);
+	g_util->ofdout = dup(STDOUT_FILENO);
 	content = *contents;
 	tools = malloc(sizeof(t_tools));
 	tools->npipes = count_cmds(content) - 1;
@@ -49,9 +49,9 @@ void	while_wait(t_tools *tools, int i)
 	{
 		wait(&(tools->pid[i]));
 		if (WIFEXITED(tools->pid[i]))
-			g_util.exit_value = WEXITSTATUS(tools->pid[i]);
+			g_util->exit_value = WEXITSTATUS(tools->pid[i]);
 		if (WIFSIGNALED(tools->pid[i]))
-			g_util.exit_value = 130;
+			g_util->exit_value = 130;
 	}
 }
 

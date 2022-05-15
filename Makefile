@@ -6,7 +6,7 @@
 #    By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/07 10:43:28 by agallipo          #+#    #+#              #
-#    Updated: 2022/05/15 16:18:21 by ycarro           ###   ########.fr        #
+#    Updated: 2022/05/15 16:55:00 by ycarro           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,7 +50,7 @@ SRCS :=	main.c \
 OBJS := $(SRCS:%.c=obj/%.o)
 
 CFLAGS := $(INCLUDE) -I $(HOME)/.brew/opt/readline/include -Wall -Werror -Wextra #-fsanitize=address -g
-LDFLAGS := -L/usr/include -lreadline -L $(HOME)/.brew/opt/readline/lib -Llibft -lft -fsanitize=address -g
+LDFLAGS := -L/usr/include -lreadline -L $(HOME)/.brew/opt/readline/lib -Llibft -lft
 
 all: $(NAME)
 

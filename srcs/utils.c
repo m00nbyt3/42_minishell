@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 11:58:28 by agallipo          #+#    #+#             */
-/*   Updated: 2022/05/15 15:21:41 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/15 17:56:46 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	checkargs(t_transformer *runner, t_env *env)
 			if (!runner->heredoc && runner->fdout == -2)
 			{
 				write(2, "W4V3shell: command not found\n", 29);
-				g_util.exit_value = 127;
+				g_util->exit_value = 127;
 			}
 			return (0);
 		}
@@ -94,8 +94,8 @@ int	checkargs(t_transformer *runner, t_env *env)
 
 void	set_origina_fd(void)
 {
-	dup2(g_util.ofdin, STDIN_FILENO);
-	close(g_util.ofdin);
-	dup2(g_util.ofdout, STDOUT_FILENO);
-	close(g_util.ofdout);
+	dup2(g_util->ofdin, STDIN_FILENO);
+	close(g_util->ofdin);
+	dup2(g_util->ofdout, STDOUT_FILENO);
+	close(g_util->ofdout);
 }

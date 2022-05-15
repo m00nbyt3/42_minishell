@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 15:12:49 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/15 15:14:47 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/15 17:58:32 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*getdollars(char *orig, t_env *env)
 			if (orig[i + 1] == ' ' || !orig[i + 1])
 				return ("$");
 			if (orig[i + 1] == '?' && (orig[i + 2] == ' ' || !orig[i + 2]))
-				return (ft_itoa(g_util.exit_value));
+				return (ft_itoa(g_util->exit_value));
 			aux = ft_strdup(orig + (i + 1));
 			if (!expand_dollar(&aux, env, &ret))
 				return (0);

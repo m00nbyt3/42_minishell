@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 12:59:45 by agallipo          #+#    #+#             */
-/*   Updated: 2022/05/13 13:31:19 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/15 17:56:57 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	file_not_found(char *path)
 	write(2, "W4V3shell: cd: ", 15);
 	ft_putstr_fd(path, 2);
 	write(2, " : No such file or directory\n", 30);
-	g_util.exit_value = 1;
+	g_util->exit_value = 1;
 }
 
 char	*go_to_last_path(char *path, char **env)
@@ -47,7 +47,7 @@ void	ft_cd(t_transformer *runner, char **env)
 		if (!path)
 		{
 			write(2, "W4V3shell: cd: HOME not set\n", 28);
-			g_util.exit_value = 1;
+			g_util->exit_value = 1;
 			return ;
 		}
 	}
@@ -59,7 +59,7 @@ void	ft_cd(t_transformer *runner, char **env)
 		return ;
 	}
 	mod_env_pwd(env);
-	g_util.exit_value = 0;
+	g_util->exit_value = 0;
 }
 
 void	mod_env_pwd(char **env)
@@ -67,9 +67,9 @@ void	mod_env_pwd(char **env)
 	char	*toadd1;
 	char	*toadd2;
 
-	toadd1 = ft_strjoin("OLDPWD=", g_util.pwd);
-	g_util.pwd = getcwd(0, 0);
-	toadd2 = ft_strjoin("PWD=", g_util.pwd);
+	toadd1 = ft_strjoin("OLDPWD=", g_util->pwd);
+	g_util->pwd = getcwd(0, 0);
+	toadd2 = ft_strjoin("PWD=", g_util->pwd);
 	if (!var_exist("OLDPWD=", env, -1, 0))
 		replace_env(toadd1, env);
 	else
@@ -88,5 +88,5 @@ void	ft_pwd(void)
 	ft_putstr_fd(buf, 1);
 	write(1, "\n", 1);
 	free(buf);
-	g_util.exit_value = 0;
+	g_util->exit_value = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 12:12:11 by agallipo          #+#    #+#             */
-/*   Updated: 2022/05/15 12:31:00 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/15 17:58:10 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	checkpipes(char *str, int count, int things, int err)
 	if ((things == 0 || err) && i)
 	{
 		write(2, "W4V3shell: syntax error near unexpected token `|'\n", 50);
-		g_util.exit_value = 1;
+		g_util->exit_value = 1;
 		return (0);
 	}
 	else
