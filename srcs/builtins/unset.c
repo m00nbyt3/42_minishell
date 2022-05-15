@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 13:41:35 by agallipo          #+#    #+#             */
-/*   Updated: 2022/05/13 13:52:38 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/15 16:15:33 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ char	**replace_env(char *toadd, char **environ);
 void	ft_unset(t_transformer *orunner, t_env *env)
 {
 	char	**aux;
-	char	*env_name;
-	int		i;
 
 	if (orunner->flags[1])
 	{
@@ -63,10 +61,8 @@ char	**find_and_quit(char **env, char *var_name)
 int	var_exist(char *str, char **environ, int i, int len)
 {
 	if (!len)
-	{
 		while (str[len] != '=' && str[len])
 			len++;
-	}
 	else
 		str = chr2str('=', str, 0);
 	if (i != -1)
@@ -92,7 +88,6 @@ int	var_exist(char *str, char **environ, int i, int len)
 
 char	**replace_env(char *toadd, char **environ)
 {
-	char	*aux;
 	int		i;
 
 	i = 0;

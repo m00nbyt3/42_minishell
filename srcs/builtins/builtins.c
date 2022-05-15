@@ -6,26 +6,23 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 12:14:54 by agallipo          #+#    #+#             */
-/*   Updated: 2022/05/11 16:24:24 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/15 15:24:23 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int		ft_builtins(t_transformer *runner, t_env *env);
-int		select_cmd(t_transformer *runner, t_env *env, int ofdin, int ofdout);
+int		select_cmd(t_transformer *runner, t_env *env);
 
 int	ft_builtins(t_transformer *runner, t_env *env)
 {
-	int		ofdin;
-	int		ofdout;
-
-	if (!select_cmd(runner, env, ofdin, ofdout))
+	if (!select_cmd(runner, env))
 		return (0);
 	return (1);
 }
 
-int	select_cmd(t_transformer *runner, t_env *env, int ofdin, int ofdout)
+int	select_cmd(t_transformer *runner, t_env *env)
 {
 	void	*orig;
 

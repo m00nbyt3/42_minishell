@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 18:09:46 by agallipo          #+#    #+#             */
-/*   Updated: 2022/05/13 13:50:44 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/15 16:14:59 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ char	**ft_env_add(char *toadd, char **environ)
 {
 	int		len;
 	int		i;
-	int		j;
 	char	**env;
 
 	len = 2 + ft_mtxlen(environ);

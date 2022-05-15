@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   transform.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 12:41:32 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/09 15:18:20 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/15 13:35:54 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 t_transformer	*transform(t_totems *input, t_env *env);
 void			find_fds(t_totems *input, t_transformer *runner);
 void			create_transformer(t_transformer **runner, int *lap);
-void			fill_content(t_totems *input, t_transformer *runner, t_env *env);
+void			fill_content(t_totems *input, t_transformer *runner, \
+	t_env *env);
 void			set_doubles(t_totems *input, t_transformer *runner);
 
 t_transformer	*transform(t_totems *input, t_env *env)
@@ -24,14 +25,9 @@ t_transformer	*transform(t_totems *input, t_env *env)
 	t_transformer	*orig;
 	int				lap;
 
-	runner = malloc(sizeof(t_transformer));
+	runner = init_transformer(runner);
 	orig = runner;
 	lap = 0;
-	runner->cmd = 0;
-	runner->fdin = -2;
-	runner->fdout = -2;
-	runner->heredoc = 0;
-	runner->append = 0;
 	while (input)
 	{
 		if (lap != input->section)

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+         #
+#    By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/07 10:43:28 by agallipo          #+#    #+#              #
-#    Updated: 2022/05/13 20:44:02 by agallipo         ###   ########.fr        #
+#    Updated: 2022/05/15 16:16:04 by ycarro           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,18 +36,20 @@ SRCS :=	main.c \
 		totem/manage.c \
 		totem/flags.c \
 		totem/elements.c \
+		totem/dollars.c \
 		parse/transform.c \
+		parse/manage.c \
 		exec/env_commands.c \
 		exec/multiple.c \
 		exec/childs.c \
 		exec/cmds.c \
 		exec/here_doc.c \
 		exec/error.c \
-		signals.c \
+		signals.c
 
 OBJS := $(SRCS:%.c=obj/%.o)
 
-CFLAGS := $(INCLUDE) -I $(HOME)/.brew/opt/readline/include -fsanitize=address -g # -Wall -Werror -Wextra #-fsanitize=address -g
+CFLAGS := $(INCLUDE) -I $(HOME)/.brew/opt/readline/include #-Wall -Werror -Wextra #-fsanitize=address -g
 LDFLAGS := -L/usr/include -lreadline -L $(HOME)/.brew/opt/readline/lib -Llibft -lft -fsanitize=address -g
 
 all: $(NAME)

@@ -3,33 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 11:58:28 by agallipo          #+#    #+#             */
-/*   Updated: 2022/05/13 20:25:48 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/15 15:21:41 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	run_cmd(char *complete, t_env *env);
 void	sort_mtx(char **mtx);
 char	*chr2str(char toadd, char *str, int *force);
 int		checkargs(t_transformer *runner, t_env *env);
 void	set_origina_fd(void);
-
-void	run_cmd(char *complete, t_env *env)
-{
-	t_transformer	*content;
-
-	content->flags = ft_split(complete, ' ');
-	content->cmd = *content->flags;
-	content->fdin = -2;
-	content->fdout = -2;
-	content->heredoc = 0;
-	content->append = 0;
-	single_cmd(0, content, env);
-}
 
 void	sort_mtx(char **mtx)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/13 21:08:25 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/15 16:13:53 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,6 @@ t_global	g_util;
 
 //Functions
 //Utils
-void			run_cmd(char *complete, t_env *env);
 void			sort_mtx(char **mtx);
 char			*chr2str(char toadd, char *str, int *force);
 void			set_origina_fd(void);
@@ -102,6 +101,7 @@ int				checkargs(t_transformer *runner, t_env *env);
 
 //Parse
 int				checkreds(char *str);
+int				checkreds_2(char *str, int *smaller, int *bigger, int *first);
 int				checkpipes(char *str, int count, int things, int err);
 char			*set_quotes(char *str, t_oncreate *shared);
 char			*inside_quote(char *str, char **tmp, t_oncreate *shared, \
@@ -122,8 +122,7 @@ void			ctrl_d(char *str, t_transformer *runner);
 
 //Builtins
 int				ft_builtins(t_transformer *runner, t_env *env);
-int				select_cmd(t_transformer *runner, t_env *env, \
-int ofdin, int ofdout);
+int				select_cmd(t_transformer *runner, t_env *env);
 void			ft_echo(t_transformer *runner);
 void			ft_cd(t_transformer *runner, char **env);
 void			ft_pwd(void);
@@ -144,7 +143,7 @@ int				variable_match(char *var, char *name);
 int				add_to_env(t_transformer *orunner);
 
 //Totem
-t_totems		*sp_split(char *s);
+t_totems		*sp_split(char *s, char *used, size_t i, size_t j);
 char			*char_detection(char *tmp, t_oncreate *shared, \
 				t_totems *totem, int *i);
 int				is_special_c(char *str, t_totems *totem, int i, \
@@ -163,12 +162,16 @@ void			ft_clear_input(t_totems **lst, \
 				void (*del)(void *));
 void			vectorize_flags(t_transformer *runner, t_totems *input, \
 	int sect, t_env *env);
+int				save_flag(t_totems *input, int sect, char **vector, t_env *env);
 int				count_flags(t_totems *input, int sect);
 void			print_vector(t_transformer *runner);
 char			*getdollars(char *str, t_env *env);
+int				expand_dollar(char **aux, t_env *env, char **ret);
 t_transformer	*transform(t_totems *input, t_env *env);
 void			ft_clear_transformer(t_transformer **runner, \
 void (*del)(void *));
+t_transformer	*init_transformer(t_transformer *runner);
+
 //Pipes
 void			ft_pipes(t_transformer **contents, t_totems *input, \
 t_env *env);

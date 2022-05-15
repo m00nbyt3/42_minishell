@@ -6,19 +6,22 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 14:57:01 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/12 11:01:45 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/15 15:13:04 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	vectorize_flags(t_transformer *runner, t_totems *input, int sect, t_env *env);
-void	save_flag(t_totems *input, int sect, char **vector, int *i, t_env *env);
+void	vectorize_flags(t_transformer *runner, t_totems *input, \
+	int sect, t_env *env);
+int		save_flag(t_totems *input, int sect, char **vector, t_env *env);
 int		count_flags(t_totems *input, int sect);
 void	print_vector(t_transformer *runner);
 char	*getdollars(char *str, t_env *env);
+int		expand_dollar(char **aux, t_env *env, char **ret);
 
-void	vectorize_flags(t_transformer *runner, t_totems *input, int sect, t_env *env)
+void	vectorize_flags(t_transformer *runner, t_totems *input, \
+	int sect, t_env *env)
 {
 	char	**vector;
 	int		size;
@@ -31,7 +34,8 @@ void	vectorize_flags(t_transformer *runner, t_totems *input, int sect, t_env *en
 	i = 0;
 	while (input)
 	{
-		save_flag(input, sect, vector, &i, env);
+		if (save_flag(input, sect, &vector[i], env))
+			i++;
 		input = input->next;
 	}
 	vector[i] = 0;
@@ -42,55 +46,19 @@ void	vectorize_flags(t_transformer *runner, t_totems *input, int sect, t_env *en
 	input = orig;
 }
 
-void	save_flag(t_totems *input, int sect, char **vector, int *i, t_env *env)
+int	save_flag(t_totems *input, int sect, char **vector, t_env *env)
 {
 	if ((input->type == 'f' || input->type == 'a' || input->type == 'c') \
 		&& input->section == sect)
 	{
-		vector[*i] = input->content;
-		if (*vector[*i] == '$' && input->qtype != '\'' && input->type != 'h')
-			vector[*i] = getdollars(vector[*i], env);
+		*vector = input->content;
+		if (**vector == '$' && input->qtype != '\'' && input->type != 'h')
+			*vector = getdollars(*vector, env);
 		if (input->type == 'f')
-			vector[*i] = ft_strjoin("-\0", vector[*i]);
-		(*i)++;
+			*vector = ft_strjoin("-\0", *vector);
+		return (1);
 	}
-}
-
-char	*getdollars(char *str, t_env *env)
-{
-	char	*aux;
-	char	*orig;
-	char	*ret;
-	int		i;
-
-	orig = ft_strdup(str);
-	i = 0;
-	ret = ft_calloc(sizeof(char *), 1);
-	while (orig[i])
-	{
-		if (orig[i] == '$')
-		{
-			if (orig[i + 1] == ' ' || !orig[i + 1])
-			{
-				free(orig);
-				return("$");
-			}
-			if (orig[i + 1] == '?' && (orig[i + 2] == ' ' || !orig[i + 2]))
-				return(ft_itoa(g_util.exit_value));
-			aux = ft_strdup(orig + (i + 1));
-			cutstr(aux, ' ');
-			aux = get_my_env(aux, env->array);
-			if (!aux)
-			{
-				free(orig);
-				return(0);
-			}
-			ret = ft_strjoin(ret, aux);
-		}
-		i++;
-	}
-	free(orig);
-	return (ret);
+	return (0);
 }
 
 int	count_flags(t_totems *input, int sect)

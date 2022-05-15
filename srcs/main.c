@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/13 12:21:23 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/15 15:20:09 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int	main(void)
 	t_totems		*input;
 	t_transformer	*runner;
 
+	str = 0;
+	runner = 0;
 	env = store_environ();
 	while (42)
 	{
@@ -45,7 +47,7 @@ char *str)
 	g_util.ofdout = -1;
 	g_util.pwd = getcwd(0, 0);
 	if (!ft_chk_quotes(str) && !checkreds(str))
-		*input = sp_split(str);
+		*input = sp_split(str, 0, 0, 0);
 	*runner = transform(*input, env);
 }
 

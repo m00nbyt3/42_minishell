@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 12:27:16 by agallipo          #+#    #+#             */
-/*   Updated: 2022/05/13 21:17:14 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/15 12:39:43 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,9 @@ char	*set_quotes(char *str, t_oncreate *shared)
 
 char	*inside_quote(char *str, char **tmp, t_oncreate *shared, int *force)
 {
-	char	qtype = *str;
+	char	qtype;
+
+	qtype = *str;
 	str++;
 	if (!(*force))
 			shared->qtype = qtype;

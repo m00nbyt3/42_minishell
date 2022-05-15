@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 14:32:09 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/11 16:01:17 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/15 16:14:38 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ char	*ft_srchlist_var(char *tofind, t_list **env)
 	list = *env;
 	len = ft_strlen(tofind);
 	result = 0;
+	tmp = 0;
 	while (list->content)
 	{
 		if (!ft_strncmp(tofind, list->content, len))
