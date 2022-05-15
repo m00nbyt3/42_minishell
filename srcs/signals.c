@@ -3,25 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 11:53:49 by agallipo          #+#    #+#             */
-/*   Updated: 2022/05/13 12:21:48 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/15 16:32:02 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 void	sign(int sig);
-void	ctrl_d(char *str, t_transformer *runner);
+void	ctrl_d(char *str);
 
-void	ctrl_d(char *str, t_transformer *runner)
+void	ctrl_d(char *str)
 {
 	if (str == NULL)
 	{
 		if (g_util.ctr_c == 0 || g_util.ctr_b == 0)
 		{
-			ft_clear_transformer(&runner, free);
+			//ft_clear_transformer(&runner, free);
 			ft_putstr_fd("exit", 0);
 			exit(0);
 		}
@@ -30,8 +30,6 @@ void	ctrl_d(char *str, t_transformer *runner)
 
 void	sign(int sig)
 {
-	char	*str;
-
 	if (sig == SIGINT)
 	{
 		g_util.ctr_c = 1;

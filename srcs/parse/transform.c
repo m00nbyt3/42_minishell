@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 12:41:32 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/15 13:35:54 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/15 16:22:01 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ t_transformer	*transform(t_totems *input, t_env *env)
 	t_transformer	*orig;
 	int				lap;
 
+	runner = 0;
 	runner = init_transformer(runner);
 	orig = runner;
 	lap = 0;

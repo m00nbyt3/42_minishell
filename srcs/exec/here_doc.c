@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 12:08:30 by agallipo          #+#    #+#             */
-/*   Updated: 2022/05/13 20:52:01 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/15 16:41:13 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	here_doc(t_transformer *content, t_env *env);
 void	while_heredoc(t_transformer *content, t_env *env, char *str, \
 int quotes);
 void	find_variable(char	*str, int fd, int *i, t_env *env);
-void	exit_here(int sig);
+void	exit_here(int code);
 void	execute_heredoc(t_transformer *runner, t_env *env);
 
 void	here_doc(t_transformer *content, t_env *env)
@@ -63,8 +63,9 @@ int quotes)
 	}
 }
 
-void	exit_here(int sig)
+void	exit_here(int code)
 {
+	(void)code;
 	ft_putstr_fd("\n", 2);
 	exit (0);
 }

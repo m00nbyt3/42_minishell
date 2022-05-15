@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 13:36:17 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/15 13:36:24 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/15 16:21:12 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ char	*new_element(char *s, t_totems **input, t_oncreate *shared)
 	t_totems	*totem;
 	char		*tmp;
 	char		*orig;
-	int			i;
 
 	totem = malloc(sizeof(t_totems));
 	if (!totem)

@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   multiple.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/13 21:01:51 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/15 16:23:51 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_pipes(t_transformer **contents, t_totems *input, t_env *env);
+void	ft_pipes(t_transformer **contents, t_env *env);
 void	ft_while_pipes(t_transformer *content, t_tools *tools, t_env *env);
 void	ft_final_pipe(t_transformer *content, t_tools *tools, t_env *env, \
 		int i);
 void	while_wait(t_tools *tools, int i);
 
-void	ft_pipes(t_transformer **contents, t_totems *input, t_env *env)
+void	ft_pipes(t_transformer **contents, t_env *env)
 {
 	int				i;
 	t_transformer	*content;

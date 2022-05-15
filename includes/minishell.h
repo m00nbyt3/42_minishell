@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/15 16:13:53 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/15 16:41:21 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,6 @@ t_global	g_util;
 void			sort_mtx(char **mtx);
 char			*chr2str(char toadd, char *str, int *force);
 void			set_origina_fd(void);
-void			set_last_command(t_transformer *smth, t_env *env);
 int				checkargs(t_transformer *runner, t_env *env);
 
 //Parse
@@ -118,7 +117,7 @@ t_list			*store_env_in_list(char **environ);
 
 //Signals
 void			sign(int sig);
-void			ctrl_d(char *str, t_transformer *runner);
+void			ctrl_d(char *str);
 
 //Builtins
 int				ft_builtins(t_transformer *runner, t_env *env);
@@ -143,7 +142,7 @@ int				variable_match(char *var, char *name);
 int				add_to_env(t_transformer *orunner);
 
 //Totem
-t_totems		*sp_split(char *s, char *used, size_t i, size_t j);
+t_totems		*sp_split(char *s, char *used, size_t i, int j);
 char			*char_detection(char *tmp, t_oncreate *shared, \
 				t_totems *totem, int *i);
 int				is_special_c(char *str, t_totems *totem, int i, \
@@ -173,7 +172,7 @@ void (*del)(void *));
 t_transformer	*init_transformer(t_transformer *runner);
 
 //Pipes
-void			ft_pipes(t_transformer **contents, t_totems *input, \
+void			ft_pipes(t_transformer **contents, \
 t_env *env);
 void			ft_while_pipes(t_transformer *content, t_tools *tools, \
 t_env *env);
@@ -198,10 +197,14 @@ void			ft_print_error(char *error, char *arg);
 void			ft_error(t_transformer *smth, int cond);
 int				rederror(void);
 void			here_doc(t_transformer *content, t_env *env);
+void			while_heredoc(t_transformer *content, t_env *env, char *str, \
+int quotes);
+void			find_variable(char	*str, int fd, int *i, t_env *env);
+void			exit_here(int code);
+void			execute_heredoc(t_transformer *runner, t_env *env);
 void			cutstr(char *str, char c);
 void			allocate_fds(t_tools *tools);
 void			close_all_fds(t_tools *tools);
-void			execute_heredoc(t_transformer *runner, t_env *env);
 
 //System functions
 void			rl_replace_line(const char *text, int clear_undo);

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   env_commands.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 14:16:08 by agallipo          #+#    #+#             */
-/*   Updated: 2022/05/04 19:13:04 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/15 16:22:55 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ char	*ft_env_path(char **env, char *argv, char **flags)
 	path = ft_path_split(env);
 	if (!path)
 		return (0);
+	i = 0;
 	while (path[i])
 	{
 		cmd = strdup(path[i]);

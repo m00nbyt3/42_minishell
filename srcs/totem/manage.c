@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 10:38:02 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/15 15:15:16 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/15 16:34:51 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,9 @@ void	ft_clear_input(t_totems **input, void (*del)(void *))
 	*input = NULL;
 }
 
-void	ft_clear_transformer(t_transformer **runner, void (*del)(void *))
-{
-   /* t_transformer    *next;
+//void	ft_clear_transformer(t_transformer **runner, void (*del)(void *))
+//{
+/* t_transformer    *next;
 
     if (!del || !runner)
         return ;
@@ -85,4 +85,4 @@ void	ft_clear_transformer(t_transformer **runner, void (*del)(void *))
         //(*runner) = next;
     }
     *runner = NULL;*/
-}
+//}

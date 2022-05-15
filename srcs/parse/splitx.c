@@ -6,20 +6,20 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 17:36:38 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/15 12:44:23 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/15 16:20:13 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_totems	*sp_split(char *s, char *used, size_t i, size_t j);
+t_totems	*sp_split(char *s, char *used, size_t i, int j);
 char		*char_detection(char *tmp, t_oncreate *shared, \
 			t_totems *totem, int *i);
 int			is_special_c(char *str, t_totems *totem, int i, t_oncreate *shared);
 int			is_redirection(char *str, t_totems *totem, int i);
 void		set_command(t_totems *input, int sect);
 
-t_totems	*sp_split(char *s, char *used, size_t i, size_t j)
+t_totems	*sp_split(char *s, char *used, size_t i, int j)
 {
 	t_oncreate	*shared;
 	t_totems	*input;
@@ -78,8 +78,6 @@ char	*char_detection(char *tmp, t_oncreate *shared, t_totems *totem, int *i)
 
 int	is_special_c(char *str, t_totems *totem, int i, t_oncreate *shared)
 {
-	int	redir;
-
 	while (*str == ' ' && *str)
 		str++;
 	if (is_redirection(str, totem, i))
@@ -136,7 +134,6 @@ void	set_command(t_totems *input, int sect)
 {
 	int		tot;
 	void	*orig;
-	void	*mod;
 
 	orig = input;
 	tot = 0;

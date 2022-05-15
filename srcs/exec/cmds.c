@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmds.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 14:53:51 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/13 20:41:36 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/15 16:26:59 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,10 @@ int		count_cmds(t_transformer *data);
 int		single_cmd(int npipes, t_transformer *smth, t_env *env);
 void	single_cmd_2(int ofdin, int ofdout, t_transformer *smth, t_env *env);
 void	ft_execute(t_transformer *smth, t_env *env);
-void	set_last_command(t_transformer *smth, t_env *env);
 
 int	count_cmds(t_transformer *data)
 {
 	void	*orig;
-	int		ret;
 	int		i;
 
 	orig = data;
@@ -91,22 +89,6 @@ void	single_cmd_2(int ofdin, int ofdout, t_transformer *smth, t_env *env)
 		dup2(ofdout, STDOUT_FILENO);
 		close(ofdout);
 	}
-}
-
-void	set_last_command(t_transformer *smth, t_env *env)
-{
-	int		i;
-
-	i = 0;
-	while (env->array[i])
-	{
-		if (ft_strncmp(env->array[i], "_=", 2) == 0)
-		{
-			break ;
-		}
-		i++;
-	}
-	env->array[i] = ft_strdup("_=/usr/bin/env");
 }
 
 void	ft_execute(t_transformer *smth, t_env *env)
