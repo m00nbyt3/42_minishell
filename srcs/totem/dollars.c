@@ -6,14 +6,15 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 15:12:49 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/16 15:25:12 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/16 18:20:07 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*getdollars(char *orig, t_env *env);
-int		expand_dollar(char **aux, t_env *env, char **ret);
+char		*getdollars(char *orig, t_env *env);
+int			expand_dollar(char **aux, t_env *env, char **ret);
+static char	*ret_free(char *tofree, char *str, char *extra);
 
 char	*getdollars(char *orig, t_env *env)
 {
@@ -28,15 +29,9 @@ char	*getdollars(char *orig, t_env *env)
 		if (orig[i] == '$')
 		{
 			if (orig[i + 1] == ' ' || !orig[i + 1])
-			{
-				free(ret);
-				return ("$");
-			}
+				return (ret_free(ret, ft_strdup("$"), orig));
 			if (orig[i + 1] == '?' && (orig[i + 2] == ' ' || !orig[i + 2]))
-			{
-				free(ret);
-				return (ft_itoa(g_util->exit_value));
-			}
+				return (ret_free(ret, ft_itoa(g_util->exit_value), orig));
 			aux = ft_strdup(orig + (i + 1));
 			if (!expand_dollar(&aux, env, &ret))
 				return (0);
@@ -45,6 +40,13 @@ char	*getdollars(char *orig, t_env *env)
 	}
 	free(orig);
 	return (ret);
+}
+
+static char	*ret_free(char *tofree, char *str, char *extra)
+{
+	free(tofree);
+	free(extra);
+	return (str);
 }
 
 int	expand_dollar(char **aux, t_env *env, char **ret)

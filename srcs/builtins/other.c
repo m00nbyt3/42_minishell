@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 14:32:09 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/15 16:14:38 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/16 17:29:16 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ char	*ft_srchlist_var(char *tofind, t_list **env);
 char	*ft_vsrch_var(char *tofind, char **env);
 void	ft_print_mtx(char **env);
 void	ft_print_export(char **env);
+char	**replace_env(char *toadd, char **environ);
 
 char	*ft_srchlist_var(char *tofind, t_list **env)
 {
@@ -93,4 +94,18 @@ void	ft_print_export(char **env)
 	i = -1;
 	while (env[++i])
 		printf("declare -x %s\n", env[i]);
+}
+
+char	**replace_env(char *toadd, char **environ)
+{
+	int		i;
+
+	i = 0;
+	while (environ[i])
+	{
+		if (!var_exist(toadd, environ, i, 0))
+			environ[i] = ft_strdup(toadd);
+		i++;
+	}
+	return (environ);
 }

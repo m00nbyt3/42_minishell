@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   manage.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/03 10:38:02 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/16 13:04:57 by ycarro           ###   ########.fr       */
-/*                                                                            */
+/*																			*/
+/*														:::	  ::::::::   */
+/*   manage.c										   :+:	  :+:	:+:   */
+/*													+:+ +:+		 +:+	 */
+/*   By: ycarro <ycarro@student.42.com>			 +#+  +:+	   +#+		*/
+/*												+#+#+#+#+#+   +#+		   */
+/*   Created: 2022/03/03 10:38:02 by ycarro			#+#	#+#			 */
+/*   Updated: 2022/05/16 17:21:43 by ycarro		   ###   ########.fr	   */
+/*																			*/
 /* ************************************************************************** */
 
 #include "minishell.h"
@@ -17,7 +17,6 @@ void		ft_print_totems(t_totems *input);
 void		ft_clear_input(t_totems **input, void (*del)(void *));
 void		ft_clear_transformer(t_transformer **orig, void (*del)(void *));
 void		free_this(void *ptr);
-
 
 void	ft_add_totem(t_totems **input, t_totems *new)
 {
@@ -74,16 +73,16 @@ void	ft_clear_transformer(t_transformer **orig, void (*del)(void *))
 	void			*tmp;
 
 	runner = *orig;
-    if (!del || !runner)
-        return ;
-    while (runner)
-    {
-    	free(runner->flags);
-    	tmp = runner;
-        runner = runner->next;
-    	free(tmp);
-    	tmp = NULL;
-    }
+	if (!del || !runner)
+		return ;
+	while (runner)
+	{
+		free(runner->flags);
+		tmp = runner;
+		runner = runner->next;
+		free(tmp);
+		tmp = NULL;
+	}
 }
 
 void	free_this(void *ptr)

@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/16 12:47:42 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/16 17:05:29 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,6 @@ void	ft_pipes(t_transformer **contents, t_env *env)
 		ft_while_pipes(content, tools, env);
 	i = -1;
 	while_wait(tools, i);
-	close_all_fds(tools);
-	free(tools->pid);
-	free(tools);
 }
 
 void	while_wait(t_tools *tools, int i)
@@ -60,6 +57,9 @@ void	while_wait(t_tools *tools, int i)
 		if (WIFSIGNALED(tools->pid[i]))
 			g_util->exit_value = 130;
 	}
+	close_all_fds(tools);
+	free(tools->pid);
+	free(tools);
 }
 
 void	ft_while_pipes(t_transformer *content, t_tools *tools, t_env *env)
