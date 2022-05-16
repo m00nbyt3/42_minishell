@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/03 19:11:28 by agallipo          #+#    #+#             */
-/*   Updated: 2022/05/11 16:34:59 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/16 16:30:54 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ void	ft_putnbr_base(unsigned int nbr, char *base);
 char	*ft_strchr_gnl(const char *s, int c);
 char	*get_next_line(int fd);
 void	ft_free_matrix(char **mtrx);
+void	ft_free_mtxbasic(char **mtrx);
 void	ft_print_lst(t_list *lst);
 int		ft_strcmp(char *s1, char *s2);
 char	**ft_mtxdup(char **mtx);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 20:43:16 by agallipo          #+#    #+#             */
-/*   Updated: 2022/05/13 21:00:55 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/16 15:06:52 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ void	close_all_fds(t_tools *tools)
 	{
 		close(tools->fd[i][0]);
 		close(tools->fd[i][1]);
+		free(tools->fd[i]);
 		i++;
 	}
+	free(tools->fd);
 }

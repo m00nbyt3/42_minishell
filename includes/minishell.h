@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/15 17:53:09 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/16 12:43:07 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,13 +77,10 @@ typedef struct s_tools
 	int			**fd;
 	int			*pid;
 	int			npipes;
-	t_totems	*input;
-	t_list		*envlist;
 }				t_tools;
 
 typedef struct s_env
 {
-	t_list	*list;
 	char	**array;
 	char	**export;
 }				t_env;
@@ -125,7 +122,7 @@ int				select_cmd(t_transformer *runner, t_env *env);
 void			ft_echo(t_transformer *runner);
 void			ft_cd(t_transformer *runner, char **env);
 void			ft_pwd(void);
-void			ft_builtin_exit(t_transformer *runner);
+void			ft_builtin_exit(t_transformer *runner, t_env *env);
 void			set_fds(t_totems *input, int section);
 char			*ft_srchlist_var(char *tofind, t_list **env);
 char			*ft_vsrch_var(char *tofind, char **env);
@@ -167,8 +164,8 @@ void			print_vector(t_transformer *runner);
 char			*getdollars(char *str, t_env *env);
 int				expand_dollar(char **aux, t_env *env, char **ret);
 t_transformer	*transform(t_totems *input, t_env *env);
-void			ft_clear_transformer(t_transformer **runner, \
-void (*del)(void *));
+void			ft_clear_transformer(t_transformer **orig, \
+	void (*del)(void *));
 t_transformer	*init_transformer(t_transformer *runner);
 
 //Pipes

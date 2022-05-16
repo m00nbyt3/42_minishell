@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   childs.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 14:52:39 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/13 13:59:20 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/16 12:48:07 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,5 +94,7 @@ void	ft_bastard(t_transformer *smth, t_env *env, t_tools *tools, int i)
 	if (smth->fdin == -1 || smth->fdout == -1)
 		exit (1);
 	close_all_fds(tools);
+	free(tools->pid);
+	free(tools);
 	ft_execute(smth, env);
 }

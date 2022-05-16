@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 14:57:01 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/15 15:13:04 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/16 15:25:09 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,10 @@ int	save_flag(t_totems *input, int sect, char **vector, t_env *env)
 	{
 		*vector = input->content;
 		if (**vector == '$' && input->qtype != '\'' && input->type != 'h')
-			*vector = getdollars(*vector, env);
+		{
+			input->content = getdollars(*vector, env);
+			*vector = input->content;
+		}
 		if (input->type == 'f')
 			*vector = ft_strjoin("-\0", *vector);
 		return (1);

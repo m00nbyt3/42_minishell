@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 12:14:54 by agallipo          #+#    #+#             */
-/*   Updated: 2022/05/15 15:24:23 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/16 12:37:38 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	select_cmd(t_transformer *runner, t_env *env)
 	else if (ft_strcmp(runner->cmd, "unset"))
 		ft_unset(runner, env);
 	else if (ft_strcmp(runner->cmd, "exit"))
-		ft_builtin_exit(runner);
+		ft_builtin_exit(runner, env);
 	else
 	{
 		runner = orig;

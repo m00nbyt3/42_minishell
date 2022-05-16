@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 12:23:04 by agallipo          #+#    #+#             */
-/*   Updated: 2022/05/15 17:30:18 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/16 12:34:27 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ t_env	*basic_env(void)
 	env->array[2] = ft_strdup("_=/usr/bin/env");
 	env->array[3] = 0;
 	env->export = ft_mtxdup(env->array);
-	env->list = store_env_in_list(env->array);
 	return (env);
 }
 
@@ -96,7 +95,6 @@ t_env	*store_environ(void)
 	env->export = ft_mtxdup(environ);
 	env->array = ft_mtxdup(environ);
 	env->array = shell_level(env->array);
-	env->list = store_env_in_list(environ);
 	return (env);
 }
 

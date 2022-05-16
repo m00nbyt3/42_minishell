@@ -6,16 +6,17 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/15 17:57:20 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/16 12:43:29 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_builtin_exit(t_transformer *runner);
+void	ft_builtin_exit(t_transformer *runner, t_env *env);
 void	flag_is_not_num(t_transformer *runner);
+void	free_env(t_env *env);
 
-void	ft_builtin_exit(t_transformer *runner)
+void	ft_builtin_exit(t_transformer *runner, t_env *env)
 {
 	if (runner->flags[1])
 	{
@@ -36,6 +37,7 @@ void	ft_builtin_exit(t_transformer *runner)
 	else
 	{
 		g_util->exit_value = 0;
+		free_env(env);
 		exit (0);
 	}
 }
@@ -47,4 +49,12 @@ void	flag_is_not_num(t_transformer *runner)
 	write(2, " : numeric argument required\n", 29);
 	g_util->exit_value = 255;
 	exit (255);
+}
+
+void	free_env(t_env *env)
+{
+	ft_free_matrix(env->array);
+	ft_free_matrix(env->export);
+	free(env);
+	env = 0;
 }

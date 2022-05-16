@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 18:09:46 by agallipo          #+#    #+#             */
-/*   Updated: 2022/05/15 17:05:11 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/16 13:15:25 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,10 @@ void	ft_export(t_transformer *orunner, t_env *env)
 		if (add_to_env(orunner))
 		{
 			aux = ft_export_add(orunner, env->array);
+			free(env->array);
 			env->array = aux;
 			aux = ft_export_add(orunner, env->export);
+			free(env->export);
 			env->export = aux;
 		}
 		else

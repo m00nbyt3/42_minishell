@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_free_matrix.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agallipo <agallipo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 17:33:04 by agallipo          #+#    #+#             */
-/*   Updated: 2022/02/16 17:33:03 by agallipo         ###   ########.fr       */
+/*   Updated: 2022/05/16 16:30:29 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,16 @@ void	ft_free_matrix(char **mtrx)
 		i++;
 	}
 	free(mtrx);
+}
+
+void	ft_free_mtxbasic(char **mtrx)
+{
+	int	i;
+
+	i = 0;
+	while (mtrx[i])
+	{
+		free(mtrx[i]);
+		i++;
+	}
 }

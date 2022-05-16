@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/15 17:57:59 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/16 12:47:42 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,11 @@ void	ft_pipes(t_transformer **contents, t_env *env)
 	tools->npipes = count_cmds(content) - 1;
 	tools->pid = malloc((tools->npipes + 1) * sizeof(int));
 	if (single_cmd(tools->npipes, content, env))
+	{
+		free(tools->pid);
+		free(tools);
 		return ;
+	}
 	allocate_fds(tools);
 	pipe(tools->fd[0]);
 	tools->pid[0] = fork();
@@ -41,6 +45,9 @@ void	ft_pipes(t_transformer **contents, t_env *env)
 		ft_while_pipes(content, tools, env);
 	i = -1;
 	while_wait(tools, i);
+	close_all_fds(tools);
+	free(tools->pid);
+	free(tools);
 }
 
 void	while_wait(t_tools *tools, int i)

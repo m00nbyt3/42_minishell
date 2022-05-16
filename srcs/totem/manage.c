@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 10:38:02 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/15 16:34:51 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/16 13:04:57 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 void		ft_add_totem(t_totems **input, t_totems *new);
 void		ft_print_totems(t_totems *input);
 void		ft_clear_input(t_totems **input, void (*del)(void *));
-void		ft_clear_transformer(t_transformer **runner, void (*del)(void *));
+void		ft_clear_transformer(t_transformer **orig, void (*del)(void *));
+void		free_this(void *ptr);
+
 
 void	ft_add_totem(t_totems **input, t_totems *new)
 {
@@ -58,31 +60,34 @@ void	ft_clear_input(t_totems **input, void (*del)(void *))
 	while (*input)
 	{
 		next = (*input)->next;
-		free((*input)->content);
+		if ((*input)->content)
+			free((*input)->content);
 		free(*input);
 		(*input) = next;
 	}
 	*input = NULL;
 }
 
-//void	ft_clear_transformer(t_transformer **runner, void (*del)(void *))
-//{
-/* t_transformer    *next;
+void	ft_clear_transformer(t_transformer **orig, void (*del)(void *))
+{
+	t_transformer	*runner;
+	void			*tmp;
 
+	runner = *orig;
     if (!del || !runner)
         return ;
-    while (*runner)
+    while (runner)
     {
-        next = (*runner)->next;
-    //    free((*runner)->cmd);
-    //    if ((*runner)->heredoc)
-    //        free((*runner)->heredoc);
-//        if ((*runner)->append)
-//            free((*runner)->append);
-    //    if ((*runner)->flags)
-    //        ft_free_matrix((*runner)->flags);
-       // free(*runner);
-        //(*runner) = next;
+    	free(runner->flags);
+    	tmp = runner;
+        runner = runner->next;
+    	free(tmp);
+    	tmp = NULL;
     }
-    *runner = NULL;*/
-//}
+}
+
+void	free_this(void *ptr)
+{
+	free(ptr);
+	ptr = 0;
+}
