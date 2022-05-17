@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/16 12:43:07 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/17 12:13:26 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ typedef struct s_global
 	int		ofdin;
 	int		ofdout;
 	int		exit_value;
-	char	*pwd;
 }				t_global;
 
 typedef struct s_totems
@@ -107,6 +106,7 @@ void			command_not_found(t_transformer *smth);
 
 //environ
 char			*get_my_env(char *name, char **env);
+int				get_env_pos(char *name, char **env);
 t_env			*basic_env(void);
 char			**shell_level(char **env);
 t_env			*store_environ(void);
@@ -125,7 +125,6 @@ void			ft_pwd(void);
 void			ft_builtin_exit(t_transformer *runner, t_env *env);
 void			set_fds(t_totems *input, int section);
 char			*ft_srchlist_var(char *tofind, t_list **env);
-char			*ft_vsrch_var(char *tofind, char **env);
 void			ft_print_mtx(char **env);
 void			ft_print_export(char **env);
 void			ft_export(t_transformer *orunner, t_env *env);
@@ -136,7 +135,7 @@ char			**ft_env_add(char *toadd, char **environ);
 void			ft_unset(t_transformer *orunner, t_env *env);
 char			**find_and_quit(char **env, char *var);
 int				variable_match(char *var, char *name);
-int				add_to_env(t_transformer *orunner);
+char			*add_to_env(t_transformer *orunner);
 
 //Totem
 t_totems		*sp_split(char *s, char *used, size_t i, int j);

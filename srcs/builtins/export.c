@@ -6,38 +6,71 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 18:09:46 by agallipo          #+#    #+#             */
-/*   Updated: 2022/05/16 13:15:25 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/17 13:07:54 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_export(t_transformer *orunner, t_env *env);
-char	**ft_export_add(t_transformer *runner, char **environ);
-int		variable_match(char *var, char *name);
-int		add_to_env(t_transformer *orunner);
-char	**ft_env_add(char *toadd, char **environ);
+void		ft_export(t_transformer *orunner, t_env *env);
+static void	ft_export_2(t_transformer *orunner, t_env *env, char *vname);
+char		**ft_export_add(t_transformer *runner, char **environ);
+int			variable_match(char *var, char *name);
+char		*add_to_env(t_transformer *orunner);
+char		**ft_env_add(char *toadd, char **environ);
 
 void	ft_export(t_transformer *orunner, t_env *env)
 {
-	char				**aux;
+	char	*vname;
+	char	**aux;
+	int		i;
 
 	if (orunner->flags[1])
 	{
-		if (add_to_env(orunner))
-		{
-			aux = ft_export_add(orunner, env->array);
-			free(env->array);
-			env->array = aux;
-			aux = ft_export_add(orunner, env->export);
-			free(env->export);
-			env->export = aux;
-		}
+		vname = add_to_env(orunner);
+		if (vname)
+			ft_export_2(orunner, env, vname);
 		else
-			env->export = ft_export_add(orunner, env->export);
+		{
+			i = get_env_pos(orunner->flags[1], env->export);
+			if (i != -1)
+				replace_env(orunner->flags[1], env->array);
+			else
+			{
+				aux = ft_export_add(orunner, env->export);
+				free(env->export);
+				env->export = aux;
+			}
+		}
 	}
 	else
 		sort_mtx(env->export);
+}
+
+static void	ft_export_2(t_transformer *orunner, t_env *env, char *vname)
+{
+	char	**aux;
+	int 	i;
+
+	i = get_env_pos(vname, env->array);
+	if (i != -1)
+		replace_env(orunner->flags[1], env->array);
+	else
+	{
+		aux = ft_export_add(orunner, env->array);
+		free(env->array);
+		env->array = aux;
+	}
+	i = get_env_pos(vname, env->export);
+	if (i != -1)
+		replace_env(orunner->flags[1], env->export);
+	else
+	{
+		aux = ft_export_add(orunner, env->export);
+		free(env->export);
+		env->export = aux;
+	}
+	free(vname);
 }
 
 int	variable_match(char *var, char *name)
@@ -61,9 +94,8 @@ char	**ft_export_add(t_transformer *runner, char **environ)
 	int		j;
 	char	**env;
 
-	if (!var_exist(runner->flags[1], environ, -1, 0))
-		return (replace_env(runner->flags[1], environ));
-	len = ft_mtxlen(runner->flags) + ft_mtxlen(environ);
+	
+	len = ft_mtxlen(environ) + 2;
 	env = malloc((len) * sizeof(char *));
 	i = 0;
 	while (environ[i])
@@ -101,15 +133,20 @@ char	**ft_env_add(char *toadd, char **environ)
 	return (env);
 }
 
-int	add_to_env(t_transformer *orunner)
+char	*add_to_env(t_transformer *orunner)
 {
-	int	i;
+	int		i;
+	char	*vname;
 
 	i = 0;
 	while (orunner->flags[1][i])
 	{
 		if (orunner->flags[1][i] == '=')
-			return (1);
+		{
+			vname = malloc((i + 1) * sizeof(char));
+			ft_strlcpy(vname, orunner->flags[1], (i + 1));
+			return (vname);
+		}
 		i++;
 	}
 	return (0);

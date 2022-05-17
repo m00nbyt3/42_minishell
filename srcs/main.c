@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/16 18:48:12 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/17 13:18:50 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,11 @@ char *str)
 	*input = 0;
 	g_util->ofdin = -1;
 	g_util->ofdout = -1;
-	g_util->pwd = getcwd(0, 0);
 	if (!ft_chk_quotes(str) && !checkreds(str))
+	{
 		*input = sp_split(str, 0, 0, 0);
-	*runner = transform(*input, env);
+		*runner = transform(*input, env);
+	}
 }
 
 void	execution(t_totems **input, t_transformer **runner, t_env *env)
@@ -70,7 +71,6 @@ void	execution(t_totems **input, t_transformer **runner, t_env *env)
 	g_util->ctr_b = 0;
 	close(g_util->ofdin);
 	close(g_util->ofdout);
-	free(g_util->pwd);
 }
 
 char	*read_my_line(char *str)

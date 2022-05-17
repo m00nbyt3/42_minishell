@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 13:41:35 by agallipo          #+#    #+#             */
-/*   Updated: 2022/05/16 17:54:30 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/17 11:24:48 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,15 @@ void	ft_unset(t_transformer *orunner, t_env *env)
 	aux = 0;
 	if (orunner->flags[1])
 	{
-		if (!var_exist(orunner->flags[1], env->array, -1, \
-		ft_strlen(orunner->flags[1])))
+		aux = find_and_quit(env->array, orunner->flags[1]);
+		if (aux)
 		{
-			aux = find_and_quit(env->array, orunner->flags[1]);
 			ft_free_matrix(env->array);
 			env->array = aux;
 		}
-		if (!var_exist(orunner->flags[1], env->export, -1, \
-		ft_strlen(orunner->flags[1])))
+		aux = find_and_quit(env->export, orunner->flags[1]);
+		if (aux)
 		{
-			aux = find_and_quit(env->export, orunner->flags[1]);
 			ft_free_matrix(env->export);
 			env->export = aux;
 		}
@@ -49,14 +47,10 @@ char	**find_and_quit(char **env, char *var_name)
 	char	**aux;
 	char	**new;
 
+	i = get_env_pos(var_name, env);
+	if (i == -1)
+		return (0);
 	copy = ft_mtxdup(env);
-	i = 0;
-	while (copy[i])
-	{
-		if (!var_exist(var_name, env, i, ft_strlen(var_name)))
-			break ;
-		i++;
-	}
 	free(copy[i]);
 	copy[i] = 0;
 	aux = copy + (i + 1);

@@ -6,13 +6,14 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 12:23:04 by agallipo          #+#    #+#             */
-/*   Updated: 2022/05/16 12:34:27 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/17 13:06:00 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 char	*get_my_env(char *name, char **env);
+int		get_env_pos(char *name, char **env);
 t_env	*basic_env(void);
 char	**shell_level(char **env);
 t_env	*store_environ(void);
@@ -31,12 +32,39 @@ char	*get_my_env(char *name, char **env)
 	{
 		if (ft_strncmp(name, env[i], len) == 0)
 		{
-			expanded = ft_strdup(env[i] + (len + 1));
-			break ;
+			if (*(env[i] + (len)) == '=')
+			{
+				expanded = ft_strdup(env[i] + (len + 1));
+				break ;
+			}
 		}
 		i++;
 	}
 	return (expanded);
+}
+
+int	get_env_pos(char *name, char **env)
+{
+	int		i;
+	int		len;
+
+	if(!name)
+		return (-2);		
+	len = ft_strlen(name);
+	i = 0;
+	while (env[i])
+	{
+		if (ft_strncmp(name, env[i], len) == 0)
+		{
+			if (*(env[i] + (len)) == '=' || *(env[i] + (len)) == 0)
+			{
+				return(i);
+				break ;
+			}
+		}
+		i++;
+	}
+	return (-1);
 }
 
 t_env	*basic_env(void)
