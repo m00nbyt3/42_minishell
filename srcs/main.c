@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/17 15:20:41 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/17 15:46:30 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,6 @@ char	*read_my_line(char *str);
 void	parse_line(t_totems **input, t_transformer **runner, t_env *env, \
 char *str);
 void	execution(t_totems **input, t_transformer **runner, t_env *env);
-
-void	leaks(void)
-{
-	system("leaks minishell");
-}
 
 int	main(void)
 {

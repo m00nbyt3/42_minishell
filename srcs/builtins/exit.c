@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/17 12:31:21 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/17 15:46:50 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void	ft_builtin_exit(t_transformer *runner, t_env *env)
 		g_util->exit_value = 0;
 		free_env(env);
 		env = env + 0;
-		system("leaks minishell");
 		exit (0);
 	}
 }

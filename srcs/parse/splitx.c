@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 17:36:38 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/15 16:20:13 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/17 15:43:49 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	is_special_c(char *str, t_totems *totem, int i, t_oncreate *shared)
 		str++;
 	if (is_redirection(str, totem, i))
 		;
-	else if (*str == '-')
+	else if (*str == '-' && *(str -1) == ' ')
 	{
 		if (!i)
 			totem->type = 'f';

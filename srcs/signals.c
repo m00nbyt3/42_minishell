@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 11:53:49 by agallipo          #+#    #+#             */
-/*   Updated: 2022/05/16 19:01:34 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/17 15:46:40 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	ctrl_d(char *str)
 	{
 		if (g_util->ctr_c == 0 || g_util->ctr_b == 0)
 		{
-			system("leaks minishell");
 			ft_putstr_fd("exit", 0);
 			exit(0);
 		}
