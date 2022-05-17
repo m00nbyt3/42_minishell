@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 11:44:56 by agallipo          #+#    #+#             */
-/*   Updated: 2022/05/16 15:27:32 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/17 15:21:30 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	command_not_found(t_transformer *smth)
 {
 	write(2, "W4V3shell: ", 11);
 	ft_putstr_fd(smth->cmd, 2);
-	write(2, " : cosmmand not found\n", 21);
+	write(2, " : command not found\n", 21);
 	g_util->exit_value = 127;
 	exit (127);
 }

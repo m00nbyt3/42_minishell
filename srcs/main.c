@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/17 13:18:50 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/17 15:20:41 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,12 @@ int	main(void)
 		signal(SIGQUIT, sign);
 		str = read_my_line(str);
 		ctrl_d(str);
-		add_history(str);
-		parse_line(&input, &runner, env, str);
-		execution(&input, &runner, env);
+		if (str[0])
+		{
+			add_history(str);
+			parse_line(&input, &runner, env, str);
+			execution(&input, &runner, env);
+		}
 		free(str);
 	}
 }
