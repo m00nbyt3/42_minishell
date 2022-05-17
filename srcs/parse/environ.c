@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 12:23:04 by agallipo          #+#    #+#             */
-/*   Updated: 2022/05/17 13:06:00 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/17 16:02:25 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int		get_env_pos(char *name, char **env);
 t_env	*basic_env(void);
 char	**shell_level(char **env);
 t_env	*store_environ(void);
-t_list	*store_env_in_list(char **environ);
 
 char	*get_my_env(char *name, char **env)
 {
@@ -48,8 +47,8 @@ int	get_env_pos(char *name, char **env)
 	int		i;
 	int		len;
 
-	if(!name)
-		return (-2);		
+	if (!name)
+		return (-2);
 	len = ft_strlen(name);
 	i = 0;
 	while (env[i])
@@ -58,7 +57,7 @@ int	get_env_pos(char *name, char **env)
 		{
 			if (*(env[i] + (len)) == '=' || *(env[i] + (len)) == 0)
 			{
-				return(i);
+				return (i);
 				break ;
 			}
 		}
@@ -123,18 +122,5 @@ t_env	*store_environ(void)
 	env->export = ft_mtxdup(environ);
 	env->array = ft_mtxdup(environ);
 	env->array = shell_level(env->array);
-	return (env);
-}
-
-t_list	*store_env_in_list(char **environ)
-{
-	t_list	*env;
-
-	env = NULL;
-	while (*environ)
-	{
-		ft_lstadd_back(&env, ft_lstnew(*environ));
-		environ++;
-	}
 	return (env);
 }

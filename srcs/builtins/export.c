@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 18:09:46 by agallipo          #+#    #+#             */
-/*   Updated: 2022/05/17 13:07:54 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/17 16:35:33 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void		ft_export(t_transformer *orunner, t_env *env);
 static void	ft_export_2(t_transformer *orunner, t_env *env, char *vname);
 char		**ft_export_add(t_transformer *runner, char **environ);
-int			variable_match(char *var, char *name);
 char		*add_to_env(t_transformer *orunner);
 char		**ft_env_add(char *toadd, char **environ);
 
@@ -50,7 +49,7 @@ void	ft_export(t_transformer *orunner, t_env *env)
 static void	ft_export_2(t_transformer *orunner, t_env *env, char *vname)
 {
 	char	**aux;
-	int 	i;
+	int		i;
 
 	i = get_env_pos(vname, env->array);
 	if (i != -1)
@@ -73,20 +72,6 @@ static void	ft_export_2(t_transformer *orunner, t_env *env, char *vname)
 	free(vname);
 }
 
-int	variable_match(char *var, char *name)
-{
-	int	i;
-
-	i = 0;
-	while (var[i] && name[i] && var[i] != '=' && name[i] != '=')
-	{
-		if (var[i] != name[i])
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
 char	**ft_export_add(t_transformer *runner, char **environ)
 {
 	int		len;
@@ -94,7 +79,6 @@ char	**ft_export_add(t_transformer *runner, char **environ)
 	int		j;
 	char	**env;
 
-	
 	len = ft_mtxlen(environ) + 2;
 	env = malloc((len) * sizeof(char *));
 	i = 0;
@@ -125,11 +109,12 @@ char	**ft_env_add(char *toadd, char **environ)
 	i = 0;
 	while (environ[i])
 	{
-		env[i] = environ[i];
+		env[i] = ft_strdup(environ[i]);
 		i++;
 	}
 	env[i] = ft_strdup(toadd);
 	env[i + 1] = 0;
+	ft_free_matrix(environ);
 	return (env);
 }
 

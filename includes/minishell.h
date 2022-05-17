@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:22:05 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/17 12:13:26 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/17 16:34:23 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,8 @@ void			ctrl_d(char *str);
 int				ft_builtins(t_transformer *runner, t_env *env);
 int				select_cmd(t_transformer *runner, t_env *env);
 void			ft_echo(t_transformer *runner);
-void			ft_cd(t_transformer *runner, char **env);
+void			ft_cd(t_transformer *runner, t_env *env);
+void			mod_env_pwd(t_env *env);
 void			ft_pwd(void);
 void			ft_builtin_exit(t_transformer *runner, t_env *env);
 void			set_fds(t_totems *input, int section);

@@ -6,15 +6,16 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 15:12:49 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/17 13:13:38 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/17 15:59:37 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 char		*getdollars(char *orig, t_env *env);
-int			expand_dollar(char **aux, t_env *env, char **ret);
+static void	do_free(char **ret, char **aux, char **orig);
 static char	*ret_free(char *tofree, char *str, char *extra);
+int			expand_dollar(char **aux, t_env *env, char **ret);
 
 char	*getdollars(char *orig, t_env *env)
 {
@@ -35,9 +36,7 @@ char	*getdollars(char *orig, t_env *env)
 			aux = ft_strdup(orig + (i + 1));
 			if (!expand_dollar(&aux, env, &ret))
 			{
-				free(ret);
-				free(aux);
-				free(orig);
+				do_free(&ret, &aux, &orig);
 				return (0);
 			}
 		}
@@ -45,6 +44,13 @@ char	*getdollars(char *orig, t_env *env)
 	}
 	free(orig);
 	return (ret);
+}
+
+static void	do_free(char **ret, char **aux, char **orig)
+{
+	free(*ret);
+	free(*aux);
+	free(*orig);
 }
 
 static char	*ret_free(char *tofree, char *str, char *extra)

@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 12:14:54 by agallipo          #+#    #+#             */
-/*   Updated: 2022/05/17 12:23:48 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/17 16:33:31 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	select_cmd(t_transformer *runner, t_env *env)
 	else if (ft_strcmp(runner->cmd, "echo"))
 		ft_echo(runner);
 	else if (ft_strcmp(runner->cmd, "cd") || ft_strcmp(runner->cmd, "CD"))
-		ft_cd(runner, env->array);
+		ft_cd(runner, env);
 	else if (ft_strcmp(runner->cmd, "pwd"))
 		ft_pwd();
 	else if (ft_strcmp(runner->cmd, "export"))
