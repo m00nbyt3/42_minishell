@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 12:41:32 by ycarro            #+#    #+#             */
-/*   Updated: 2022/05/16 18:48:54 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/19 09:06:35 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ void	create_transformer(t_transformer **p_runner, int *lap)
 
 void	fill_content(t_totems *input, t_transformer *runner, t_env *env)
 {
-	runner->cmd = input->content;
 	vectorize_flags(runner, input, input->section, env);
+	runner->cmd = input->content;
 }
 
 void	find_fds(t_totems *input, t_transformer *runner)

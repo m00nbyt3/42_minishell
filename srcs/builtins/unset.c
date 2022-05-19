@@ -6,7 +6,7 @@
 /*   By: ycarro <ycarro@student.42.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 13:41:35 by agallipo          #+#    #+#             */
-/*   Updated: 2022/05/17 11:24:48 by ycarro           ###   ########.fr       */
+/*   Updated: 2022/05/19 09:09:57 by ycarro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ static int	check_len(char **orig, int len)
 	char	*str;
 
 	str = *orig;
+	if (!str)
+		return (0);
 	if (!len)
 		while (str[len] != '=' && str[len])
 			len++;
